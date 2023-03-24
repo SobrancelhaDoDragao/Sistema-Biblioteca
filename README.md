@@ -1,5 +1,7 @@
 # Sistema Biblioteca
 
+#### Status: em progresso
+
 ## Sobre
 
 O objetivo desse projeto é criar uma aplicação web completa, um sistema para gerenciar livros e emprestimos de livros feitos em uma biblioteca. O sistema deverá ser uma single page aplication(SPA) com rederização de servidor (SSR). Por isso escolhei o framework Nuxt para facilitar o SSR.
