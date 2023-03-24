@@ -1,0 +1,33 @@
+/*Variaveis padroes*/
+:root{
+    --main-radius:10px;
+    --main-padding:5px;
+
+    /* Paleta de cores */
+    --colorOne:rgb(0, 128, 128);
+    --colorTwo:rgb(103, 92, 255);
+    --colorThree:#00ff88;
+    --colorFour:#000000;
+    --colorFive:#77ffc0;
+    --colorSix:rgba(172, 171, 171, 0.76);
+    /* Background colors*/
+    --main-background-color:#e3e9f7; 
+    --main-background-color-conteiner:#ffffff;
+    --main-background-dark:#201b2c;
+
+
+     /* fonts */
+    --main-font:'Ubuntu', sans-serif;
+    --thin-weight:300;
+    --regular-weight:400;
+    --medium-weight:500;
+    --bold-weight:700;
+    
+    /* fonts size */
+
+    /*Espesura das bordas*/
+    --main-border: .5rem;
+
+    /* margem bordas */
+    --margem-bordas:5rem;
+  }
