@@ -3,25 +3,25 @@
     <div id="conteiner">
 
   
-        <form action="">
+        <form>
             
-            <h1>Cadastro</h1>
+           <h1>Cadastro</h1>
 
            <label for="nome">Nome</label>
-           <input type="text" name="" id="nome">
+           <input type="text" name="" id="nome" v-model="formulario.nome">
 
            <label for="email">Email</label>
-           <input type="email" name="" id="email">
+           <input type="email" name="" id="email" v-model="formulario.email">
 
            <label for="senha">Senha</label>
-           <input type="password" name="" id="senha">
+           <input type="password" name="" id="senha" v-model="formulario.password">
 
            <label for="senha">Repetir senha</label>
-           <input type="password" name="" id="senha">
+           <input type="password" name="" id="senha2" v-model="formulario.password2">
 
            <label for="tipoConta">Criar conta como</label>
 
-            <select name="TipoConta" id="TipoConta">
+            <select name="TipoConta" id="TipoConta"  v-model="formulario.TipoConta">
 
                 <option value="usuario">Usuário</option>
                 <option value="funcionario">Funcionário</option>
@@ -29,7 +29,7 @@
             </select>
 
 
-            <button>Cadastrar</button>
+            <button v-on:click.prevent="CreateUser()" >Cadastrar</button>
 
         </form>
     </div>
@@ -140,8 +140,45 @@ form select{
 }
 </style>
 
-<script setup>
-    useHead({
-    title: 'Biblioteca | Cadastro',
-    })
+<script>
+   export default{
+
+    data(){
+      return{
+        formulario:{}
+      }
+    },
+
+    methods:{
+        async CreateUser(){
+
+            let teste = this.validate()
+
+            let response = await fetch('http://127.0.0.1:8000/createuser',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(teste)
+            });
+
+          
+
+            let dado = await response.json();
+
+            console.log(JSON.stringify(dado))
+
+        },
+
+        validate(){
+            const data = { 
+                nome:this.formulario.nome,
+                email:this.formulario.email,
+                foto:'dedede',
+                password:this.formulario.password 
+            }
+
+            return data
+        }
+
+    }
+   }
 </script>

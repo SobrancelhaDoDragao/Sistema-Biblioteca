@@ -43,6 +43,7 @@ class CustomUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    # Campos adicionais
     nome = models.CharField(max_length=50)
     foto = models.CharField(max_length=100)
 
