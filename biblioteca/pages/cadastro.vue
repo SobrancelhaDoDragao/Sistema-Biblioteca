@@ -160,11 +160,15 @@ form select{
                 body:JSON.stringify(teste)
             });
 
-          
-
-            let dado = await response.json();
-
-            console.log(JSON.stringify(dado))
+            let resultado = await response.json();
+            
+            if(resultado.nome){
+               await navigateTo('/')
+            }
+            else{
+                console.log(resultado)
+            }
+    
 
         },
 

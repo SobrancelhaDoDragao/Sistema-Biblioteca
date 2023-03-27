@@ -3,12 +3,12 @@
     <div class="main-login">
         
         <div class="explicao">
-
+            
                 <h1>Projeto biblioteca</h1>
                 <h2>Uma aplicação web para gerenciar acervo de livros de uma biblioteca e tambem emprestimo de livros feito pelo os usuarios.</h2>
                 <h2><NuxtLink to="/cadastro">Crie seu cadastro aqui</NuxtLink></h2>
     
-                <img src="img/meninoLendo.png" alt="Menindo lendo um livro em cima da lua">
+                <img src="~/assets/img/meninoLendo.png" alt="Menindo lendo um livro em cima da lua">
         </div>
 
         <div class="fomularioLogin">
@@ -18,18 +18,18 @@
                 <h1>Login</h1>
 
          
-                <form action="" method="post">
+                <form>
                                   
                     <div class="text_field">   
               
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email">
+                        <input type="email" name="email" id="email" v-model="email" >
     
                         <label for="senha">Senha</label>
-                        <input type="password" name="senha" id="senha">
+                        <input type="password" name="senha" id="senha" v-model="password" >
 
                         
-                        <button class="butaoLogin" >Login</button>
+                        <button class="butaoLogin"  @click.prevent="login()" >Login</button>
                     </div>
 
                     
@@ -194,8 +194,34 @@ img{
 
 </style>
 
-<script setup>
-    useHead({
-    title: 'Biblioteca | Login',
-    })
+<script>
+    export default{
+        data(){
+            return{
+                email:'',
+                password:'',
+            }
+        },
+
+        methods: {
+          
+            async login(){
+
+                const credentials = {
+                email:this.email,
+                password:this.password
+                } 
+
+                const response = await fetch('http://127.0.0.1:8000/api/token/',{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify(credentials)
+                });
+
+                let teste = await response.json()
+
+                console.log(teste)
+            }   
+        },
+    }
 </script>
