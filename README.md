@@ -4,7 +4,7 @@
 
 ## Sobre
 
-O objetivo desse projeto é criar uma aplicação web completa, um sistema para gerenciar livros e emprestimos de livros feitos em uma biblioteca. O sistema deverá ser uma single page aplication(SPA) com rederização de servidor (SSR). Por isso escolhei o framework Nuxt para facilitar o SSR.
+O objetivo desse projeto é criar uma aplicação web completa, um sistema para gerenciar livros e emprestimos de livros feitos em uma biblioteca, com login e cadastro de usuario e bibliotecarios. No meu apredizado de vue.js e percebi que o o vue carrega uma pagina em branco para depois carregar o javascript e por sua vez o conteudo da página, pesquisando sobre uma solução para esse problema eu conheci o Server side redering(SSR), para aplicar esses novo conhecimento eu optei por usar o Nuxt um framework criadon em cima do vue para facilitar a rederização de servidor.
 
 ## Escopo do sistema
 
