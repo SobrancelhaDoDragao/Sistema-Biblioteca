@@ -1,33 +1,24 @@
-# Sistema Biblioteca
+<h1 align="center">Sistema Biblioteca</h1>
 
-#### Status: em progresso
+<h3 align="center">Gereciamento de livros e empréstimos de biblioteca</h3>
+
+<h4 align="center">Status: em progresso</h4>
 
 ## Sobre
 
-O objetivo desse projeto é criar uma aplicação web completa, um sistema para gerenciar livros e emprestimos de livros feitos em uma biblioteca, com login e cadastro de usuario e bibliotecarios. No meu apredizado de vue.js e percebi que o o vue carrega uma pagina em branco para depois carregar o javascript e por sua vez o conteudo da página, pesquisando sobre uma solução para esse problema eu conheci o Server side redering(SSR), para aplicar esses novo conhecimento eu optei por usar o Nuxt um framework criadon em cima do vue para facilitar a rederização de servidor.
+Este projeto tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca. A aplicação conta com funcionalidades de login cadastro de usuários, cadastro de livros e bibliotecários.
 
-## Escopo do sistema
-
-Cadastrar usuários, funcionários e livros. Usuários poderão pegar livros que estão cadastrados na biblioteca emprestados. Os funcionários vão registrar no sistema todos os livros emprestados e devolvidos. 
+Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em branco antes de carregar o JavaScript e, consequentemente, o conteúdo da página. Após pesquisar sobre soluções para este problema, descobri o Server Side Rendering (SSR). Decidi utilizar o Nuxt, um framework baseado em Vue, para facilitar a renderização no lado do servidor e aplicar meus novos conhecimentos.
 
 ## Funcionalidades
 
-1. Crud Usuarios
-2. Crud Funcionários.
-3. Crud Livros .
-4. O sistema deverá ter um login para usuários e para funcionários.
-5. Exibir livros cadastrados na biblioteca para funcionário e usuários.
-6. Funcionários poderão cadastrar livro, excluir e editar.
-7. Funcionário poderá somente visualizar e excluir usuários. 
-8. O sistema deve ser responsivo.  
-9. Usuários e funcionários poderão ter uma foto de perfil.
-10. Um usuário poderá pegar 3 livros emprestados simultaneamente.
-11. Um livro emprestado, ficará indisponivel para outro emprestimo até ser devolvido. 
-12. Recuperação de senha
-13. Enviar e-mail 
-14. Dark-mode
+- Cadastro de usuários e bibliotecários
+- Autenticação de usuários e bibliotecários
+- Gerenciamento de livros (adicionar, remover, editar e visualizar)
+- Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
+- Pesquisa de livros e empréstimos
 
-## Tecnologias
+## Tecnologias usadas
 
 - Djando rest framework
 - Vue.js
@@ -35,3 +26,10 @@ Cadastrar usuários, funcionários e livros. Usuários poderão pegar livros que
 - Html 
 - Css
 
+## Instalação
+
+Em progresso
+
+## Licensa
+
+Em progresso
