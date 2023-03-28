@@ -22,7 +22,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 - Python
 - Javascript
-- Djando rest framework
+- Django rest framework
 - Vue.js
 - Nuxt
 - Html 
