@@ -20,6 +20,8 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ## Tecnologias usadas
 
+- Python
+- Javascript
 - Djando rest framework
 - Vue.js
 - Nuxt
