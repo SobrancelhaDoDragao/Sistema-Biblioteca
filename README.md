@@ -1,6 +1,6 @@
 <h1 align="center">Sistema Biblioteca</h1>
 
-<h3 align="center">Gereciamento de livros, epréstimos </h3>
+<h3 align="center">Gereciamento de livros, empréstimos e acervo de biblioteca</h3>
 
 <h4 align="center">Status: em progresso</h4>
 
