@@ -5,10 +5,14 @@
         <div class="explicao">
             
                 <h1>Projeto biblioteca</h1>
-                <h2>Uma aplicação web para gerenciar acervo de livros de uma biblioteca e tambem emprestimo de livros feito pelo os usuarios.</h2>
-                <h2><NuxtLink to="/cadastro">Crie seu cadastro aqui</NuxtLink></h2>
+                <h2>Este projeto tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca.</h2>
+
+                <div>
+                    <NuxtLink class="btn" to="/cadastro">Crie seu cadastro aqui</NuxtLink> <a class="btn" href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" >Veja o código</a>
+                </div>
+                
     
-                <img src="~/assets/img/meninoLendo.png" alt="Menindo lendo um livro em cima da lua">
+                <!--<img src="~/assets/img/meninoLendo.png" alt="Menindo lendo um livro em cima da lua">-->
         </div>
 
         <div class="fomularioLogin">
@@ -64,12 +68,11 @@
 }
 
 .explicao{
-  width: 50vw;
-  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
+  margin-top: 1rem;
 }
 
 .explicao h1{
@@ -83,21 +86,41 @@
     color: var(--main-background-color-conteiner);
 }
 
+.explicao div{
+    display: flex;
+}
+
+.btn{
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+    margin: 1rem;
+    border: none;
+    border-radius: 10px;
+    display: block;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: var(--bold-weight);
+    color:var(--main-background-color-conteiner);
+    background: var(--colorThree);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
 .fomularioLogin{
-    width: 50vw;
-    height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .card_login{
-    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;
+    padding: 20px;
     background:var(--main-background-color-conteiner);
     border-radius: 20px;
     box-shadow: 0px 10px 40px var(--colorFour);
@@ -132,7 +155,7 @@
 
 .text_field > label{
     color: var(--colorFour);
-    margin: 10px 0 10px 0;
+    margin: 5px 0 5px 0;
     width: 100%;
 }
 
@@ -172,13 +195,17 @@ img{
         flex-direction: column;
     }
 
+    .btn{
+        margin:.5rem;
+    }
+
     .explicao{
         width:100%;
         height: auto;
     }
 
     .fomularioLogin{
-        width: 100%;
+        width: 80%;
         height: auto;
     }
 
@@ -195,6 +222,10 @@ img{
 </style>
 
 <script>
+
+import Cookie from 'js-cookie';
+
+
     export default{
         data(){
             return{
@@ -210,7 +241,7 @@ img{
                 const credentials = {
                 email:this.email,
                 password:this.password
-                } 
+                };
 
                 const response = await fetch('http://127.0.0.1:8000/api/token/',{
                     method:'POST',
@@ -218,9 +249,12 @@ img{
                     body:JSON.stringify(credentials)
                 });
 
-                let teste = await response.json()
+                let token = await response.json();
+            
+                Cookie.set('access',token.access);
+                Cookie.set('refresh',token.refresh);
 
-                console.log(teste)
+                navigateTo('/auth/home');
             }   
         },
     }
