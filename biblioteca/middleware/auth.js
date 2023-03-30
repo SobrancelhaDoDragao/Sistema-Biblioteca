@@ -1,36 +1,28 @@
-import Cookie from 'js-cookie';
+export default defineNuxtRouteMiddleware(async ({redirect}) => {
 
+    // Url base do back-end
+    const config = useRuntimeConfig()
 
-export default async function(context){
-
-    // Restrinzindo o middleware a somente ao client, o cookie só fica disponivel no client
-    if (process.server) return
-
-    const token = Cookie.get('access');
-
-    var bearer = 'Bearer ' + token;
+    let token = useCookie('access')
+  
+    var bearer = 'Bearer ' + token.value;
     
+    //Isso é desnecessario
     const data = {teste:'teste'}
-   
-    const response = await fetch('http://127.0.0.1:8000/api/VerifyAuthenticated',{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json',
-                    'Authorization': bearer,
-                    },
-                    body:JSON.stringify(data)
-                });
     
-    
-    const teste = await response.json()
-
-    console.log(token)
-
-    if(!teste.Authenticated){
-     //Funciona no servidor
-     //return redirect = "/";
-     //Funciona no client
-     return navigateTo('/');
+    try {
+        // Verificando se está logado
+        const response = await $fetch(`${config.apiBase}VerifyAuthenticated`,{
+            method:'POST',
+            headers:{'Content-Type':'application/json',
+            'Authorization': bearer,
+            },
+            body:JSON.stringify(data)
+        });
+        
+    } catch (error) {
+        return redirect = "/";
     }
-
-  }
+ 
+})
  

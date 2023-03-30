@@ -11,8 +11,12 @@
     "nuxt": "^3.3.1"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.7",
     "cookie-universal-nuxt": "^2.2.2",
     "js-cookie": "^3.0.1",
-    "universal-cookie": "^4.0.4"
+    "pinia": "^2.0.33"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

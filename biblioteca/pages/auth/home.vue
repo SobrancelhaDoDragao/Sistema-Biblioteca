@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-      
      <TheHeader></TheHeader>
 
       <div id="conteinerMain">
@@ -10,7 +9,7 @@
           <TheMain></TheMain>
           
       </div>
-   
+
       <footer>Desenvolvido por Eudson Durães</footer>
       
     </div>
@@ -134,8 +133,8 @@ footer{
 
 <script setup>
 
-    definePageMeta({
-        middleware: 'auth'
-    })
- 
+definePageMeta({
+   middleware: 'auth'
+})
+
 </script>

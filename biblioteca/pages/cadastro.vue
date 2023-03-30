@@ -140,24 +140,24 @@ form select{
 }
 </style>
 
-<script>
-   export default{
+<script setup>
+    // Url base do back-end
+    const config = useRuntimeConfig()
 
-    data(){
-      return{
-        formulario:{}
-      }
-    },
+    const formulario = reactive({
+        nome:'',
+        email:'',
+        password:'',
+        foto:'derpvkori'
+    })
 
-    methods:{
-        async CreateUser(){
+ 
+    const CreateUser = async ()=>{
 
-            let teste = this.validate()
-
-            let response = await fetch('http://127.0.0.1:8000/createuser',{
+            let response = await fetch(`${config.apiBase}createuser`,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(teste)
+                body:JSON.stringify(formulario)
             });
 
             let resultado = await response.json();
@@ -169,20 +169,6 @@ form select{
                 console.log(resultado)
             }
     
-
-        },
-
-        validate(){
-            const data = { 
-                nome:this.formulario.nome,
-                email:this.formulario.email,
-                foto:'dedede',
-                password:this.formulario.password 
-            }
-
-            return data
         }
 
-    }
-   }
 </script>

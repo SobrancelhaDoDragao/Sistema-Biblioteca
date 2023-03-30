@@ -5,7 +5,7 @@
         <div class="explicao">
             
                 <h1>Projeto biblioteca</h1>
-                <h2>Este projeto tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca.</h2>
+                <h2>Este projeto foi criado para fins de estudos e tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca.</h2>
 
                 <div>
                     <NuxtLink class="btn" to="/cadastro">Crie seu cadastro aqui</NuxtLink> <a class="btn" href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" >Veja o código</a>
@@ -33,7 +33,7 @@
                         <input type="password" name="senha" id="senha" v-model="password" >
 
                         
-                        <button class="butaoLogin"  @click.prevent="login()" >Login</button>
+                        <button class="butaoLogin" @click.prevent="login"  >Login</button>
                     </div>
 
                     
@@ -221,41 +221,45 @@ img{
 
 </style>
 
-<script>
-
-import Cookie from 'js-cookie';
-
-
-    export default{
-        data(){
-            return{
-                email:'',
-                password:'',
-            }
-        },
-
-        methods: {
-          
-            async login(){
-
+<script setup>
+ import {useUserStore} from '@/stores/user'
+ 
+ // Url base do back-end
+ const config = useRuntimeConfig()
+ 
+ // access the `store` variable anywhere in the component 
+ const store = useUserStore()
+  
+ const password = ref('')
+ const email = ref('')
+ 
+ // Criando cookies para salvar os tokens
+ const access = useCookie('access')
+ const refresh = useCookie('refresh')
+ 
+ 
+ const login = async () =>{
+    
                 const credentials = {
-                email:this.email,
-                password:this.password
+                    email:email.value,
+                    password:password.value
                 };
 
-                const response = await fetch('http://127.0.0.1:8000/api/token/',{
+                const response = await $fetch(`${config.apiBase}token/`,{
                     method:'POST',
                     headers:{'Content-Type':'application/json'},
                     body:JSON.stringify(credentials)
                 });
 
-                let token = await response.json();
-            
-                Cookie.set('access',token.access);
-                Cookie.set('refresh',token.refresh);
+                let token = response
+                // Salvando tokens
+                access.value = token.access
+                refresh.value = token.refresh
+                
+                store.access = token.access
 
                 navigateTo('/auth/home');
-            }   
-        },
-    }
+ } 
+
+ 
 </script>
