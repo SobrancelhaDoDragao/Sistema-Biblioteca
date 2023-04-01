@@ -48,6 +48,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
   - Python 3.8.10
   - Npm 18.15.0
+  - Venv
   
 ### Instalação Front-End
 
