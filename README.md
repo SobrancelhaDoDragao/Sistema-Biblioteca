@@ -28,9 +28,9 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 - [x] Cadastro de usuários e bibliotecários
 - [x] Autenticação de usuários e bibliotecários
-- Gerenciamento de livros (adicionar, remover, editar e visualizar)
-- Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
-- Pesquisa de livros e empréstimos
+- [ ] Gerenciamento de livros (adicionar, remover, editar e visualizar)
+- [ ] Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
+- [ ] Pesquisa de livros e empréstimos
 
 ## Tecnologias usadas
 
