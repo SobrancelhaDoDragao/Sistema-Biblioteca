@@ -12,7 +12,7 @@
                   <li> <a href="#" class="active" >Home</a></li>
                   <li> <a href="#">Ver acervo</a></li>
                   <li> <a href="#">Modo dark</a></li>
-                  <li> <a href="#">Nome</a></li>
+                  <li> <a href="#">{{ user.nome }}</a></li>
               </ul>
           </nav>
           
@@ -116,3 +116,24 @@
         border: solid var(--colorThree) 4px;
     }
 </style>
+
+
+<script setup>
+        
+        // Url base do back-end
+        const config = useRuntimeConfig()
+
+        let token = useCookie('access')
+        var bearer = 'Bearer ' + token.value;
+
+        const response = await $fetch(`${config.apiBase}user/`,{
+            method:'GET',
+            headers:{'Content-Type':'application/json',
+            'Authorization': bearer,
+            },
+        });
+
+        const user = response
+
+</script>
+

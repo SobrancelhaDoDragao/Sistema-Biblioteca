@@ -5,30 +5,39 @@ from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser 
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    
-    email = serializers.EmailField(
-            required=True,
-            validators=[UniqueValidator(queryset=CustomUser.objects.all())]
-            )
-    
-    nome = serializers.CharField(max_length=50)
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    foto = serializers.CharField(max_length=50)
-
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Create and update user
+    """
+  
     class Meta:
         model = CustomUser 
-        fields = ('nome', 'email', 'foto' ,'password')
+        fields = ('nome', 'email', 'password')
     
     def create(self, validated_data):
-
+        """
+        Criando um novo usuario e retorno o novo usuario criado
+        """
         user = CustomUser.objects.create(
-            nome=validated_data['nome'],
-            email=validated_data['email'],
-            foto=validated_data['foto'],
+            nome= validated_data['nome'],
+            email= validated_data['email'],
         )
 
         user.set_password(validated_data['password'])
         user.save()
         
         return user
+    
+    def update(self, instance, validated_data):
+        """
+        Atualiza os dados do usurio e retorno o usuario com os dados atualizados
+        """
+        instance.nome = validated_data['nome']
+        instance.email = validated_data['email']
+
+        instance.save()
+
+        return instance
+    
+
+
