@@ -9,10 +9,10 @@
 
           <nav>
               <ul>
-                  <li> <a href="#" class="active" >Home</a></li>
+                  <li><NuxtLink to="home">Home</NuxtLink></li>
                   <li> <a href="#">Ver acervo</a></li>
                   <li> <a href="#">Modo dark</a></li>
-                  <li> <a href="#">{{ user.nome }}</a></li>
+                  <li><NuxtLink to="user-information-page">{{ user.nome }}</NuxtLink></li>
               </ul>
           </nav>
           
@@ -83,12 +83,12 @@
         background: var(--main-background-color);
     }
 
-    nav ul li a.active{
+    .router-link-active, .router-link-exact-active{
         background: var(--colorOne);
         color:var(--colorThree);
         font-weight: var(--bold-weight);
     }
-
+   
     .hamburger{
         display: none;
         height: fit-content;

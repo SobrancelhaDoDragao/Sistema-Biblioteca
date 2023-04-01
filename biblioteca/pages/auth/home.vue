@@ -1,18 +1,8 @@
 <template>
-    <div class="container">
-     <TheHeader></TheHeader>
+   <NuxtLayout>
+     <TheSideBar></TheSideBar> <TheMain></TheMain>
+  </NuxtLayout>
 
-      <div id="conteinerMain">
-       
-          <TheSideBar></TheSideBar>
-
-          <TheMain></TheMain>
-          
-      </div>
-
-      <footer>Desenvolvido por Eudson Durães</footer>
-      
-    </div>
 </template>
 
 <style>
