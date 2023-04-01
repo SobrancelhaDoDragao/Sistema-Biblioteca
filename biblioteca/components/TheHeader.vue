@@ -119,21 +119,13 @@
 
 
 <script setup>
-        
-        // Url base do back-end
-        const config = useRuntimeConfig()
+import { useUserStore } from '~/stores/user'
 
-        let token = useCookie('access')
-        var bearer = 'Bearer ' + token.value;
-
-        const response = await $fetch(`${config.apiBase}user/`,{
-            method:'GET',
-            headers:{'Content-Type':'application/json',
-            'Authorization': bearer,
-            },
-        });
-
-        const user = response
+// Dados do usuário logado
+const user = useUserStore()
 
 </script>
+
+
+
 

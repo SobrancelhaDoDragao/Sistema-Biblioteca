@@ -222,13 +222,12 @@ img{
 </style>
 
 <script setup>
- import {useUserStore} from '@/stores/user'
- 
+ useHead({
+  title: 'Biblioteca|Login',
+})
+
  // Url base do back-end
  const config = useRuntimeConfig()
- 
- // access the `store` variable anywhere in the component 
- const store = useUserStore()
   
  const password = ref('')
  const email = ref('')
@@ -256,8 +255,6 @@ img{
                 access.value = token.access
                 refresh.value = token.refresh
                 
-                store.access = token.access
-
                 navigateTo('/auth/home');
  } 
 

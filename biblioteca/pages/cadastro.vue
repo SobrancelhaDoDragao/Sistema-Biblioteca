@@ -141,6 +141,11 @@ form select{
 </style>
 
 <script setup>
+
+    useHead({
+    title: 'Biblioteca|Cadastro',
+    })
+
     // Url base do back-end
     const config = useRuntimeConfig()
 
@@ -151,7 +156,6 @@ form select{
         foto:'derpvkori'
     })
 
- 
     const CreateUser = async ()=>{
 
             let response = await fetch(`${config.apiBase}createuser`,{

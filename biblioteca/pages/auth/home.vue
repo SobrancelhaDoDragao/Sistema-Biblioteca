@@ -3,7 +3,7 @@
      <TheHeader></TheHeader>
 
       <div id="conteinerMain">
-
+       
           <TheSideBar></TheSideBar>
 
           <TheMain></TheMain>
@@ -132,9 +132,19 @@ footer{
 </style>
 
 <script setup>
+import { useUserStore } from '~/stores/user'
 
 definePageMeta({
    middleware: 'auth'
 })
+
+useHead({
+  title: 'Biblioteca|Home',
+})
+
+// Dados do usuário logado
+const user = useUserStore()
+
+user.GetUserData()
 
 </script>
