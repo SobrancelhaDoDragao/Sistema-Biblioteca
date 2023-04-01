@@ -40,4 +40,4 @@ Em progresso
 
 ## Licensa
 
-Em progresso
+[MIT](https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/LICENSE.md)
