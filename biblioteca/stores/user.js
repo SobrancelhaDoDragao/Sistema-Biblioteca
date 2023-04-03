@@ -8,19 +8,28 @@ export const useUserStore = defineStore('User', {
       nome:'',
       email:'',
       foto:'',
+      password:'',
     }
   },
 
   actions:{
-    async GetUserData(){
-      // Url base do back-end
-      const config = useRuntimeConfig()
+    async GetToken(){
 
       this.access = useCookie('access')
       this.refresh = useCookie('refresh')
 
-      var bearer = 'Bearer ' + this.access;
+      let bearer = 'Bearer ' + this.access;
 
+      return bearer
+    },
+
+    async GetUserData(){
+
+      let bearer = await this.GetToken()
+  
+      // Url base do back-end
+      const config = useRuntimeConfig()
+      
       const response = await $fetch(`${config.apiBase}user/`,{
           method:'GET',
           headers:{'Content-Type':'application/json',
@@ -33,7 +42,34 @@ export const useUserStore = defineStore('User', {
       this.nome = user.nome
       this.email = user.email
       this.foto = user.foto
+      this.password = user.password
+      
+    },
+
+    async PutUserData(nome,email,foto,password){
+
+      let bearer = await this.GetToken()
+  
+      // Url base do back-end
+      const config = useRuntimeConfig()
+
+      let form = {
+          nome: nome.value,
+          email: email.value,
+          foto: foto,
+          password:password.value
+      } 
+     
+      const response = await $fetch(`${config.apiBase}user/`,{
+        method:'PUT',
+        headers:{'Content-Type':'application/json',
+        'Authorization': bearer,
+        },
+        body:form
+       });
+
     }
+
   }
 
 })

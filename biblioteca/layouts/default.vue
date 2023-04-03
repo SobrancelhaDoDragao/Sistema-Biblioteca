@@ -4,7 +4,6 @@
         <TheHeader></TheHeader>
 
         <div id="conteinerMain">
-        
             <slot />
         </div>
 

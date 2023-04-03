@@ -8,7 +8,7 @@
          <label for="email">Email</label>
          <input type="email" name="" id="email" v-model="email" >
 
-         <button id="btn-perfil" >Salvar</button>
+         <button id="btn-perfil" @click.prevent="enviar" >Salvar</button>
    </main>
 </template>
 
@@ -61,5 +61,15 @@ const user = useUserStore()
 
 let nome = ref(user.nome)
 let email = ref(user.email)
+let foto = ""
+let password = ref(user.password)
+
+const enviar =  async () => {
+    //Atualizando dados
+    await user.PutUserData(nome,email,foto,password)
+    await user.GetUserData()
+}
+
+
 
 </script>

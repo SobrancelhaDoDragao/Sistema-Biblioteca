@@ -9,15 +9,18 @@ class UserSerializer(serializers.ModelSerializer):
     """
     Create and update user
     """
-  
+   
     class Meta:
         model = CustomUser 
-        fields = ('nome', 'email', 'password','foto')
+        fields = ('nome', 'email', 'foto','password')
+
     
+
     def create(self, validated_data):
         """
         Criando um novo usuario e retorno o novo usuario criado
         """
+
         user = CustomUser.objects.create(
             nome= validated_data['nome'],
             email= validated_data['email'],
@@ -30,10 +33,12 @@ class UserSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         """
-        Atualiza os dados do usurio e retorno o usuario com os dados atualizados
+        Atualiza os dados do usuario e retorna o usuario com os dados atualizados
         """
+        
         instance.nome = validated_data['nome']
         instance.email = validated_data['email']
+        instance.foto = validated_data['foto']
 
         instance.save()
 

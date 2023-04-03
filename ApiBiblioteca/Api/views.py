@@ -18,6 +18,7 @@ def getRoutes(request):
         'api/token',
         'api/token/refresh',
         'api/VerifyAuthenticated',
+        'api/user/',
     ]
 
     return Response(routes)
@@ -89,10 +90,10 @@ class User_Detail(APIView):
         """
         Update 
         """
-
         user = self.get_object(request)
-        serializer = UserSerializer(user, data=request.data)
 
+        serializer = UserSerializer(user, data=request.data)
+  
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

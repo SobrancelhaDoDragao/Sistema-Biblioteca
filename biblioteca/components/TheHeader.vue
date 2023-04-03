@@ -124,6 +124,7 @@ import { useUserStore } from '~/stores/user'
 // Dados do usuário logado
 const user = useUserStore()
 
+user.GetUserData()
 </script>
 
 

@@ -45,7 +45,7 @@ class CustomUser(AbstractBaseUser):
     )
     # Campos adicionais
     nome = models.CharField(max_length=50)
-    foto = models.CharField(max_length=100)
+    foto = models.CharField(max_length=100, blank=True)
 
     
     is_active = models.BooleanField(default=True)
