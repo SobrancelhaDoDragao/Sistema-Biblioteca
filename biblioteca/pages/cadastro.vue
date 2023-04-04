@@ -21,15 +21,17 @@
 
            <label for="tipoConta">Criar conta como</label>
 
-            <select name="TipoConta" id="TipoConta"  v-model="formulario.TipoConta">
+            <select name="TipoConta" id="TipoConta"  v-model="formulario.tipoconta">
 
-                <option value="usuario">Usuário</option>
-                <option value="funcionario">Funcionário</option>
+                <option value=0 selected>Usuário</option>
+                <option value=1>Funcionário</option>
 
             </select>
+            
 
-
-            <button v-on:click.prevent="CreateUser()" >Cadastrar</button>
+            <p v-if="erros" id="erros" >{{ erros }}</p>
+             
+            <button v-on:click.prevent="validate()">Cadastrar</button>
 
         </form>
     </div>
@@ -64,7 +66,7 @@
 form h1{
     color: var(--colorThree);
     font-weight: var(--bold-weight);
-    font-size: 5rem;
+    font-size: 3.5rem;
     text-align: center;
     width: 100%;
     letter-spacing: 4px;
@@ -105,6 +107,12 @@ form button{
     color:var(--colorFour);
     background: var(--colorThree);
     cursor: pointer;
+}
+
+#erros{
+    margin-top: 1rem;
+    color: rgb(255, 0, 0);
+    font-weight: var(--bold-weight);
 }
 
 form select{
@@ -153,25 +161,43 @@ form select{
         nome:'',
         email:'',
         password:'',
-        foto:'derpvkori'
+        password2:'',
+        foto:'teste',
+        tipoconta:''
     })
+    
+    let erros = ref()
 
+    const validate = ()=>{
+        if(formulario.nome == ''||formulario.email == ''||formulario.password ==''||formulario.password2 ==''){
+          erros.value = 'Preencha todos os dados'
+        }
+        else if(formulario.password != formulario.password2){
+            erros.value = 'As senhas não são iguais'
+        }
+        else{
+          erros.value = ''
+          //Create user pode retornar dois erros: 1º: O email já existe no banco de dados 2º: A senha criada não é aceita  
+          CreateUser()
+        }
+    }
     const CreateUser = async ()=>{
-
+             
             let response = await fetch(`${config.apiBase}createuser`,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(formulario)
             });
-
+               
             let resultado = await response.json();
-            
+             
             if(resultado.nome){
                await navigateTo('/')
             }
             else{
-                console.log(resultado)
+                erros.value = resultado['email'][0]
             }
+            
     
         }
 

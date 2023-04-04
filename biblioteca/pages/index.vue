@@ -31,7 +31,8 @@
     
                         <label for="senha">Senha</label>
                         <input type="password" name="senha" id="senha" v-model="password" >
-
+                        
+                        <p v-if="erro" id="erro" >{{erro}}</p>
                         
                         <button class="butaoLogin" @click.prevent="login"  >Login</button>
                     </div>
@@ -183,6 +184,10 @@ img{
     width: 20vw;
 }
 
+#erro{
+    margin-top: 1rem;
+    color: rgba(255, 0, 0, 0.788);
+}
 
 @media only screen and (max-width: 950px){
     .card_login{
@@ -236,6 +241,8 @@ img{
  const access = useCookie('access')
  const refresh = useCookie('refresh')
  
+
+ let erro = ref()
  
  const login = async () =>{
     
@@ -243,19 +250,25 @@ img{
                     email:email.value,
                     password:password.value
                 };
+               
+                try {
+                    const response = await $fetch(`${config.apiBase}token/`,{
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body:JSON.stringify(credentials)
+                    });
 
-                const response = await $fetch(`${config.apiBase}token/`,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify(credentials)
-                });
-
-                let token = response
-                // Salvando tokens
-                access.value = token.access
-                refresh.value = token.refresh
+                    let token = response
+                    // Salvando tokens
+                    access.value = token.access
+                    refresh.value = token.refresh
+                    
+                    navigateTo('/auth/home');
+                    
+                } catch (error) {
+                    erro.value = "Algo foi digitado errado"
+                }
                 
-                navigateTo('/auth/home');
  } 
 
  
