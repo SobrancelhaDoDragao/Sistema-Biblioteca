@@ -135,6 +135,10 @@ useHead({
 // Dados do usuário logado, as vezes não funciona redirect /auth/home server-side
 const user = useUserStore()
 
-user.GetUserData()
+// Só ira fazer o request se os dados do usuario estiver vazio
+if(user.nome == ''){
+    user.GetUserData()
+}
+
 
 </script>

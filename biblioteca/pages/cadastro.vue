@@ -190,7 +190,7 @@ form select{
             });
                
             let resultado = await response.json();
-            console.log(JSON.stringify(formulario))
+            
             if(resultado.nome){
                await navigateTo('/')
             }

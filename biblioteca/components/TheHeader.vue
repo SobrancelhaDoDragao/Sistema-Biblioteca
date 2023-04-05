@@ -124,7 +124,10 @@ import { useUserStore } from '~/stores/user'
 // Dados do usuário logado
 const user = useUserStore()
 
-user.GetUserData()
+// Só ira fazer o request se os dados do usuario estiver vazio
+if(user.nome == ''){
+    user.GetUserData()
+}
 </script>
 
 
