@@ -54,6 +54,9 @@ class UserList(APIView):
         """
         Create
         """
+
+        print(f"Dados view: {request.data}")
+
         serializer =  UserSerializer(data=request.data)
               
         if serializer.is_valid():
@@ -91,7 +94,7 @@ class User_Detail(APIView):
         Update 
         """
         user = self.get_object(request)
-
+        
         serializer = UserSerializer(user, data=request.data)
   
         if serializer.is_valid():

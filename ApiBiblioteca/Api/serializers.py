@@ -20,10 +20,12 @@ class UserSerializer(serializers.ModelSerializer):
         """
         Criando um novo usuario e retorno o novo usuario criado
         """
+        print(validated_data)
 
         user = CustomUser.objects.create(
             nome= validated_data['nome'],
             email= validated_data['email'],
+            is_admin =validated_data['is_admin']
         )
 
         user.set_password(validated_data['password'])

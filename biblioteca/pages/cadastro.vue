@@ -21,7 +21,7 @@
 
            <label for="tipoConta">Criar conta como</label>
 
-            <select name="TipoConta" id="TipoConta"  v-model="formulario.tipoconta">
+            <select name="TipoConta" id="TipoConta"  v-model="formulario.is_admin">
 
                 <option value=0 selected>Usuário</option>
                 <option value=1>Funcionário</option>
@@ -163,7 +163,7 @@ form select{
         password:'',
         password2:'',
         foto:'teste',
-        tipoconta:''
+        is_admin:''
     })
     
     let erros = ref()
@@ -190,7 +190,7 @@ form select{
             });
                
             let resultado = await response.json();
-             
+            console.log(JSON.stringify(formulario))
             if(resultado.nome){
                await navigateTo('/')
             }

@@ -28,6 +28,7 @@ export const useUserStore = defineStore('User', {
       let bearer = await this.GetToken()
   
       // Url base do back-end
+      // Não fica disponivel no url /
       const config = useRuntimeConfig()
       
       const response = await $fetch(`${config.apiBase}user/`,{

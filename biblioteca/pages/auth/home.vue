@@ -132,7 +132,7 @@ useHead({
   title: 'Biblioteca|Home',
 })
 
-// Dados do usuário logado
+// Dados do usuário logado, as vezes não funciona redirect /auth/home server-side
 const user = useUserStore()
 
 user.GetUserData()

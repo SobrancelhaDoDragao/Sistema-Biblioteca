@@ -231,6 +231,10 @@ img{
   title: 'Biblioteca|Login',
 })
 
+definePageMeta({
+   middleware: 'redirect-auth'
+})
+
  // Url base do back-end
  const config = useRuntimeConfig()
   
@@ -266,7 +270,7 @@ img{
                     navigateTo('/auth/home');
                     
                 } catch (error) {
-                    erro.value = "Algo foi digitado errado"
+                    erro.value = `Algo foi digitado errado`
                 }
                 
  } 
