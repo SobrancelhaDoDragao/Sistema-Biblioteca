@@ -43,6 +43,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 - Nuxt
 - Html 
 - Css
+- Pinia
 
 ## Banco de dados
 
