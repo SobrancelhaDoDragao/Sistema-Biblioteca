@@ -25,10 +25,10 @@
       </header>
 </template>
 
-<style>
+<style scoped>
     header{
         /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
-        grid-area: 1 / 1 / 3 / 5;
+
         background: var(--main-background-color-conteiner);
         display: flex;
         align-items: flex-start;

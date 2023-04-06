@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    css:['~/assets/variaveis.css'],
+    css:['~/assets/css/variaveis.css'],
     modules: [
       '@pinia/nuxt',
     ],

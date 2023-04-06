@@ -12,3 +12,8 @@
         </div>
 
 </template>
+
+
+<style scoped>
+@import '~/assets/css/layoutDefault.css';
+</style>

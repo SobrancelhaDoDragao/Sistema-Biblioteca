@@ -12,7 +12,7 @@
    </main>
 </template>
 
-<style>
+<style scoped>
 main{
    background-color: var(--main-background-color-conteiner);
    padding: 1rem;

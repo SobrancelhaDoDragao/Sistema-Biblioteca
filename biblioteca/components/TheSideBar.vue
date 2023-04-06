@@ -5,7 +5,7 @@
 </template>
 
 
-<style>
+<style scoped>
 #sidebar{
     background-color: var(--main-background-color-conteiner);
     padding: 1rem;
