@@ -15,8 +15,10 @@
 1. [Sobre](#sobre)
 2. [Funcionalidades](#funcionalidades)
 3. [Tecnologias usadas](#tecnologias-usadas) 
-4. [Instalação](#instalação)
-5. [Licensa](#licensa)
+4. [Banco de dados](#banco-de-dados)
+5. [Testes](#testes)
+6. [Instalação](#instalação)
+7. [Licensa](#licensa)
 
 ## Sobre
 
@@ -45,6 +47,10 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 ## Banco de dados
 
 Em andamendo
+
+## Testes
+
+Em andamento
 
 ## Instalação
 
