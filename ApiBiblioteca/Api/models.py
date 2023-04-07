@@ -74,5 +74,11 @@ class CustomUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    
+class Livro(models.Model):
+
+    nome = models.CharField(max_length=50)
+    editora = models.CharField(max_length=50)
+    capa = models.CharField(max_length=50)
 
  

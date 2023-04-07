@@ -9,9 +9,9 @@
 
           <nav>
               <ul>
-                  <li><NuxtLink to="home">Home</NuxtLink></li>
-                  <li> <a href="#">Ver acervo</a></li>
                   <li> <a href="#">Modo dark</a></li>
+                  <li><NuxtLink to="home">Home</NuxtLink></li>
+                  <li><NuxtLink to="acervo">Acervo</NuxtLink></li>
                   <li><NuxtLink to="user-information-page">{{ user.nome }}</NuxtLink></li>
               </ul>
           </nav>
@@ -115,6 +115,53 @@
         border-radius: 20px;
         border: solid var(--colorThree) 4px;
     }
+
+    /* Reposividade do header */
+  @media only screen and (max-width: 1100px){
+      header{
+         padding: 0 20px;
+      }
+  
+      nav{
+         position: absolute;
+         left: -300px;
+         top:0;
+         z-index:999;
+         width: 280px;
+         height: 100vh;
+         background-color:  #fefefe;
+         transition: 0.2s;
+         box-shadow: 2px 0 20px 0 rgba(0, 0, 0, 0.05);
+      }
+     
+      #nav_check:checked ~ nav{
+             left:0;
+      }
+  
+      nav .logo {
+         display: block;
+         height: 70px;
+         display: flex;
+         align-items: center;
+         margin-left: 30px;
+      }
+  
+      nav ul li a{
+         margin-bottom: 5px;
+         padding: 10px 15px;
+         border-radius: 5px;
+      }
+      nav ul{
+        display: block;
+        padding: 0 20px;
+        margin-top: 30px;
+      }
+      
+      .hamburger{
+         display: block;
+      }
+  }
+  
 </style>
 
 

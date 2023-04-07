@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LivroSerializer
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +9,7 @@ from rest_framework import status
 from django.http import Http404
 
 from .models import CustomUser as User
+from .models import Livro
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -55,8 +56,6 @@ class UserList(APIView):
         Create
         """
 
-        print(f"Dados view: {request.data}")
-
         serializer =  UserSerializer(data=request.data)
               
         if serializer.is_valid():
@@ -68,7 +67,7 @@ class UserList(APIView):
 
 class User_Detail(APIView):
     """
-    Retrieve, update or delete a user instance.
+    Recuperar, Atualizar ou delatar o usuario
     """
     permission_classes = [IsAuthenticated]
 
@@ -113,5 +112,28 @@ class User_Detail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class LivroList(APIView):
+    """
+    Exibir todos os livros ou adicionar um novo livro
+    """
+    def get(self, request, format=None):
+
+        livros = Livro.objects.all()
+        serializer = LivroSerializer(livros, many=True)
+          
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        """
+        Create
+        """
+
+        serializer = LivroSerializer(data=request.data)
+              
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     

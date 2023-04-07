@@ -10,6 +10,6 @@ main{
     padding: 1rem;
     border-radius: 10px;
     flex: 4;
-    border: solid var(--colorFour) 2px;
+    border: solid var(--colorSix) 2px;
 }
 </style>

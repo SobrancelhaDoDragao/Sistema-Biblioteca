@@ -9,6 +9,8 @@
          <input type="email" name="" id="email" v-model="email" >
 
          <button id="btn-perfil" @click.prevent="enviar" >Salvar</button>
+
+         <div id="linha"></div>
    </main>
 </template>
 
@@ -18,7 +20,17 @@ main{
    padding: 1rem;
    border-radius: 10px;
    flex: 4;
-   border: solid var(--colorFour) 2px;
+   border: solid var(--colorSix) 2px;
+}
+
+main h1{
+    font-weight: var(--thin-weight);
+    margin-bottom: 1rem;
+}
+
+#linha{
+    margin-top: 1rem;
+    border-bottom: solid 2px var(--colorSix);
 }
 
 input{
@@ -26,18 +38,16 @@ input{
     border:none;
     border-radius: 10px;
     padding: 15px;
-    background:var(--main-background-color-conteiner);
     color: var(--colorFour);
     font-size: 12pt;
     outline: none;
     border: solid var(--colorSix) 1px;
+    font-weight: var(--thin-weight);
 }
 
 label{
     color: var(--colorFour);
-
-    width: 100%;
-
+    font-weight: var(--thin-weight);
 }
 
 #btn-perfil{
@@ -69,7 +79,5 @@ const enviar =  async () => {
     await user.PutUserData(nome,email,foto,password)
     await user.GetUserData()
 }
-
-
 
 </script>

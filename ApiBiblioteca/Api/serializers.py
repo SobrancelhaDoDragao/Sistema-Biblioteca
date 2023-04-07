@@ -2,13 +2,10 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import CustomUser 
+from .models import CustomUser, Livro
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """
-    Create and update user
-    """
    
     class Meta:
         model = CustomUser 
@@ -45,5 +42,9 @@ class UserSerializer(serializers.ModelSerializer):
 
         return instance
     
+class LivroSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Livro
+        fields = ('nome', 'editora', 'capa')
 
