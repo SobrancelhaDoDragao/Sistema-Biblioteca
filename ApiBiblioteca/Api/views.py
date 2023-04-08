@@ -16,10 +16,11 @@ def getRoutes(request):
 
     routes = [
         'api/createuser',
+        'api/user/',
         'api/token',
         'api/token/refresh',
         'api/VerifyAuthenticated',
-        'api/user/',
+        'api/livro/',
     ]
 
     return Response(routes)

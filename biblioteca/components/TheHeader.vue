@@ -36,7 +36,6 @@
         padding: 0 40px;
 
         border-bottom: solid var(--colorOne) .5rem;
-        
         background: var(--colorOne);
         background: linear-gradient(180deg, var(--colorOne) 50%, var(--colorFive) 90%);
 

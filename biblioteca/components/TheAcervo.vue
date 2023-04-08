@@ -1,6 +1,47 @@
 <template>
     <main>
-   
+               <div id="Filtro">
+              
+                  Filtro
+
+               </div>
+                  
+
+               <!--Essa div só deve ser visivel para admins-->
+               <div id="AcervoForm">
+                  <h1>Cadastrar livro</h1>
+
+                  <form action="">
+
+                     <label for="nome">Nome</label>
+                     <input type="text" id="nome" v-model="form.nome" >
+
+                     <label for="editora">Editora</label>
+                     <input type="text" id="editora" v-model="form.editora" >
+
+                     <button id="btn-acervo" @click.prevent="cadastrolLivro">Cadastrar</button>
+
+                  </form>
+               </div>
+
+               <div id="LivroConteiner">
+
+                  <h1>Acervo</h1>
+                        
+                     <div class="Livros">
+
+                        <div class="Livro" v-for="livro in livros" :key="livro.id" >
+                           <div class="imagem-none">
+                              Sem imagem
+                           </div>
+                           <h5 class="livro-title">{{ livro.nome }}</h5>
+
+                        </div>
+ 
+                     </div>
+                    
+
+               </div>
    </main>
 </template>
 
@@ -15,10 +56,11 @@ main{
    border: solid var(--colorSix) 2px;
    
    display: grid;
-   
-   grid-area: "livro livros filtro filtro"
-              "livro livros filtro filtro"
+   grid-template-columns: 1fr 2fr;
+   grid-template-areas: "filtro livro"
+                         "form livro"
    ;
+   gap: 1rem;
 }
 
 main h1{
@@ -26,22 +68,79 @@ main h1{
    text-align: center;
 }
 
-.LivroConteiner{
-   background: rgb(136, 129, 129);
-   width: 140px;
-   height: 170px;
+#filtro{
+   grid-area: filtro;
 }
 
-#AcervoConteiner{
+#LivroConteiner{
+   grid-area: livro;
+   padding: 1rem;
+   border-left:solid var(--colorSix)10px;
+   border-right: solid var(--colorSix) 10px;
+   border-radius: 30px;
+}
+
+.Livros{
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+.Livro{
+   width: 90px;
+   height: 140px;
+   background: rgb(173, 162, 162);
+}
+
+.imagem-none{
+   width: 100%;
+   height: 100%;
+
    display: flex;
-   gap: 5px;
-   margin-top: 1rem;
+   align-items: center;
+   text-align: center;
 }
 
-.linha{
-   border-bottom: solid var(--colorSix) 2px;
-   margin-top: .5rem;
+.livro-title{
+   text-align: center;
+   font-weight: var(--thin-weight);
 }
+
+#AcervoForm{
+   grid-area: form;
+   padding: .5rem;
+}
+
+label{
+    color: var(--colorFour);
+    font-weight: var(--thin-weight);
+}
+
+input{
+    width: 100%;
+    border:none;
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--colorFour);
+    font-size: 1rem;
+    outline: none;
+    border: solid var(--colorSix) 1px;
+    font-weight: var(--thin-weight);
+}
+
+#btn-acervo{
+   background: var(--colorOne);
+   color:var(--colorThree);
+   font-weight: var(--bold-weight);
+   padding: 8px 18px;
+   border: none;
+   border-radius: 10px;
+   font-size: 1rem;
+   margin-top: 1rem;
+   cursor: pointer;
+}
+
 </style>
 
 <script setup>
@@ -50,6 +149,7 @@ main h1{
       let refresh = useCookie('refresh')
 
       let bearer = 'Bearer ' + access;
+      
       // Url base do back-end
       // Não fica disponivel no url /
       const config = useRuntimeConfig()
@@ -60,5 +160,27 @@ main h1{
       });
 
       const livros = response
+      
+       
+      let form = reactive({
+        nome:'',
+        editora:'',
+        capa:'rfderf0uj',
+      })
+
+      const cadastrolLivro = async () =>{ 
+         
+         let response = await $fetch(`${config.apiBase}livro/`,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:form
+
+            });
+
+         form.nome = ''
+         form.editora = ''
+      }
+
+      
 
 </script>

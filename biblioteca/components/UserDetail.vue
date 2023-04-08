@@ -3,12 +3,12 @@
         <h1>Perfil</h1>
 
          <label for="nome">Nome</label>
-         <input type="text" name="" id="nome" v-model="nome" >
+         <input type="text" id="nome" v-model="nome" >
 
          <label for="email">Email</label>
-         <input type="email" name="" id="email" v-model="email" >
+         <input type="email" id="email" v-model="email" >
 
-         <button id="btn-perfil" @click.prevent="enviar" >Salvar</button>
+         <button id="btn-perfil" @click.prevent="enviar">Salvar</button>
 
          <div id="linha"></div>
    </main>
