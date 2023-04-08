@@ -8,7 +8,7 @@
                 <h2>Este projeto foi criado para fins de estudos e tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca.</h2>
 
                 <div>
-                    <NuxtLink class="btn" to="/cadastro">Crie seu cadastro aqui</NuxtLink> <a class="btn" href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" >Veja o código</a>
+                    <NuxtLink class="btn" to="/cadastro">Crie seu cadastro aqui</NuxtLink> <a class="btn" href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" target="_blank">Veja o código</a>
                 </div>
                 
     

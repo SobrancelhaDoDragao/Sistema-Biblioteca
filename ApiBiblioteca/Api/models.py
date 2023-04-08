@@ -80,5 +80,6 @@ class Livro(models.Model):
     nome = models.CharField(max_length=50)
     editora = models.CharField(max_length=50)
     capa = models.CharField(max_length=50)
+    # Falta o genero do livro, Ação, romance, classico, literatura brasileira. Pode ser uma tag tb.
 
  

@@ -7,7 +7,7 @@
             <slot />
         </div>
         
-        <footer> <a href="https://github.com/SobrancelhaDoDragao" target="_blank">Desenvolvido por Eudson Durães © 2023</a><a href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" target="_blank">Github</a></footer>
+        <footer> <a href="https://github.com/SobrancelhaDoDragao" target="_blank">Desenvolvido por Eudson Durães © 2023</a><a href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" target="_blank" class="FooterLinkOculto" >Github</a> <a href="https://www.linkedin.com/in/eudsonduraes/" target="_blank" class="FooterLinkOculto" >Linkedin</a></footer>
         
         </div>
 

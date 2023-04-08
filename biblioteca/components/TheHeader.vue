@@ -86,7 +86,6 @@
     .router-link-active, .router-link-exact-active{
         background: var(--colorOne);
         color:var(--colorThree);
-        font-weight: var(--bold-weight);
     }
    
     .hamburger{
@@ -166,7 +165,6 @@
 
 
 <script setup>
-import { useUserStore } from '~/stores/user'
 
 // Dados do usuário logado
 const user = useUserStore()
@@ -175,6 +173,7 @@ const user = useUserStore()
 if(user.nome == ''){
     user.GetUserData()
 }
+
 </script>
 
 

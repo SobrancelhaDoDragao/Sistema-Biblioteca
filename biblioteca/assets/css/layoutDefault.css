@@ -30,7 +30,6 @@ header{
       background-color: var(--colorOne);
       color: var(--main-background-color-conteiner);
       height: 2rem;
-      font-weight: var(--thin-weight);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -42,6 +41,7 @@ header{
   footer a{
     color:var(--main-background-color-conteiner);
     text-decoration: none;
+    font-weight: var(--thin-weight);
   }
 
   footer a:hover{
@@ -69,6 +69,10 @@ header{
       #conteinerMain{
           flex-direction: column;
           margin: 0 1rem 0 1rem;
+      }
+      /*Não cabe no mobile*/
+      .FooterLinkOculto{
+        display: none;
       }
   
   }

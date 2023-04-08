@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { useUserStore } from '~/stores/user'
 
 definePageMeta({
    middleware: 'auth'
@@ -23,6 +22,5 @@ const user = useUserStore()
 if(user.nome == ''){
     user.GetUserData()
 }
-
 
 </script>
