@@ -61,8 +61,6 @@ definePageMeta({
    middleware: 'redirect-auth'
 })
 
-
-
  // Url base do back-end
  const config = useRuntimeConfig()
   
@@ -70,8 +68,8 @@ definePageMeta({
  const email = ref('')
  
  // Criando cookies para salvar os tokens
- const access = useCookie('access')
- const refresh = useCookie('refresh')
+ const access = useCookie('access', {maxAge: 60 * 60 * 24 * 7}) // Uma semana em segundos
+ const refresh = useCookie('refresh',{maxAge: 60 * 60 * 24 * 7})
  
 
  let erro = ref()

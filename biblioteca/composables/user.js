@@ -31,7 +31,7 @@ export const useUserStore = defineStore('User', {
       // Não fica disponivel no url /
       const config = useRuntimeConfig()
       
-      const response = await $fetch(`${config.apiBase}user/`,{
+      const response = await $fetch(`${config.public.apiBase}user/`,{
           method:'GET',
           headers:{'Content-Type':'application/json',
           'Authorization': bearer,
@@ -61,7 +61,7 @@ export const useUserStore = defineStore('User', {
           password:password.value
       } 
      
-      const response = await $fetch(`${config.apiBase}user/`,{
+      const response = await $fetch(`${config.public.apiBase}user/`,{
         method:'PUT',
         headers:{'Content-Type':'application/json',
         'Authorization': bearer,

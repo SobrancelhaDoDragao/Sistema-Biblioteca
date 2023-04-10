@@ -1,9 +1,7 @@
 <template>
     <main>
                <div id="Filtro">
-              
                   Filtro
-
                </div>
                   
 
@@ -14,10 +12,10 @@
                   <form action="">
 
                      <label for="nome">Nome</label>
-                     <input type="text" id="nome" v-model="form.nome" >
+                     <input type="text" id="nome" v-model="nome" >
 
                      <label for="editora">Editora</label>
-                     <input type="text" id="editora" v-model="form.editora" >
+                     <input type="text" id="editora" v-model="editora" >
 
                      <button id="btn-acervo" @click.prevent="cadastrolLivro">Cadastrar</button>
 
@@ -30,7 +28,7 @@
                         
                      <div class="Livros">
 
-                        <div class="Livro" v-for="livro in livros" :key="livro.id" >
+                        <div class="Livro" v-for="livro in livros.livros" :key="livro.id" >
                            <div class="imagem-none">
                               Sem imagem
                            </div>
@@ -145,42 +143,24 @@ input{
 
 <script setup>
 
-      let access = useCookie('access')
-      let refresh = useCookie('refresh')
+      let nome = ref()
+      let editora = ref()
+      let capa = ref('rfderf0uj')
+   
+      let livros = useLivroStore()
 
-      let bearer = 'Bearer ' + access;
+      livros.GetLivros()
       
-      // Url base do back-end
-      // Não fica disponivel no url /
-      const config = useRuntimeConfig()
-  
-      const response = await $fetch(`${config.apiBase}livro/`,{
-            method:'GET',
-            headers:{'Content-Type':'application/json'}
-      });
-
-      const livros = response
-      
-       
-      let form = reactive({
-        nome:'',
-        editora:'',
-        capa:'rfderf0uj',
-      })
-
-      const cadastrolLivro = async () =>{ 
-         
-         let response = await $fetch(`${config.apiBase}livro/`,{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:form
-
-            });
-
-         form.nome = ''
-         form.editora = ''
+      let cadastrolLivro = async()=>{
+     
+            livros.CreateLivro(nome,editora,capa)
+             
+            // Aqui deve estar dando erro
+            nome = ''
+            editora = ''
       }
-
+    
+      
       
 
 </script>

@@ -1,25 +1,13 @@
 import { defineStore } from 'pinia'
 
-export const useLivroStore = defineStore('User', {
+export const useLivroStore = defineStore('Livro', {
     state: () => {
       return {
-        nome:'',
-        editora:'',
-        capa:'dededed',
+        livros: []
       }
     },
   
-    actions:{
-      async GetToken(){
-  
-        this.access = useCookie('access')
-        this.refresh = useCookie('refresh')
-  
-        let bearer = 'Bearer ' + this.access;
-  
-        return bearer
-      },
-  
+    actions:{  
       async GetLivros(){
 
         // Url base do back-end
@@ -32,10 +20,33 @@ export const useLivroStore = defineStore('User', {
         });
 
         const livros = response
+
+        this.livros = livros
       },
-  
-      async CreateLivro(nome,editora){
-  
+
+
+      async CreateLivro(nome,editora,capa){
+
+        // Url base do back-end
+        // Não fica disponivel no url /
+        const config = useRuntimeConfig()
+        
+        let form = {
+          nome: nome.value,
+          editora: editora.value,
+          capa: capa.value
+        }
+
+        console.log(form)
+
+        let response = await $fetch(`${config.apiBase}livro/`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:form
+          });
+
+        this.livros.push(form)
+
       }
   
     }
