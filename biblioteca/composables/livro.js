@@ -37,7 +37,7 @@ export const useLivroStore = defineStore('Livro', {
           capa: capa.value
         }
 
-        console.log(form)
+        
 
         let response = await $fetch(`${config.apiBase}livro/`,{
           method:'POST',
@@ -45,7 +45,8 @@ export const useLivroStore = defineStore('Livro', {
           body:form
           });
 
-        this.livros.push(form)
+
+        this.livros.push(response)
 
       }
   

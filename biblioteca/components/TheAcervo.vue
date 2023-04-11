@@ -16,6 +16,9 @@
 
                      <label for="editora">Editora</label>
                      <input type="text" id="editora" v-model="editora" >
+                     
+                     <label for="capa">Capa</label>
+                     <input type="file" name="" id="capa" v-on:change="filechange" >
 
                      <button id="btn-acervo" @click.prevent="cadastrolLivro">Cadastrar</button>
 
@@ -29,9 +32,10 @@
                      <div class="Livros">
 
                         <div class="Livro" v-for="livro in livros.livros" :key="livro.id" >
-                           <div class="imagem-none">
-                              Sem imagem
-                           </div>
+                        
+
+                           <img :src="'http://localhost:8000/static/img/'+livro.capa">
+
                            <h5 class="livro-title">{{ livro.nome }}</h5>
 
                         </div>
@@ -68,6 +72,11 @@ main h1{
 
 #filtro{
    grid-area: filtro;
+}
+
+main img{
+   width: 100px;
+   height: 140px;
 }
 
 #LivroConteiner{
@@ -145,19 +154,35 @@ input{
 
       let nome = ref()
       let editora = ref()
-      let capa = ref('rfderf0uj')
-   
+      let capa = ref()
+       
       let livros = useLivroStore()
 
       livros.GetLivros()
       
+
+      
+      let filechange = (event)=>{
+
+         const reader = new FileReader()
+
+         reader.addEventListener("load",() => {
+
+                     // Armazenando o valor data url da imagem na variavel capa
+                     capa.value = reader.result
+                  },
+
+         );
+         // Convertendo a imagem em data url
+         reader.readAsDataURL(event.target.files[0]);
+
+      } 
+
+   
       let cadastrolLivro = async()=>{
      
-            livros.CreateLivro(nome,editora,capa)
-             
-            // Aqui deve estar dando erro
-            nome = ''
-            editora = ''
+            await livros.CreateLivro(nome,editora,capa)
+            await livros.GetLivros()        
       }
     
       

@@ -7,6 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
+import base64
+from PIL import Image
+from io import BytesIO
+import datetime
 
 from .models import CustomUser as User
 from .models import Livro
@@ -128,6 +132,25 @@ class LivroList(APIView):
         """
         Create
         """
+        
+        data_url = request.data['capa'] 
+        # Removendo informações iniciais
+        data_url = data_url.split(',')[1]
+        # Decodificando
+        img_bytes = base64.b64decode(data_url)
+        
+        img = Image.open(BytesIO(img_bytes))
+        
+        # Usar a data para sempre ter um nome unico
+        now = datetime.datetime.now()
+
+        # Criar um nome de arquivo único com a data e hora atual
+        filename = "capaLivro" + now.strftime("%Y%m%d%H%M%S") + ".png"
+
+        img.save(f'Api/static/img/{filename}')
+        
+        #Salvando o nome do arquivo no banco
+        request.data['capa'] = filename
 
         serializer = LivroSerializer(data=request.data)
               
