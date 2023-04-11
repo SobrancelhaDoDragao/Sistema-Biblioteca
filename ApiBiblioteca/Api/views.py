@@ -145,11 +145,11 @@ class LivroList(APIView):
         now = datetime.datetime.now()
 
         # Criar um nome de arquivo único com a data e hora atual
-        filename = "capaLivro" + now.strftime("%Y%m%d%H%M%S") + ".png"
+        filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
 
         img.save(f'Api/static/img/{filename}')
         
-        #Salvando o nome do arquivo no banco
+        # Salvando o nome do arquivo no banco
         request.data['capa'] = filename
 
         serializer = LivroSerializer(data=request.data)
@@ -159,5 +159,7 @@ class LivroList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
     

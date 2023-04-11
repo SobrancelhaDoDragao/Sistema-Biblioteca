@@ -9,7 +9,7 @@
                <div id="AcervoForm">
                   <h1>Cadastrar livro</h1>
 
-                  <form action="">
+                  <form>
 
                      <label for="nome">Nome</label>
                      <input type="text" id="nome" v-model="nome" >
@@ -33,9 +33,8 @@
 
                         <div class="Livro" v-for="livro in livros.livros" :key="livro.id" >
                         
-
-                           <img :src="'http://localhost:8000/static/img/'+livro.capa">
-
+                           <nuxt-img :src="'http://localhost:8000/static/img/'+livro.capa" format="webp" width="100" height="150"/>
+                           
                            <h5 class="livro-title">{{ livro.nome }}</h5>
 
                         </div>
@@ -74,17 +73,15 @@ main h1{
    grid-area: filtro;
 }
 
-main img{
-   width: 100px;
-   height: 140px;
-}
+
 
 #LivroConteiner{
    grid-area: livro;
    padding: 1rem;
-   border-left:solid var(--colorSix)10px;
-   border-right: solid var(--colorSix) 10px;
+   border-left:solid var(--colorOne)10px;
+   border-right: solid var(--colorOne) 10px;
    border-radius: 30px;
+   background: var(--main-background-color);
 }
 
 .Livros{
@@ -112,6 +109,7 @@ main img{
 .livro-title{
    text-align: center;
    font-weight: var(--thin-weight);
+   font-size: 1rem;
 }
 
 #AcervoForm{
