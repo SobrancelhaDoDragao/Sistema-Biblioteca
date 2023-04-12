@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main id="main-acervo" class="conteiner-padrao" >
                <div id="Filtro">
                   Filtro
                </div>
@@ -9,7 +9,7 @@
                <div id="AcervoForm">
                   <h1>Cadastrar livro</h1>
 
-                  <form>
+                  <form class="form-padrao">
 
                      <label for="nome">Nome</label>
                      <input type="text" id="nome" v-model="nome" >
@@ -20,7 +20,7 @@
                      <label for="capa">Capa</label>
                      <input type="file" name="" id="capa" v-on:change="filechange" >
 
-                     <button id="btn-acervo" @click.prevent="cadastrolLivro">Cadastrar</button>
+                     <button id="btn-acervo" class="btn-padrao" @click.prevent="cadastrolLivro">Cadastrar</button>
 
                   </form>
                </div>
@@ -31,12 +31,10 @@
                         
                      <div class="Livros">
 
-                        <div class="Livro" v-for="livro in livros.livros" :key="livro.id" >
+                        <div v-for="livro in livros.livros" :key="livro.id" >
                         
                            <nuxt-img :src="'http://localhost:8000/static/img/'+livro.capa" format="webp" width="100" height="150"/>
                            
-                           <h5 class="livro-title">{{ livro.nome }}</h5>
-
                         </div>
  
                      </div>
@@ -49,13 +47,8 @@
 <style scoped>
 /**Colocar no lugar do sidebar um filtro de livros e formulario para cadastrar livros */
 
-main{
-   background-color: var(--main-background-color-conteiner);
-   padding: 1rem;
-   border-radius: 10px;
+#main-acervo{
    flex: 4;
-   border: solid var(--colorSix) 2px;
-   
    display: grid;
    grid-template-columns: 1fr 2fr;
    grid-template-areas: "filtro livro"
@@ -64,16 +57,9 @@ main{
    gap: 1rem;
 }
 
-main h1{
-   font-weight: var(--thin-weight);
-   text-align: center;
-}
-
 #filtro{
    grid-area: filtro;
 }
-
-
 
 #LivroConteiner{
    grid-area: livro;
@@ -86,30 +72,23 @@ main h1{
 
 .Livros{
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-top: .5rem;
-}
-
-.Livro{
-   width: 90px;
-   height: 140px;
-   background: rgb(173, 162, 162);
+  justify-content: center;
+  align-content: center;
+  height: 90%;
 }
 
 .imagem-none{
    width: 100%;
    height: 100%;
-
    display: flex;
    align-items: center;
    text-align: center;
 }
 
-.livro-title{
-   text-align: center;
-   font-weight: var(--thin-weight);
-   font-size: 1rem;
+#btn-acervo{
+   margin-top: 1rem;
 }
 
 #AcervoForm{
@@ -117,34 +96,6 @@ main h1{
    padding: .5rem;
 }
 
-label{
-    color: var(--colorFour);
-    font-weight: var(--thin-weight);
-}
-
-input{
-    width: 100%;
-    border:none;
-    border-radius: 10px;
-    padding: 15px;
-    color: var(--colorFour);
-    font-size: 1rem;
-    outline: none;
-    border: solid var(--colorSix) 1px;
-    font-weight: var(--thin-weight);
-}
-
-#btn-acervo{
-   background: var(--colorOne);
-   color:var(--colorThree);
-   font-weight: var(--bold-weight);
-   padding: 8px 18px;
-   border: none;
-   border-radius: 10px;
-   font-size: 1rem;
-   margin-top: 1rem;
-   cursor: pointer;
-}
 
 </style>
 

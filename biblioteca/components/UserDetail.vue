@@ -1,29 +1,37 @@
 <template>
-    <main>
+    <main  id="main-user-detail"  class="conteiner-padrao" >
         <h1>Perfil</h1>
 
-         <label for="nome">Nome</label>
-         <input type="text" id="nome" v-model="nome" >
+        <div id="UserDetailConteiner">
+            <form class="form-padrao">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" v-model="nome" >
 
-         <label for="email">Email</label>
-         <input type="email" id="email" v-model="email" >
+                <label for="email">Email</label>
+                <input type="email" id="email" v-model="email" >
 
-         <button id="btn-perfil" @click.prevent="enviar">Salvar</button>
+                <button  id="btn-user-detail"  class="btn-padrao" @click.prevent="enviar">Salvar</button>
+            </form>
+
+            <div id="FotoPerfil">
+                <nuxt-img src="img/user-solid.svg" format="webp" width="100" height="150"/>
+                <button id="btn-user-foto" class="btn-padrao" >Alterar foto</button>
+            </div>
+        </div>
+
+       
 
          <div id="linha"></div>
    </main>
 </template>
 
 <style scoped>
-main{
-   background-color: var(--main-background-color-conteiner);
-   padding: 1rem;
-   border-radius: 10px;
-   flex: 4;
-   border: solid var(--colorSix) 2px;
+
+#main-user-detail{
+    flex: 4;
 }
 
-main h1{
+main h1,h3{
     font-weight: var(--thin-weight);
     margin-bottom: 1rem;
 }
@@ -32,34 +40,30 @@ main h1{
     margin-top: 1rem;
     border-bottom: solid 2px var(--colorSix);
 }
-
-input{
-    width: 100%;
-    border:none;
-    border-radius: 10px;
-    padding: 15px;
-    color: var(--colorFour);
-    font-size: 12pt;
-    outline: none;
-    border: solid var(--colorSix) 1px;
-    font-weight: var(--thin-weight);
+#UserDetailConteiner{
+    display: flex;
+    align-items: center;
 }
 
-label{
-    color: var(--colorFour);
-    font-weight: var(--thin-weight);
+form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 
-#btn-perfil{
-   background: var(--colorOne);
-   color:var(--colorThree);
-   font-weight: var(--bold-weight);
-   padding: 8px 18px;
-   border: none;
-   border-radius: 10px;
-   font-size: 1rem;
-   margin-top: 1rem;
-   cursor: pointer;
+#btn-user-detail{
+    margin-top: 1rem;
+}
+
+#btn-user-foto{
+  margin-top: 1rem;
+  width: 10rem;
+}
+
+#FotoPerfil{
+ display: flex;
+ flex-direction: column;
+ margin-left: 1rem;
 }
 </style>
 

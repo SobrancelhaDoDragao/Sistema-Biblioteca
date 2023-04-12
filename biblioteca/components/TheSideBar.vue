@@ -11,8 +11,7 @@
     padding: 1rem;
     border-radius: 20px;
     flex: 2;
-    box-shadow: 0px 20px 50px -12px var(--colorFour);
-    border-left:solid var(--colorSix) 10px;
-    border-right:solid var(--colorSix) 10px;
+    border-left:solid var(--colorFive) 10px;
+    border-right:solid var(--colorFive) 10px;
 }
 </style>
