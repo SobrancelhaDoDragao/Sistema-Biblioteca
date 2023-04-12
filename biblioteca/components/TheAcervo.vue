@@ -32,9 +32,11 @@
                      <div class="Livros">
 
                         <div v-for="livro in livros.livros" :key="livro.id" >
-                        
-                           <nuxt-img :src="'http://localhost:8000/static/img/'+livro.capa" format="webp" width="100" height="150"/>
-                           
+
+                           <NuxtLink :to="'/auth/acervo/livro/'+livro.id"> 
+                           <nuxt-img class="livro" :src="'http://localhost:8000/static/img/'+livro.capa" format="webp" width="100" height="150"/>
+                           </NuxtLink>
+
                         </div>
  
                      </div>
@@ -77,6 +79,11 @@
   justify-content: center;
   align-content: center;
   height: 90%;
+}
+
+.livro:hover{
+   border: solid var(--colorTwo) 4px;
+   cursor: pointer;
 }
 
 .imagem-none{
@@ -134,7 +141,4 @@
             await livros.GetLivros()        
       }
     
-      
-      
-
 </script>

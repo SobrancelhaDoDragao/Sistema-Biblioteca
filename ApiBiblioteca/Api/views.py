@@ -24,7 +24,7 @@ def getRoutes(request):
         'api/token',
         'api/token/refresh',
         'api/VerifyAuthenticated',
-        'api/livro/',
+        'api/createlivro/',
     ]
 
     return Response(routes)
@@ -72,7 +72,7 @@ class UserList(APIView):
 
 class User_Detail(APIView):
     """
-    Recuperar, Atualizar ou delatar o usuario
+    Recuperar, Atualizar ou deletar o usuario
     """
     permission_classes = [IsAuthenticated]
 
@@ -130,7 +130,7 @@ class LivroList(APIView):
 
     def post(self, request, format=None):
         """
-        Create
+        Url para cadastrar livro
         """
         
         data_url = request.data['capa'] 
@@ -161,5 +161,50 @@ class LivroList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class Livro_Detail(APIView):
+    """
+    Recuperar, Atualizar ou deletar livro
+    """
+    #permission_classes = [IsAuthenticated] 
 
+    def get_object(self,request):
+
+        try:
+            return Livro.objects.get(id=request.data['id'])
+        except Livro.DoesNotExist:
+            raise Http404
+
+    def post(self, request, format=None):
+        """
+        Retrieve
+        """
+  
+        livro = self.get_object(request)
+       
+        serializer = LivroSerializer(livro)
+
+        return Response(serializer.data)
+
+    def put(self, request, format=None):
+        """
+        Update 
+        """
+        livro = self.get_object(request)
+        
+        serializer = LivroSerializer(livro, data=request.data)
+  
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        """
+        Delete
+        """
+        livro = self.get_object(request)
+        livro.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
     

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 export const useLivroStore = defineStore('Livro', {
     state: () => {
       return {
+        livro:{id:'',nome:'',editora:'',capa:''},
         livros: []
       }
     },
@@ -14,7 +15,7 @@ export const useLivroStore = defineStore('Livro', {
         // Não fica disponivel no url /
         const config = useRuntimeConfig()
     
-        const response = await $fetch(`${config.apiBase}livro/`,{
+        const response = await $fetch(`${config.apiBase}createlivro/`,{
                 method:'GET',
                 headers:{'Content-Type':'application/json'}
         });
@@ -37,9 +38,8 @@ export const useLivroStore = defineStore('Livro', {
           capa: capa.value
         }
 
-        
-
-        let response = await $fetch(`${config.apiBase}livro/`,{
+      
+        let response = await $fetch(`${config.apiBase}createlivro/`,{
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body:form
@@ -48,6 +48,25 @@ export const useLivroStore = defineStore('Livro', {
 
         this.livros.push(response)
 
+      },
+
+      async GetLivro(id){
+
+        const config = useRuntimeConfig()
+
+        const form = {id:id}
+
+
+        let response = await $fetch(`${config.apiBase}livro/`,{
+                  method:'POST',
+                  headers:{'Content-Type':'application/json'},
+                  body:form
+        });
+        
+        this.livro.id = response.id
+        this.livro.nome = response.nome
+        this.livro.capa = response.capa
+        this.livro.editora = response.editora
       }
   
     }

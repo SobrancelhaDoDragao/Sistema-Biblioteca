@@ -1,5 +1,5 @@
 <template>
     <NuxtLayout>
-     <h1>Livro</h1>
+     <TheLivro></TheLivro>
    </NuxtLayout>
  </template>

@@ -54,6 +54,17 @@
   cursor: pointer;
 }
 
+.btn-danger{
+  background: red;
+  color:var(--colorThree);
+  font-weight: var(--bold-weight);
+  padding: 8px 18px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 .form-padrao input{
   width: 100%;
   border:none;
