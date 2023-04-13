@@ -11,9 +11,32 @@ import base64
 from PIL import Image
 from io import BytesIO
 import datetime
+import os
 
 from .models import CustomUser as User
 from .models import Livro
+
+def salvarImagem(data_url):
+    """
+    Função que salva a imagem e retorna o nome do arquivo
+    """
+    # Removendo informações iniciais
+    data_url = data_url.split(',')[1]
+    # Decodificando
+    img_bytes = base64.b64decode(data_url)
+            
+    img = Image.open(BytesIO(img_bytes))
+            
+    # Usar a data para sempre ter um nome unico
+    now = datetime.datetime.now()
+
+    # Criar um nome de arquivo único com a data e hora atual
+    filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
+
+    img.save(f'Api/static/img/{filename}')
+
+    return filename
+
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -134,20 +157,8 @@ class LivroList(APIView):
         """
         
         data_url = request.data['capa'] 
-        # Removendo informações iniciais
-        data_url = data_url.split(',')[1]
-        # Decodificando
-        img_bytes = base64.b64decode(data_url)
-        
-        img = Image.open(BytesIO(img_bytes))
-        
-        # Usar a data para sempre ter um nome unico
-        now = datetime.datetime.now()
 
-        # Criar um nome de arquivo único com a data e hora atual
-        filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
-
-        img.save(f'Api/static/img/{filename}')
+        filename = salvarImagem(data_url)
         
         # Salvando o nome do arquivo no banco
         request.data['capa'] = filename
@@ -190,7 +201,20 @@ class Livro_Detail(APIView):
         Update 
         """
         livro = self.get_object(request)
-        
+         
+        try:
+            # Caso seja enviado uma nova capa
+            data_url = request.data['capa'] 
+
+            filename = salvarImagem(data_url)
+                
+            # Salvando o nome do arquivo no banco
+            request.data['capa'] = filename
+
+            os.remove(f'Api/static/img/{livro.capa}')
+        except:
+            pass
+
         serializer = LivroSerializer(livro, data=request.data)
   
         if serializer.is_valid():
@@ -204,6 +228,9 @@ class Livro_Detail(APIView):
         Delete
         """
         livro = self.get_object(request)
+
+        os.remove(f'Api/static/img/{livro.capa}')
+        
         livro.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)

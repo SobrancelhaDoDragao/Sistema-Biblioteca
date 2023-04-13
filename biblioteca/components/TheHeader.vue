@@ -169,7 +169,7 @@ let user = useUserStore()
 
 // Só ira fazer o request se os dados do usuario estiver vazio
 if(user.nome == ''){
-    user.GetUserData()
+    await user.GetUserData()
 }
 
 </script>

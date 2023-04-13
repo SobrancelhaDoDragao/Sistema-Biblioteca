@@ -116,8 +116,6 @@
 
       livros.GetLivros()
       
-
-      
       let filechange = (event)=>{
 
          const reader = new FileReader()
