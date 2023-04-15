@@ -3,26 +3,33 @@ import { defineStore } from 'pinia'
 export const useLivroStore = defineStore('Livro', {
     state: () => {
       return {
-        livro:{id:'',nome:'',editora:'',capa:''},
-        livros: []
+        livro:{id:'',nome:'',editora:'',capa:''}, //Usado apenas pelo putLivro e Getlivro
+        livrosDados: {PageActive:null,quantidadePagina:0,livros:[],nextPageNumber:null,previousPageNumber:null},
       }
     },
   
     actions:{  
-      async GetLivros(){
+      async GetLivros(page){
+        
+        if(page != null){
+          // Url base do back-end
+          // Não fica disponivel no url /
+          const config = useRuntimeConfig()
+          
+          
+          const response = await $fetch(`${config.apiBase}createlivro/?page=${page}`,{
+                  method:'GET',
+                  headers:{'Content-Type':'application/json'}
+          });
 
-        // Url base do back-end
-        // Não fica disponivel no url /
-        const config = useRuntimeConfig()
-    
-        const response = await $fetch(`${config.apiBase}createlivro/`,{
-                method:'GET',
-                headers:{'Content-Type':'application/json'}
-        });
-
-        const livros = response
-
-        this.livros = livros
+          const livros = response.results
+        
+          this.livrosDados.livros = livros
+          this.livrosDados.nextPageNumber = response.links.nextPageNumber
+          this.livrosDados.previousPageNumber = response.links.previousPageNumber
+          this.livrosDados.quantidadePagina = response.links.TotalPages
+          this.livrosDados.PageActive = response.links.PageActive
+       }
       },
 
 
@@ -38,16 +45,11 @@ export const useLivroStore = defineStore('Livro', {
           capa: capa.value
         }
 
-      
-        let response = await $fetch(`${config.apiBase}createlivro/`,{
+        await $fetch(`${config.apiBase}createlivro/`,{
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body:form
           });
-
-
-        this.livros.push(response)
-
       },
 
       async GetLivro(id){

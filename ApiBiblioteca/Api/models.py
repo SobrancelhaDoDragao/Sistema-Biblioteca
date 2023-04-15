@@ -80,6 +80,8 @@ class Livro(models.Model):
     nome = models.CharField(max_length=50)
     editora = models.CharField(max_length=50)
     capa = models.CharField(max_length=50)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    # Falta o autor do livro
     # Falta o genero do livro, Ação, romance, classico, literatura brasileira. Pode ser uma tag tb.
 
  

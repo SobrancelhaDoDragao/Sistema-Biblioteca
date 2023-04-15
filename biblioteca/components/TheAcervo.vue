@@ -7,7 +7,7 @@
 
                <!--Essa div só deve ser visivel para admins-->
                <div id="AcervoForm">
-                  <h1>Cadastrar livro</h1>
+                  <h1>Cadastrar Livro</h1>
 
                   <form class="form-padrao">
 
@@ -27,21 +27,30 @@
 
                <div id="LivroConteiner">
 
-                  <h1>Acervo</h1>
+                  <h1 id="h1Acervo">Acervo</h1>
                         
                      <div class="Livros">
 
-                        <div v-for="livro in livros.livros" :key="livro.id" >
+                        <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
                            <NuxtLink :to="'/auth/acervo/livro/'+livro.id"> 
                            <nuxt-img class="livro" :src="'http://localhost:8000/static/img/'+livro.capa" format="webp" width="100" height="150"/>
                            </NuxtLink>
 
                         </div>
- 
+                        
                      </div>
-                    
 
+                  <div id="btn-group-pagination">
+
+                  
+                     <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.previousPageNumber)">Voltar</button>
+                       
+                     <button :class="{ active: livros.livrosDados.PageActive == pagina }" class="btn-pagination" v-on:click="livros.GetLivros(pagina)" v-for="pagina in livros.livrosDados.quantidadePagina" >{{ pagina }}</button>
+
+                     <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.nextPageNumber)">Proxima</button>
+
+                  </div>
                </div>
    </main>
 </template>
@@ -78,7 +87,13 @@
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
-  height: 90%;
+  height: 85%;
+  border: solid white 2px;
+  border-radius: 20px;
+}
+
+#h1Acervo{
+   text-align: center;
 }
 
 .livro:hover{
@@ -104,6 +119,27 @@
 }
 
 
+#btn-group-pagination{
+   display: flex;
+   justify-content: center;
+   margin-top: .5rem;
+   gap: 5px;
+}
+
+.btn-pagination{
+  background: var(--main-background-color-conteiner);
+  color:var(--colorTwo);
+  font-weight: var(--bold-weight);
+  padding:.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.active{
+   background: var(--colorOne);
+}
+
 </style>
 
 <script setup>
@@ -114,7 +150,15 @@
        
       let livros = useLivroStore()
 
-      livros.GetLivros()
+      const route = useRoute()
+      
+      if(livros.livrosDados.PageActive){
+         livros.GetLivros(livros.livrosDados.PageActive)
+      }
+      else{
+         livros.GetLivros(1) //Primeira pagina
+      }
+      
       
       let filechange = (event)=>{
 
@@ -132,11 +176,11 @@
 
       } 
 
-   
+      
       let cadastrolLivro = async()=>{
      
             await livros.CreateLivro(nome,editora,capa)
-            await livros.GetLivros()        
+            await livros.GetLivros(livros.livrosDados.PageActive)        
       }
-    
+ 
 </script>

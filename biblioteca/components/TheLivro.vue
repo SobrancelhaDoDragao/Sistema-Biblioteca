@@ -101,7 +101,6 @@ const route = useRoute()
 
 let livro = useLivroStore()
 
-
 await livro.GetLivro(route.params.id)
 
 let nome = ref(livro.livro.nome)

@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/user/', views.User_Detail.as_view()),
     path('api/createlivro/', views.LivroList.as_view()),
     path('api/livro/', views.Livro_Detail.as_view()),
+    
 ]
