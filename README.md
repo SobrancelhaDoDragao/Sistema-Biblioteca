@@ -4,7 +4,7 @@
 
 <div align="center">
 
-<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/biblioteca/assets/img/meninoLendo.png" alt="Menino lendo um livro na lua" width="100">
+<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/Alpha-3.0/biblioteca/public/img/meninoLendo.png" alt="Menino lendo um livro na lua" width="100">
 
 </div>
 
