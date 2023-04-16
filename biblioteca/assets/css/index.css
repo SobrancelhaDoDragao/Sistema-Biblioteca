@@ -16,7 +16,7 @@
 }
 
 .explicao h1{
-    color: var(--colorThree);
+    color: var(--colorTwo);
     text-align: center;
 }
 
@@ -24,6 +24,15 @@
     text-align:justify;
     margin: 1rem;
     color: var(--main-background-color-conteiner);
+}
+
+a{  
+    text-decoration: none;
+    color: var(--main-background-color-conteiner);
+}
+
+a:hover{
+    text-decoration: underline;
 }
 
 .explicao div{
@@ -43,7 +52,7 @@
     text-transform: uppercase;
     font-weight: var(--bold-weight);
     color:var(--main-background-color-conteiner);
-    background: var(--colorThree);
+    background: var(--colorTwo);
     font-size: 1rem;
     cursor: pointer;
 }
@@ -63,11 +72,11 @@
     padding: 20px;
     background:var(--main-background-color-conteiner);
     border-radius: 20px;
-    box-shadow: 0px 10px 40px var(--colorFour);
+    box-shadow: 0px 10px 40px var(--colorThree);
 }
 
 .card_login h1{
-    color:var(--colorThree);
+    color:var(--colorTwo);
     font-weight: var(--bold-weight);
     margin: 0;
 }
@@ -87,14 +96,14 @@
     border-radius: 10px;
     padding: 15px;
     background:var(--main-background-color-conteiner);
-    color: var(--colorFour);
+    color: var(--colorThree);
     font-size: 12pt;
     outline: none;
-    border: solid var(--colorSix) 1px;
+    border: solid var(--colorFive) 1px;
 }
 
 .text_field > label{
-    color: var(--colorFour);
+    color: var(--colorThree);
     margin: 5px 0 5px 0;
     width: 100%;
 }
@@ -111,15 +120,15 @@
     text-transform: uppercase;
     font-weight: var(--bold-weight);
     letter-spacing: 4px;
-    color:var(--colorFour);
-    background: var(--colorThree);
+    color:var(--colorThree);
+    background: var(--colorTwo);
     cursor: pointer;
 }
 
 
 img{
     border-radius: 40px;
-    border: solid var(--colorThree) 5px;
+    border: solid var(--colorTwo) 5px;
     width: 20vw;
 }
 

@@ -15,7 +15,7 @@
 }
 
 h1{
-    color: var(--colorThree);
+    color: var(--colorTwo);
     font-weight: var(--bold-weight);
     font-size: 3.5rem;
     text-align: center;
@@ -30,14 +30,14 @@ form > input{
     border-radius: 10px;
     padding: 10px;
     background:var(--main-background-color-conteiner);
-    color: var(--colorFour);
+    color: var(--colorThree);
     font-size: 1rem;
     outline: none;
-    border: solid var(--colorSix) 1px;
+    border: solid var(--colorFive) 1px;
 }
 
 form > label{
-    color: var(--colorFour);
+    color: var(--colorTwo);
     margin: 10px 0 10px 0;
     width: 100%;
     font-size: 1.5rem;
@@ -55,8 +55,8 @@ form button{
     text-transform: uppercase;
     font-weight: var(--bold-weight);
     letter-spacing: 4px;
-    color:var(--colorFour);
-    background: var(--colorThree);
+    color:var(--colorThree);
+    background: var(--colorTwo);
     cursor: pointer;
 }
 
@@ -72,7 +72,7 @@ form select{
     border-radius: 5px;
     padding: 5px;
     background:var(--main-background-color-conteiner);
-    color: var(--colorFour);
+    color: var(--colorThree);
     font-size: 1rem;
     outline: none;
     border: solid var(--colorSix) 1px;

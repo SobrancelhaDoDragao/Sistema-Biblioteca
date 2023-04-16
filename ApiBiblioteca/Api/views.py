@@ -1,25 +1,58 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer, LivroSerializer
-from rest_framework import generics
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
 from rest_framework import status
 from django.http import Http404
+import base64
+from PIL import Image
+from io import BytesIO
+import datetime
+import os
+
 
 from .models import CustomUser as User
 from .models import Livro
 
+def salvarImagem(data_url):
+    """
+    Função que salva a imagem e retorna o nome do arquivo
+    """
+    # Removendo informações iniciais
+    data_url = data_url.split(',')[1]
+    # Decodificando
+    img_bytes = base64.b64decode(data_url)
+            
+    img = Image.open(BytesIO(img_bytes))
+            
+    # Usar a data para sempre ter um nome unico
+    now = datetime.datetime.now()
+
+    # Criar um nome de arquivo único com a data e hora atual
+    filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
+
+    img.save(f'Api/static/img/{filename}')
+
+    return filename
+
+
 @api_view(['GET'])
 def getRoutes(request):
+    """
+    Todas as url da Api biblioteca
+    """
 
     routes = [
         'api/createuser',
+        'api/user/',
         'api/token',
         'api/token/refresh',
         'api/VerifyAuthenticated',
-        'api/user/',
+        'api/createlivro/',
+        'api/livro/'
     ]
 
     return Response(routes)
@@ -29,8 +62,9 @@ class VerifyAuthenticated(APIView):
     """
     Verificando se o usuario está logado
     """
+ 
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request, format=None):
         
         response = {
@@ -67,7 +101,7 @@ class UserList(APIView):
 
 class User_Detail(APIView):
     """
-    Recuperar, Atualizar ou delatar o usuario
+    Recuperar, Atualizar ou deletar o usuario
     """
     permission_classes = [IsAuthenticated]
 
@@ -112,21 +146,29 @@ class User_Detail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class LivroList(APIView):
+class LivroList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     """
     Exibir todos os livros ou adicionar um novo livro
     """
-    def get(self, request, format=None):
 
-        livros = Livro.objects.all()
-        serializer = LivroSerializer(livros, many=True)
+    queryset = Livro.objects.all().order_by('-data_criacao')
+    serializer_class = LivroSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
           
-        return Response(serializer.data)
 
     def post(self, request, format=None):
         """
-        Create
+        Url para cadastrar livro
         """
+        
+        data_url = request.data['capa'] 
+
+        filename = salvarImagem(data_url)
+        
+        # Salvando o nome do arquivo no banco
+        request.data['capa'] = filename
 
         serializer = LivroSerializer(data=request.data)
               
@@ -136,4 +178,67 @@ class LivroList(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class Livro_Detail(APIView):
+    """
+    Recuperar, Atualizar ou deletar livro
+    """
+    #permission_classes = [IsAuthenticated] 
+
+    def get_object(self,request):
+
+        try:
+            return Livro.objects.get(id=request.data['id'])
+        except Livro.DoesNotExist:
+            raise Http404
+
+    def post(self, request, format=None):
+        """
+        Retrieve
+        """
+  
+        livro = self.get_object(request)
+       
+        serializer = LivroSerializer(livro)
+
+        return Response(serializer.data)
+
+    def put(self, request, format=None):
+        """
+        Update 
+        """
+        livro = self.get_object(request)
+         
+        try:
+            # Caso seja enviado uma nova capa
+            data_url = request.data['capa'] 
+
+            filename = salvarImagem(data_url)
+                
+            # Salvando o nome do arquivo no banco
+            request.data['capa'] = filename
+
+            os.remove(f'Api/static/img/{livro.capa}')
+        except:
+            pass
+
+        serializer = LivroSerializer(livro, data=request.data)
+  
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        """
+        Delete
+        """
+        livro = self.get_object(request)
+
+        os.remove(f'Api/static/img/{livro.capa}')
+        
+        livro.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
     

@@ -9,10 +9,9 @@
 #sidebar{
     background-color: var(--main-background-color-conteiner);
     padding: 1rem;
-    border: solid var(--colorSix) var(--main-border);
     border-radius: 20px;
     flex: 2;
-    box-shadow: 0px 10px 30px -12px var(--colorFour);
-   
+    border-left:solid var(--colorFive) 10px;
+    border-right:solid var(--colorFive) 10px;
 }
 </style>

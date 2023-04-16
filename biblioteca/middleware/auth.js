@@ -6,10 +6,16 @@ export default defineNuxtRouteMiddleware(async ({redirect}) => {
     let token = useCookie('access')
   
     var bearer = 'Bearer ' + token.value;
-     
+    /*
+    if(process.server){
+        console.log("SERVER SIDE")
+    }
+    */
+
+   
     try {
         // Verificando se está logado
-        const response = await $fetch(`${config.apiBase}VerifyAuthenticated`,{
+        const response = await $fetch(`${config.public.apiBase}VerifyAuthenticated`,{
             method:'POST',
             headers:{'Content-Type':'application/json',
             'Authorization': bearer,
@@ -19,6 +25,6 @@ export default defineNuxtRouteMiddleware(async ({redirect}) => {
     } catch (error) {
         return redirect = "/";
     }
- 
+
 })
  

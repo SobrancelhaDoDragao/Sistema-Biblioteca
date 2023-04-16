@@ -2,7 +2,7 @@
      <header>
           
           <div class="logo">
-                  <img src="~/assets/img/meninoLendo.png" alt=""> <span>Biblioteca</span>
+                  <nuxt-img src="img/meninoLendo.png" format="webp" width="60" height="60"/><span>Biblioteca</span>
           </div>
 
           <input type="checkbox" id="nav_check" hidden>
@@ -10,9 +10,9 @@
           <nav>
               <ul>
                   <li> <a href="#">Modo dark</a></li>
-                  <li><NuxtLink to="home">Home</NuxtLink></li>
-                  <li><NuxtLink to="acervo">Acervo</NuxtLink></li>
-                  <li><NuxtLink to="user-information-page">{{ user.nome }}</NuxtLink></li>
+                  <li><NuxtLink to="/auth/home">Home</NuxtLink></li>
+                  <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
+                  <li><NuxtLink to="/auth/user-information-page">{{ user.nome }}</NuxtLink></li>
               </ul>
           </nav>
           
@@ -36,9 +36,8 @@
         padding: 0 40px;
 
         border-bottom: solid var(--colorOne) .5rem;
-        
         background: var(--colorOne);
-        background: linear-gradient(180deg, var(--colorOne) 50%, var(--colorFive) 90%);
+        background: linear-gradient(180deg, var(--colorOne) 50%, var(--colorFour) 90%);
 
     }
 
@@ -57,7 +56,7 @@
 
     .logo span{
         margin-left: .5rem;
-        color:var(--colorThree);
+        color:var(--colorTwo);
         font-weight: var(--bold-weight);
         font-size: 1.5rem;
         letter-spacing: 2px;
@@ -72,7 +71,7 @@
     nav ul li a {
         text-decoration: none;
         display: block;
-        color:var(--colorFour);
+        color:var(--colorThree);
         margin: 0 2px;
         padding: 8px 18px;
         transition: 0.2s;
@@ -85,7 +84,7 @@
 
     .router-link-active, .router-link-exact-active{
         background: var(--colorOne);
-        color:var(--colorThree);
+        color:var(--colorTwo);
     }
    
     .hamburger{
@@ -110,9 +109,8 @@
     }
 
     .logo img{
-        width: 60px;
         border-radius: 20px;
-        border: solid var(--colorThree) 4px;
+        border: solid var(--colorTwo) 4px;
     }
 
     /* Reposividade do header */
@@ -167,11 +165,11 @@
 <script setup>
 
 // Dados do usuário logado
-const user = useUserStore()
+let user = useUserStore()
 
 // Só ira fazer o request se os dados do usuario estiver vazio
 if(user.nome == ''){
-    user.GetUserData()
+    await user.GetUserData()
 }
 
 </script>

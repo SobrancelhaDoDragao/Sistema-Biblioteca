@@ -1,15 +1,11 @@
 <template>
-     <main>
+     <main id="main-home" class="conteiner-padrao" >
         Recomedação de livros e novos livro do acervo
     </main>
 </template>
 
 <style scoped>
-main{
-    background-color: var(--main-background-color-conteiner);
-    padding: 1rem;
-    border-radius: 10px;
+#main-home{
     flex: 4;
-    border: solid var(--colorSix) 2px;
 }
 </style>

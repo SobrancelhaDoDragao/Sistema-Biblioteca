@@ -5,7 +5,7 @@
         <div class="explicao">
             
                 <h1>Projeto biblioteca</h1>
-                <h2>Este projeto foi criado para fins de estudos e tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca.</h2>
+                <h2>Este projeto foi criado para fins de estudos e tem como objetivo criar uma aplicação web completa para gerenciar o acervo, empréstimos e devoluções de livros em uma biblioteca. Criador: <a href="https://www.linkedin.com/in/eudsonduraes/" target="_blank" rel="noopener noreferrer">Eudson Durães</a>, licença MIT.</h2>
 
                 <div>
                     <NuxtLink class="btn" to="/cadastro">Crie seu cadastro aqui</NuxtLink> <a class="btn" href="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca" target="_blank">Veja o código</a>
@@ -61,8 +61,6 @@ definePageMeta({
    middleware: 'redirect-auth'
 })
 
-
-
  // Url base do back-end
  const config = useRuntimeConfig()
   
@@ -70,8 +68,8 @@ definePageMeta({
  const email = ref('')
  
  // Criando cookies para salvar os tokens
- const access = useCookie('access')
- const refresh = useCookie('refresh')
+ const access = useCookie('access', {maxAge: 60 * 60 * 24 * 7}) // Uma semana em segundos
+ const refresh = useCookie('refresh',{maxAge: 60 * 60 * 24 * 7})
  
 
  let erro = ref()

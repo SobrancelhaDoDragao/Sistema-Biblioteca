@@ -33,7 +33,7 @@ header{
       display: flex;
       align-items: center;
       justify-content: center;
-      border-top:solid 2px var(--colorSix);
+      border-top:solid 2px var(--colorFive);
       gap: .5rem;
   }
   
