@@ -1,12 +1,12 @@
 <template>
     <main id="main-acervo" class="conteiner-padrao" >
-               <div id="Filtro">
-                  Filtro
-               </div>
-                  
+               
 
+      <Teleport to="body">
                <!--Essa div só deve ser visivel para admins-->
-               <div id="AcervoForm">
+
+            <Transition name="bounce">
+               <div v-if="modal" id="AcervoForm" class="modal">
                   <h1>Cadastrar Livro</h1>
 
                   <form class="form-padrao">
@@ -19,16 +19,24 @@
                      
                      <label for="capa">Capa</label>
                      <input type="file" name="" id="capa" v-on:change="filechange" >
+                     
 
-                     <button id="btn-acervo" class="btn-padrao" @click.prevent="cadastrolLivro">Cadastrar</button>
+                  <p id="ErroCadastroForm" v-if="ErroCadastroForm" >{{ErroCadastroForm}}</p>
 
+                  <div id="group-btn-cadastro">
+                    <button class="btn-padrao" @click.prevent="cadastrolLivro">Cadastrar</button> <button class="btn-padrao" @click.prevent="modal = false">Cancelar</button>  
+                  </div>
                   </form>
                </div>
+            </Transition>
+         </Teleport>
 
                <div id="LivroConteiner">
-
+               
                   <h1 id="h1Acervo">Acervo</h1>
-                        
+
+                   <button class="btn-padrao" id="btn-modal-acervo" @click.prevent="modal = true">Cadastrar livro</button> 
+
                      <div class="Livros">
 
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
@@ -61,24 +69,22 @@
 #main-acervo{
    flex: 4;
    display: grid;
-   grid-template-columns: 1fr 2fr;
-   grid-template-areas: "filtro livro"
-                         "form livro"
-   ;
+   grid-template-columns: 1fr;
+   grid-template-areas: "livro";
    gap: 1rem;
-}
-
-#filtro{
-   grid-area: filtro;
+   max-height: 78vh;
 }
 
 #LivroConteiner{
    grid-area: livro;
-   padding: 1rem;
    border-left:solid var(--colorOne)10px;
    border-right: solid var(--colorOne) 10px;
    border-radius: 30px;
    background: var(--main-background-color);
+   overflow: auto;
+   display: flex;
+   flex-direction: column;
+   padding: .5rem 1rem;
 }
 
 .Livros{
@@ -87,9 +93,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
-  height: 85%;
-  border: solid white 2px;
-  border-radius: 20px;
+  flex: 1;
 }
 
 #h1Acervo{
@@ -109,13 +113,12 @@
    text-align: center;
 }
 
-#btn-acervo{
-   margin-top: 1rem;
-}
-
 #AcervoForm{
-   grid-area: form;
    padding: .5rem;
+   background: var(--main-background-color-conteiner);
+   padding: 1rem;
+   border-radius: 20px;
+   border: solid var(--colorOne) 2px;
 }
 
 
@@ -134,20 +137,66 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 1rem;
 }
 
 .active{
    background: var(--colorOne);
 }
 
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 20%;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+}
+
+#group-btn-cadastro{
+   display: flex;
+   justify-content: space-between;
+   margin-top: 1rem;
+}
+
+#btn-modal-acervo{
+   width: 10rem;
+   margin-bottom: 1rem;
+}
+
+#ErroCadastroForm{
+  color: var(--colorTwo);
+  text-align: center;
+}
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
 
 <script setup>
 
-      let nome = ref()
-      let editora = ref()
-      let capa = ref()
-       
+      let nome = ref('')
+      let editora = ref('')
+      let capa = ref('')
+
+      let modal = ref(false)
+
+      let ErroCadastroForm = ref()
+
       let livros = useLivroStore()
 
       const route = useRoute()
@@ -178,9 +227,18 @@
 
       
       let cadastrolLivro = async()=>{
-     
-            await livros.CreateLivro(nome,editora,capa)
-            await livros.GetLivros(livros.livrosDados.PageActive)        
+            
+            if(nome.value == ''|| editora.value == ''){
+               ErroCadastroForm.value = 'Preecha todos os campos'
+            }
+            else if(capa.value == ''){
+               ErroCadastroForm.value = 'Nenhuma imagem foi enviada'
+            }
+            else{
+               await livros.CreateLivro(nome,editora,capa)
+               await livros.GetLivros(livros.livrosDados.PageActive)
+               modal.value = false
+            }    
       }
  
 </script>
