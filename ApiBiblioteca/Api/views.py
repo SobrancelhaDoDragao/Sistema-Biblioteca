@@ -62,9 +62,9 @@ class VerifyAuthenticated(APIView):
     """
     Verificando se o usuario está logado
     """
-
+ 
     permission_classes = [IsAuthenticated]
-
+    
     def post(self, request, format=None):
         
         response = {
