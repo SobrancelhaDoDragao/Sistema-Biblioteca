@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
 
       public: {
-        apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+        apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000/api/'
       }
     },
 

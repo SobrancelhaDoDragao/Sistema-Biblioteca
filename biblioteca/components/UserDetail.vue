@@ -14,7 +14,7 @@
             </form>
 
             <div id="FotoPerfil">
-                <nuxt-img src="img/user-solid.svg" format="webp" width="100" height="150"/>
+                <nuxt-img src="img/user-solid.svg" format="webp" width="100" height="139"/>
                 <button id="btn-user-foto" class="btn-padrao" >Alterar foto</button>
             </div>
         </div>

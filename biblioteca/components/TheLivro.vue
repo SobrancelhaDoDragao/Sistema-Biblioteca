@@ -1,7 +1,7 @@
 <template>
     <main id="main-livro" class="conteiner-padrao">
        
-      <nuxt-img  id="livro-detail" :src="'http://localhost:8000/static/img/'+livro.livro.capa" fit="inside" sizes='xs:50vw sm:40vw md:35vw lg:28vw xl:20vw'/>
+      <nuxt-img  id="livro-detail" :src="'http://localhost:8000/static/img/CapasLivros/'+livro.livro.capa" fit="inside" sizes='xs:50vw sm:40vw md:35vw lg:28vw xl:20vw'/>
         <div id="livro-informacao">
 
             <div v-if="!editar">

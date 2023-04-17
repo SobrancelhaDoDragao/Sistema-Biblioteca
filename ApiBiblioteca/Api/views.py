@@ -34,7 +34,7 @@ def salvarImagem(data_url):
     # Criar um nome de arquivo único com a data e hora atual
     filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
 
-    img.save(f'Api/static/img/{filename}')
+    img.save(f'Api/static/img/CapasLivros/{filename}')
 
     return filename
 
@@ -218,7 +218,7 @@ class Livro_Detail(APIView):
             # Salvando o nome do arquivo no banco
             request.data['capa'] = filename
 
-            os.remove(f'Api/static/img/{livro.capa}')
+            os.remove(f'Api/static/img/CapasLivros/{livro.capa}')
         except:
             pass
 

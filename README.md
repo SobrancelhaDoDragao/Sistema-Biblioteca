@@ -57,15 +57,17 @@ Em andamento
 
 ### Requisitos
 
-  - Python 3.8.10
-  - Npm 18.15.0
+  - Python 3.10.6
   - Venv
+  - Pip
+  - Node 18.16.0
   
 ### Instalação Front-End
 
-1. Entre na pasta <code>biblioteca</code> pelo terminal
-2. Instale as dependências com o comando <code>npm install</code> 
-3. Para inciar o servidor: <code>npm run dev</code>
+1. Entre na pasta <code>biblioteca</code> pelo terminal.
+2. Instale as dependências com o comando <code>npm install</code> .
+3. Crie um arquivo .env para configurar a url do servidor, e adicione a seguinte linha no arquivo. <code>NUXT_PUBLIC_API_BASE_URL = "http://127.0.0.1:8000/api/"</code> Essa linha poderá mudar dependendo do seu computador.
+4. Para inciar o servidor: <code>npm run dev</code>.
 
 ### Instalação Back-end
 
