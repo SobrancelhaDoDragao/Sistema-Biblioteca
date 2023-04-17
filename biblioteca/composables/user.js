@@ -57,7 +57,7 @@ export const useUserStore = defineStore('User', {
       let form = {
           nome: nome.value,
           email: email.value,
-          foto: foto,
+          foto: foto.value,
           password:password.value
       } 
      

@@ -17,7 +17,7 @@ import os
 from .models import CustomUser as User
 from .models import Livro
 
-def salvarImagem(data_url):
+def salvarImagem(data_url,path,nome):
     """
     Função que salva a imagem e retorna o nome do arquivo
     """
@@ -32,9 +32,9 @@ def salvarImagem(data_url):
     now = datetime.datetime.now()
 
     # Criar um nome de arquivo único com a data e hora atual
-    filename = "capa" + now.strftime("%Y%m%d%H%M%S") + ".png"
+    filename = nome + now.strftime("%Y%m%d%H%M%S") + ".png"
 
-    img.save(f'Api/static/img/CapasLivros/{filename}')
+    img.save(f'{path}{filename}')
 
     return filename
 
@@ -127,7 +127,22 @@ class User_Detail(APIView):
         Update 
         """
         user = self.get_object(request)
-        
+
+        try:
+            # Caso seja enviado uma foto
+            data_url = request.data['foto'] 
+
+            path = 'Api/static/img/FotoPerfil/'
+            nome = 'fotodeperfil'
+
+            filename = salvarImagem(data_url,path,nome)
+                
+            # Salvando o nome do arquivo no banco
+            request.data['foto'] = filename
+        except:
+            pass
+
+
         serializer = UserSerializer(user, data=request.data)
   
         if serializer.is_valid():
@@ -164,8 +179,11 @@ class LivroList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAP
         """
         
         data_url = request.data['capa'] 
+        
+        path = 'Api/static/img/CapasLivros/'
+        nome = 'capa'
 
-        filename = salvarImagem(data_url)
+        filename = salvarImagem(data_url,path,nome)
         
         # Salvando o nome do arquivo no banco
         request.data['capa'] = filename
@@ -213,7 +231,10 @@ class Livro_Detail(APIView):
             # Caso seja enviado uma nova capa
             data_url = request.data['capa'] 
 
-            filename = salvarImagem(data_url)
+            path = 'Api/static/img/CapasLivros/'
+            nome = 'capa'
+
+            filename = salvarImagem(data_url,path,nome)
                 
             # Salvando o nome do arquivo no banco
             request.data['capa'] = filename

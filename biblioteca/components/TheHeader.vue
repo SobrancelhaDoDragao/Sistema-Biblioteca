@@ -12,7 +12,14 @@
                   <li> <a href="#">Modo dark</a></li>
                   <li><NuxtLink to="/auth/home">Home</NuxtLink></li>
                   <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
-                  <li><NuxtLink to="/auth/user-information-page">{{ user.nome }}</NuxtLink></li>
+                  <li><NuxtLink id="UserNomeEFoto" to="/auth/user-information-page">
+
+                    <nuxt-img  v-if="user.foto == ''" src="img/user-solid.svg" format="webp" width="20" height="20"/>
+                    <nuxt-img  v-else :src="`http://localhost:8000/static/img/FotoPerfil/${user.foto}`" format="webp" width="20" height="15"/>
+                    {{ user.nome }}
+                    </NuxtLink>
+                    
+                </li>
               </ul>
           </nav>
           
@@ -73,9 +80,9 @@
         display: block;
         color:var(--colorThree);
         margin: 0 2px;
-        padding: 8px 18px;
+        padding: 10px;
         transition: 0.2s;
-        border-radius: 30px;
+        border-radius: 8px;
     }
 
     nav ul li a:hover{
@@ -111,6 +118,12 @@
     .logo img{
         border-radius: 20px;
         border: solid var(--colorTwo) 4px;
+    }
+
+    #UserNomeEFoto{
+        display: flex;
+        gap: 5px;
+        align-items: center;
     }
 
     /* Reposividade do header */

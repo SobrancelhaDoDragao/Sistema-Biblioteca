@@ -42,7 +42,7 @@
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
                            <NuxtLink :to="'/auth/acervo/livro/'+livro.id"> 
-                           <nuxt-img class="livro" :src="'http://localhost:8000/static/img/CapasLivros/'+livro.capa" format="webp" width="100" height="150"/>
+                           <nuxt-img class="livro" :src="'/serverImage/'+livro.capa" format="webp" width="100" height="150"/>
                            </NuxtLink>
 
                         </div>

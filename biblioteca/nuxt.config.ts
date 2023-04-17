@@ -7,7 +7,11 @@ export default defineNuxtConfig({
     ],
     image: {
       domains: ['http://localhost:8000/static/img'],
+      alias: {
+        serverImage: 'http://localhost:8000/static/img/CapasLivros/'
+      },
     },
+   
     runtimeConfig: {
 
       public: {

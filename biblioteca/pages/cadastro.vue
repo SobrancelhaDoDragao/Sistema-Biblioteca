@@ -56,7 +56,7 @@
         email:'',
         password:'',
         password2:'',
-        foto:'teste',
+        foto:'',
         is_admin:''
     })
     
