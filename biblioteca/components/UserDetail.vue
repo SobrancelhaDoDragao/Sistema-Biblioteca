@@ -15,11 +15,9 @@
 
             <div id="FotoPerfil">
 
-                
-                <nuxt-img  v-if="user.foto == ''" src="img/user-solid.svg" format="webp" width="100" height="139"/>
-                <nuxt-img  v-else :src="`http://localhost:8000/static/img/FotoPerfil/${user.foto}`" format="webp" width="100" height="139"/>
-
-                <input type="file" v-on:change="filechange">
+                    <nuxt-img  v-if="user.foto == ''" src="icons/user-solid.svg" width="100" height="139"/>
+                    <nuxt-img  v-else :src="`http://localhost:8000/static/img/FotoPerfil/${user.foto}`" sizes="sm:80vw lg:20vw" placeholder/>
+                    <input type="file" v-on:change="filechange">
             </div>
         </div>
 
@@ -31,10 +29,6 @@
 
 <style scoped>
 
-#main-user-detail{
-    flex: 4;
-}
-
 main h1,h3{
     font-weight: var(--thin-weight);
     margin-bottom: 1rem;
@@ -44,30 +38,42 @@ main h1,h3{
     margin-top: 1rem;
     border-bottom: solid 2px var(--colorSix);
 }
+
 #UserDetailConteiner{
     display: flex;
-    align-items: center;
+    gap: 1rem;
 }
 
 form{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 60%;
 }
 
 #btn-user-detail{
     margin-top: 1rem;
 }
 
-#btn-user-foto{
-  margin-top: 1rem;
-  width: 10rem;
-}
-
 #FotoPerfil{
  display: flex;
  flex-direction: column;
- margin-left: 1rem;
+ width: 40%;
+}
+
+@media only screen and (max-width: 700px){
+    #UserDetailConteiner{
+        display: flex;
+        flex-direction: column;
+    }
+
+    form{
+        width: 100%;
+    }
+
+    #FotoPerfil{
+        width: 100%;
+    }
+  
 }
 </style>
 

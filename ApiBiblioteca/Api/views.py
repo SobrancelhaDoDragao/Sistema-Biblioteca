@@ -7,6 +7,9 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import status
 from django.http import Http404
+from .filters import LivroFilter
+
+
 import base64
 from PIL import Image
 from io import BytesIO
@@ -137,8 +140,11 @@ class User_Detail(APIView):
 
             filename = salvarImagem(data_url,path,nome)
                 
-            # Salvando o nome do arquivo no banco
+            # Para salvar o nome do arquivo no banco
             request.data['foto'] = filename
+
+            # Apagando foto antiga. Obs: Testar se funcionado quando for a primeira foto, porque não havera foto para deletar
+            os.remove(f'{path}{user.foto}')
         except:
             pass
 
@@ -168,6 +174,7 @@ class LivroList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAP
 
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
+    filterset_class = LivroFilter
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -257,7 +264,7 @@ class Livro_Detail(APIView):
         """
         livro = self.get_object(request)
 
-        os.remove(f'Api/static/img/{livro.capa}')
+        os.remove(f'Api/static/img/CapasLivros/{livro.capa}')
         
         livro.delete()
 

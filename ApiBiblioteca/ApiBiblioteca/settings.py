@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'Api',
     'rest_framework_simplejwt.token_blacklist',
-     "corsheaders",
+    "corsheaders",
+    'django_filters',
 ]
 
 AUTH_USER_MODEL = 'Api.CustomUser'
@@ -55,7 +56,8 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_PAGINATION_CLASS': 'Api.pagination.PaginationToFrontEnd',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 SIMPLE_JWT = {

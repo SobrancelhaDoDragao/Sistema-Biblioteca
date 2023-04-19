@@ -1,6 +1,6 @@
 <template>
    <NuxtLayout>
-     <TheSideBar></TheSideBar> <UserDetail></UserDetail>
+    <UserDetail></UserDetail>
   </NuxtLayout>
 </template>
 

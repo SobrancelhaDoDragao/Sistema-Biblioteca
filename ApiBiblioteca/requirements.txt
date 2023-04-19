@@ -2,6 +2,7 @@ asgiref==3.6.0
 backports.zoneinfo==0.2.1;python_version<"3.9"
 Django==4.1.7
 django-cors-headers==3.14.0
+django-filter==23.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 Pillow==9.5.0
@@ -9,5 +10,3 @@ PyJWT==2.6.0
 pytz==2023.2
 sqlparse==0.4.3
 whitenoise==6.4.0
-
-

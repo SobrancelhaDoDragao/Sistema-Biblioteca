@@ -1,7 +1,10 @@
 <template>
     <main id="main-livro" class="conteiner-padrao">
-       
-      <nuxt-img  id="livro-detail" :src="'http://localhost:8000/static/img/CapasLivros/'+livro.livro.capa" fit="inside" sizes='xs:50vw sm:40vw md:35vw lg:28vw xl:20vw'/>
+
+       <div id="img-conteiner">
+          <nuxt-img :src="'http://localhost:8000/static/img/CapasLivros/'+livro.livro.capa" fit="fill" sizes='xs:50vw sm:40vw md:35vw lg:28vw xl:300px' placeholder/>
+       </div>
+      
         <div id="livro-informacao">
 
             <div v-if="!editar">
@@ -30,13 +33,13 @@
             </form>
 
             <div id="acoes-livro">
-                <NuxtLink to="/auth/acervo/livros" class="btn-padrao" id='btn-voltar-livro'>Voltar</NuxtLink> 
+                <NuxtLink to="/auth/acervo/livros" class="btn-padrao" id='btn-voltar-livro'><nuxt-img src="icons/arrow-left-solid.svg" width="25" height="25"/></NuxtLink> 
 
-                <button v-if="!editar" id='btn-salvar-livro' class="btn-padrao" v-on:click="showEditarInput">Editar</button>
+                <button v-if="!editar" id='btn-salvar-livro' class="btn-padrao" v-on:click="showEditarInput"><nuxt-img src="icons/pen-solid.svg" width="25" height="25"/></button>
                 <button v-else id='btn-salvar-livro' class="btn-danger" v-on:click="showEditarInput">Cancelar</button>
 
+                <button id='btn-excluir-livro' v-on:click="DeleteLivro" class="btn-danger"><nuxt-img src="icons/trash-can-solid.svg" width="25" height="25"/></button>
                 <button id='btn-emprestimo-livro' class="btn-padrao" >Emprestar</button>
-                <button id='btn-excluir-livro' v-on:click="DeleteLivro" class="btn-danger" >Excluir</button> 
             </div>
             
         </div>
@@ -92,6 +95,10 @@ h2{
 
 #btn-voltar-livro{
     text-decoration: none;
+}
+
+#img-conteiner{
+   margin: auto;
 }
 </style>
 

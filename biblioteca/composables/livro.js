@@ -9,15 +9,24 @@ export const useLivroStore = defineStore('Livro', {
     },
   
     actions:{  
-      async GetLivros(page){
+      async GetLivros(page,nome,editora){
         
         if(page != null){
+
           // Url base do back-end
           // Não fica disponivel no url /
           const config = useRuntimeConfig()
           
-          
-          const response = await $fetch(`${config.apiBase}createlivro/?page=${page}`,{
+          let url = `${config.apiBase}createlivro/`
+
+          if(nome || editora){
+            url = url + `?nome=${nome}&editora=${editora}`
+          }
+          else{
+            url = url + `?page=${page}`
+          }
+
+          const response = await $fetch(url,{
                   method:'GET',
                   headers:{'Content-Type':'application/json'}
           });

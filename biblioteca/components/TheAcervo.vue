@@ -31,18 +31,46 @@
             </Transition>
          </Teleport>
 
+
+
+         <Teleport to="body">
+               <!--Essa div só deve ser visivel para admins-->
+
+            <Transition name="bounce">
+               <div v-if="modalFiltro" id="modalFiltro" class="modal">
+                  <h1>Filtrar</h1>
+
+                  <form class="form-padrao">
+
+                     <label for="nome">Nome</label>
+                     <input type="text" id="nome" v-model="NomeFiltro" >
+
+                     <label for="editora">Editora</label>
+                     <input type="text" id="editora" v-model="EditoraFiltro" >
+                     
+                  <div id="group-btn-cadastro">
+                    <button class="btn-padrao" @click.prevent="filtrar">Filtrar</button> <button class="btn-padrao" @click.prevent="modalFiltro = false">Cancelar</button>  
+                  </div>
+                  </form>
+               </div>
+            </Transition>
+         </Teleport>
+
                <div id="LivroConteiner">
                
                   <h1 id="h1Acervo">Acervo</h1>
 
-                   <button class="btn-padrao" id="btn-modal-acervo" @click.prevent="modal = true">Cadastrar livro</button> 
+                  <div  id="btn-modal-group">
+                     <button class="btn-padrao" id="btn-modal-acervo" @click.prevent="modal = true">Cadastrar livro</button> <button class="btn-padrao" id="btn-modal-filter" @click.prevent="modalFiltro = true">Filtrar</button> 
+                  </div>
+                   
 
                      <div class="Livros">
 
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
                            <NuxtLink :to="'/auth/acervo/livro/'+livro.id"> 
-                           <nuxt-img class="livro" :src="'/serverImage/'+livro.capa" format="webp" width="100" height="150"/>
+                           <nuxt-img class="livro" :src="'/serverImage/'+livro.capa" format="webp" width="100" height="150" placeholder />
                            </NuxtLink>
 
                         </div>
@@ -54,7 +82,7 @@
                   
                      <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.previousPageNumber)">Voltar</button>
                        
-                     <button :class="{ active: livros.livrosDados.PageActive == pagina }" class="btn-pagination" v-on:click="livros.GetLivros(pagina)" v-for="pagina in livros.livrosDados.quantidadePagina" >{{ pagina }}</button>
+                     <button :class="{ active: livros.livrosDados.PageActive == pagina }" class="btn-pagination" v-on:click="livros.GetLivros(pagina)" v-for="pagina in livros.livrosDados.quantidadePagina">{{ pagina }}</button>
 
                      <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.nextPageNumber)">Proxima</button>
 
@@ -69,8 +97,8 @@
 #main-acervo{
    flex: 4;
    display: grid;
-   grid-template-columns: 1fr;
-   grid-template-areas: "livro";
+   grid-template-columns: 1fr 1fr;
+   grid-template-areas: "livro livro";
    gap: 1rem;
    max-height: 78vh;
 }
@@ -121,6 +149,14 @@
    border: solid var(--colorOne) 2px;
 }
 
+#modalFiltro{
+   padding: .5rem;
+   background: var(--main-background-color-conteiner);
+   padding: 1rem;
+   border-radius: 20px;
+   border: solid var(--colorOne) 2px;
+}
+
 
 #btn-group-pagination{
    display: flex;
@@ -138,6 +174,11 @@
   cursor: pointer;
   border-radius: 5px;
   font-size: 1rem;
+}
+
+#btn-modal-group{
+display: flex;
+justify-content: space-between;
 }
 
 .active{
@@ -160,8 +201,14 @@
 }
 
 #btn-modal-acervo{
-   width: 10rem;
+   width: 8rem;
    margin-bottom: 1rem;
+   padding: .5rem;
+}
+#btn-modal-filter{
+   width: 5rem;
+   margin-bottom: 1rem;
+   padding: .5rem;
 }
 
 #ErroCadastroForm{
@@ -188,44 +235,33 @@
 </style>
 
 <script setup>
+      
+      // Modal cadastro e seus input
+      let modal = ref(false)
 
       let nome = ref('')
       let editora = ref('')
       let capa = ref('')
 
-      let modal = ref(false)
-
       let ErroCadastroForm = ref()
 
-      let livros = useLivroStore()
 
-      const route = useRoute()
-      
-      if(livros.livrosDados.PageActive){
-         livros.GetLivros(livros.livrosDados.PageActive)
-      }
-      else{
-         livros.GetLivros(1) //Primeira pagina
-      }
-      
-      
       let filechange = (event)=>{
 
-         const reader = new FileReader()
+      const reader = new FileReader()
 
-         reader.addEventListener("load",() => {
+      reader.addEventListener("load",() => {
 
-                     // Armazenando o valor data url da imagem na variavel capa
-                     capa.value = reader.result
-                  },
+                  // Armazenando o valor data url da imagem na variavel capa
+                  capa.value = reader.result
+               },
 
-         );
-         // Convertendo a imagem em data url
-         reader.readAsDataURL(event.target.files[0]);
+      );
+      // Convertendo a imagem em data url
+      reader.readAsDataURL(event.target.files[0]);
 
-      } 
+      }
 
-      
       let cadastrolLivro = async()=>{
             
             if(nome.value == ''|| editora.value == ''){
@@ -241,4 +277,26 @@
             }    
       }
  
+      // Modal filtro e seus input
+      let modalFiltro = ref(false)
+
+      let NomeFiltro = ref('')
+      let EditoraFiltro = ref('')
+
+      const filtrar = async ()=>{
+         let page = 0
+         await livros.GetLivros(page,NomeFiltro.value,EditoraFiltro.value)
+         modalFiltro.value = false
+      }
+       
+      let livros = useLivroStore()
+
+      
+      if(livros.livrosDados.PageActive){
+         livros.GetLivros(livros.livrosDados.PageActive)
+      }
+      else{
+         livros.GetLivros(1) //Primeira pagina
+      }
+      
 </script>
