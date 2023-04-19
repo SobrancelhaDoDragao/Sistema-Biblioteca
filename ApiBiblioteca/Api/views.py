@@ -171,6 +171,7 @@ class LivroList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAP
     """
     Exibir todos os livros ou adicionar um novo livro
     """
+    permission_classes = [IsAuthenticated] 
 
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
@@ -208,7 +209,7 @@ class Livro_Detail(APIView):
     """
     Recuperar, Atualizar ou deletar livro
     """
-    #permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated] 
 
     def get_object(self,request):
 

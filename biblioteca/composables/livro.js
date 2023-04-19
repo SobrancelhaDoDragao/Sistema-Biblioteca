@@ -9,15 +9,39 @@ export const useLivroStore = defineStore('Livro', {
     },
   
     actions:{  
+
+      async GetUrlBaseRuntimeConfig(){
+        // Nem sempre está disponivel no server por isso usarei try e catch
+        try {
+          const config = useRuntimeConfig()
+  
+          return config.public.apiBase
+  
+        } catch (error) {
+          
+          console.log('RuntimeConfig ainda não está disponivel')
+          return "http://127.0.0.1:8000/api/"
+        }  
+      },
+
+      async GetToken(){
+
+        let access = useCookie('access')
+        //let refresh = useCookie('refresh')
+       
+        let bearer = 'Bearer ' + access.value;
+  
+        return bearer
+      },
+
       async GetLivros(page,nome,editora){
         
         if(page != null){
 
-          // Url base do back-end
-          // Não fica disponivel no url /
-          const config = useRuntimeConfig()
+          const urlBase = await this.GetUrlBaseRuntimeConfig()
+          const token = await this.GetToken()
           
-          let url = `${config.apiBase}createlivro/`
+          let url = `${urlBase}createlivro/`
 
           if(nome || editora){
             url = url + `?nome=${nome}&editora=${editora}`
@@ -28,7 +52,9 @@ export const useLivroStore = defineStore('Livro', {
 
           const response = await $fetch(url,{
                   method:'GET',
-                  headers:{'Content-Type':'application/json'}
+                  headers:{'Content-Type':'application/json',
+                  'Authorization': token,
+                  },      
           });
 
           const livros = response.results
@@ -44,32 +70,34 @@ export const useLivroStore = defineStore('Livro', {
 
       async CreateLivro(nome,editora,capa){
 
-        // Url base do back-end
-        // Não fica disponivel no url /
-        const config = useRuntimeConfig()
-        
+        const url = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
+
         let form = {
           nome: nome.value,
           editora: editora.value,
           capa: capa.value
         }
 
-        await $fetch(`${config.apiBase}createlivro/`,{
+        await $fetch(`${url}createlivro/`,{
           method:'POST',
-          headers:{'Content-Type':'application/json'},
+          headers:{'Content-Type':'application/json',
+                  'Authorization': token},    
           body:form
           });
       },
 
       async GetLivro(id){
 
-        const config = useRuntimeConfig()
+        const url = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
 
         const form = {id:id}
 
-        let response = await $fetch(`${config.apiBase}livro/`,{
+        let response = await $fetch(`${url}livro/`,{
                   method:'POST',
-                  headers:{'Content-Type':'application/json'},
+                  headers:{'Content-Type':'application/json',
+                  'Authorization': token},
                   body:form
         });
         
@@ -81,7 +109,8 @@ export const useLivroStore = defineStore('Livro', {
 
       async PutLivro(id,nome,editora,capa,){
 
-        const config = useRuntimeConfig()
+        const url = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
 
         const form = {
           id:id,
@@ -90,9 +119,10 @@ export const useLivroStore = defineStore('Livro', {
           capa: capa.value
         }
 
-        let response = await $fetch(`${config.apiBase}livro/`,{
+        let response = await $fetch(`${url}livro/`,{
                   method:'PUT',
-                  headers:{'Content-Type':'application/json'},
+                  headers:{'Content-Type':'application/json',
+                  'Authorization': token},
                   body:form
         });
         
@@ -105,13 +135,15 @@ export const useLivroStore = defineStore('Livro', {
 
       async DeleteLivro(id){
 
-        const config = useRuntimeConfig()
-
+        const url = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
+        
         const form = {id:id}
 
-        let response = await $fetch(`${config.apiBase}livro/`,{
+        let response = await $fetch(`${url}livro/`,{
                   method:'DELETE',
-                  headers:{'Content-Type':'application/json'},
+                  headers:{'Content-Type':'application/json',
+                  'Authorization': token},
                   body:form
         });
       }

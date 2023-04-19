@@ -1,4 +1,7 @@
 export default defineNuxtRouteMiddleware(async ({redirect}) => {
+    
+    // Vai ser executado somente no server para não sobrecarregar o servidor
+    if (process.client) return
 
     // Url base do back-end
     const config = useRuntimeConfig()
@@ -6,12 +9,6 @@ export default defineNuxtRouteMiddleware(async ({redirect}) => {
     let token = useCookie('access')
   
     var bearer = 'Bearer ' + token.value;
-    /*
-    if(process.server){
-        console.log("SERVER SIDE")
-    }
-    */
-
    
     try {
         // Verificando se está logado

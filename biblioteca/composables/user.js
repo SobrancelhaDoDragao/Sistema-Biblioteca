@@ -11,7 +11,7 @@ export const useUserStore = defineStore('User', {
       password:'',
     }
   },
-
+  
   actions:{
     async GetToken(){
 
@@ -23,15 +23,28 @@ export const useUserStore = defineStore('User', {
       return bearer
     },
 
+    async GetUrlBaseRuntimeConfig(){
+      // Nem sempre está disponivel no server por isso usarei try e catch
+      try {
+        const config = useRuntimeConfig()
+
+        return config.public.apiBase
+
+      } catch (error) {
+        
+        console.log('RuntimeConfig ainda não está disponivel')
+        return "http://127.0.0.1:8000/api/"
+      }
+    
+    },
+
     async GetUserData(){
 
       let bearer = await this.GetToken()
   
-      // Url base do back-end
-      // Não fica disponivel no url /
-      const config = useRuntimeConfig()
-      
-      const response = await $fetch(`${config.public.apiBase}user/`,{
+      let url = await this.GetUrlBaseRuntimeConfig()
+
+      const response = await $fetch(`${url}user/`,{
           method:'GET',
           headers:{'Content-Type':'application/json',
           'Authorization': bearer,
@@ -52,7 +65,7 @@ export const useUserStore = defineStore('User', {
       let bearer = await this.GetToken()
   
       // Url base do back-end
-      const config = useRuntimeConfig()
+      let url = this.GetUrlBaseRuntimeConfig()
 
       let form = {
           nome: nome.value,
@@ -61,7 +74,7 @@ export const useUserStore = defineStore('User', {
           password:password.value
       } 
      
-      const response = await $fetch(`${config.public.apiBase}user/`,{
+      const response = await $fetch(`${url}user/`,{
         method:'PUT',
         headers:{'Content-Type':'application/json',
         'Authorization': bearer,
