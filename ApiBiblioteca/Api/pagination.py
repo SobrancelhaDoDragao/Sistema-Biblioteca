@@ -3,13 +3,15 @@ from rest_framework.response import Response
 from math import ceil
 
 class PaginationToFrontEnd(PageNumberPagination):
-    
+
+    page_size = 15
+
     def get_paginated_response(self, data):
         
         nextPageNumber = self.get_next_link()
         previousPageNumber = self.get_previous_link()
         PageActive = 0
-        TotalPages = ceil(self.page.paginator.count/10) # Sempre será um numero inteiro arredondado para cima
+        TotalPages = ceil(self.page.paginator.count/self.page_size) # Sempre será um numero inteiro arredondado para cima
         
         if(data):
             try:

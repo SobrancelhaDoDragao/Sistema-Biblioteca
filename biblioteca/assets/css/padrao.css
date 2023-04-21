@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
 /*Variaveis padroes*/
+
 :root{
 
     --main-radius:10px;
@@ -35,6 +36,7 @@
     --margem-bordas:5rem;
   }
 
+/*Resetando style*/
 * {
     box-sizing: border-box;
     padding: 0;
@@ -42,7 +44,7 @@
     font-family: var(--main-font);
     font-weight: var(--regular-weight);
 }
-
+/* Botoes */
 .btn-padrao{
   background: var(--colorOne);
   color:var(--colorTwo);
@@ -65,6 +67,12 @@
   cursor: pointer;
 }
 
+/* Formularios */
+
+.form-padrao{
+  padding: 1rem;
+}
+
 .form-padrao input{
   width: 100%;
   border:none;
@@ -80,7 +88,13 @@
 .form-padrao label{
   color: var(--colorThree);
   font-weight: var(--thin-weight);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 10px;
 }
+
+/* Conteiners */
 
 .conteiner-padrao{
     background-color: var(--main-background-color-conteiner);
@@ -92,6 +106,30 @@
 
 .conteiner-padrao h1{
   font-weight: var(--thin-weight);
+}
+
+
+/*---      Modal       ---------*/
+
+
+/* Animacao modal */
+.bounce-enter-active {
+  animation: bounce-in 0.4s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.4s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.10);
+  }
+  100% {
+    transform: scale(1);
+  }
+ 
 }
 
 
