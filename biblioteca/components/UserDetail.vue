@@ -105,7 +105,7 @@ reader.readAsDataURL(event.target.files[0]);
 
 } 
 
-const enviar =  async () => {
+const enviar = async () => {
     //Atualizando dados
     await user.PutUserData(nome,email,foto,password)
     await user.GetUserData()

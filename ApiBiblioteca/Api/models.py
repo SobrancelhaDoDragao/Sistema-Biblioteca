@@ -78,10 +78,10 @@ class CustomUser(AbstractBaseUser):
 class Livro(models.Model):
 
     nome = models.CharField(max_length=50)
-    editora = models.CharField(max_length=50)
     capa = models.CharField(max_length=50)
+    autor = models.CharField(max_length=50)
+    editora = models.CharField(max_length=50,null=True, blank=True)
+    genero = models.CharField(max_length=50,null=True, blank=True)
+    descricao = models.TextField(null=True, blank=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    # Falta o autor do livro
-    # Falta o genero do livro, Ação, romance, classico, literatura brasileira. Pode ser uma tag tb.
 
- 

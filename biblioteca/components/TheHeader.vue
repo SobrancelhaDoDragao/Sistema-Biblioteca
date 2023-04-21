@@ -14,7 +14,7 @@
                   <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
                   <li><NuxtLink id="UserNomeEFoto" to="/auth/user-information-page">
 
-                    <nuxt-img  v-if="user.foto == ''" src="img/user-solid.svg" format="webp" width="20" height="20"/>
+                    <nuxt-img  v-if="user.foto == ''" src="icons/user-solid.svg" format="webp" width="20" height="20"/>
                     <nuxt-img  v-else :src="`http://localhost:8000/static/img/FotoPerfil/${user.foto}`" format="webp" width="20" height="15"/>
                     {{ user.nome }}
                     </NuxtLink>

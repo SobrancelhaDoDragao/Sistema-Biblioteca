@@ -10,7 +10,7 @@
                   <form id="formCadastroLivro" class="form-padrao">
                     
                         <div>
-                        <label for="nome">Nome</label>
+                        <label for="nome">Nome <span>*Obrigatório</span></label>
                         <input type="text" id="nome" v-model="nome">
                         </div>
                         
@@ -21,24 +21,24 @@
                         </div>
                         
                         <div>
-                        <label for="autor">Autor</label>
-                        <input type="text" id="autor">
+                        <label for="autor">Autor <span>*Obrigatório</span></label>
+                        <input type="text" id="autor" v-model="autor">
                         </div>
                         
                         <div>
                         <label for="genero">Gênero</label>
-                        <input type="text" id="genero" >
+                        <input type="text" id="genero" v-model="genero">
                         </div>
 
                         <div id="descricaoDiv">
                             <label for="descricao">Descrição</label>
                    
-                            <textarea id="descricao" name="story" rows="2">
+                            <textarea id="descricao" v-model="descricao">
                   
                             </textarea>
                         </div>
                         <div id="capaDiv" >
-                            <label for="capa">Capa</label>
+                            <label for="capa">Capa <span>*Obrigatório</span></label>
                             <input type="file" name="" id="capa" v-on:change="filechange" >
                         </div>
                     
@@ -75,6 +75,14 @@
   border-radius: 10px;
 }
 
+#formCadastroLivro{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: last baseline;
+}
+
+
 #descricaoDiv{
 /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
   grid-area: 3 / 1 / 3 / 3;
@@ -105,23 +113,13 @@ form{
 
 textarea {
     font-size: 1rem;
-    letter-spacing: 1px;
     width: 100%;
-}
-
-textarea {
-    padding: 10px;
+    height: 15vh;
+    padding: 5px;
     max-width: 100%;
-    line-height: 1.5;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
-}
-
-#formCadastroLivro{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
 }
 
 #group-btn-cadastro{
@@ -137,7 +135,7 @@ textarea {
 }
 
 #ErroCadastroForm{
-  color: var(--colorTwo);
+  color: red;
   text-align: center;
 }
 </style>
@@ -150,8 +148,11 @@ let livros = useLivroStore()
 let modal = ref(false)
 
 let nome = ref('')
-let editora = ref('')
 let capa = ref('')
+let autor = ref('')
+let editora = ref('')
+let genero = ref('')
+let descricao = ref('')
 
 let ErroCadastroForm = ref()
 
@@ -174,14 +175,14 @@ reader.readAsDataURL(event.target.files[0]);
 
 let cadastrolLivro = async()=>{
       
-      if(nome.value == ''|| editora.value == ''){
+      if(nome.value == ''|| autor.value == ''){
          ErroCadastroForm.value = 'Preecha todos os campos'
       }
       else if(capa.value == ''){
          ErroCadastroForm.value = 'Nenhuma imagem foi enviada'
       }
       else{
-         await livros.CreateLivro(nome,editora,capa)
+         await livros.CreateLivro(nome,capa,autor,editora,genero,descricao)
          await livros.GetLivros(livros.livrosDados.PageActive)
          modal.value = false
       }    

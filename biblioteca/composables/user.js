@@ -65,7 +65,7 @@ export const useUserStore = defineStore('User', {
       let bearer = await this.GetToken()
   
       // Url base do back-end
-      let url = this.GetUrlBaseRuntimeConfig()
+      let url = await this.GetUrlBaseRuntimeConfig()
 
       let form = {
           nome: nome.value,

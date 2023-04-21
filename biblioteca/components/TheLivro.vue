@@ -11,7 +11,9 @@
 
                 <h1>{{ livro.livro.nome }}</h1>
 
-                <h2>Editora: {{ livro.livro.editora }}</h2>
+                <p id="descricao">{{ livro.livro.descricao }}</p>
+
+                <h3><span>Autor: {{ livro.livro.autor }}</span> <span>Editora: {{ livro.livro.editora }}</span> <span>Gênero: {{ livro.livro.genero }}</span></h3>
             
             </div>
 
@@ -19,27 +21,51 @@
 
                 <h1 id="h1Editar">Editar</h1>
 
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" v-model="nome">
+                        <div>
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" v-model="nome">
+                        </div>
+                        
 
-                <label for="editora">Editora</label>
-                <input type="text" id="editora" v-model="editora" >
+                        <div>
+                        <label for="editora">Editora</label>
+                        <input type="text" id="editora" v-model="editora" >
+                        </div>
+                        
+                        <div>
+                        <label for="autor">Autor</label>
+                        <input type="text" id="autor" v-model="autor">
+                        </div>
+                        
+                        <div>
+                        <label for="genero">Gênero</label>
+                        <input type="text" id="genero" v-model="genero">
+                        </div>
 
-                <label for="capa">Capa</label>
-                <input type="file" id="capa" v-on:change="filechange" >
-
-                <button id="btn-acervo" class="btn-padrao" @click.prevent="EditarLivro">Salvar</button>
+                        <div id="descricaoDiv">
+                            <label for="descricao">Descrição</label>
+                   
+                            <textarea id="descricao" v-model="descricao">
+                  
+                            </textarea>
+                        </div>
+                        <div id="capaDiv" >
+                            <label for="capa">Capa</label>
+                            <input type="file" name="" id="capa" v-on:change="filechange" >
+                        </div>
 
             </form>
-
+  
             <div id="acoes-livro">
                 <NuxtLink to="/auth/acervo/livros" class="btn-padrao" id='btn-voltar-livro'><nuxt-img src="icons/arrow-left-solid.svg" width="25" height="25"/></NuxtLink> 
 
-                <button v-if="!editar" id='btn-salvar-livro' class="btn-padrao" v-on:click="showEditarInput"><nuxt-img src="icons/pen-solid.svg" width="25" height="25"/></button>
-                <button v-else id='btn-salvar-livro' class="btn-danger" v-on:click="showEditarInput">Cancelar</button>
+                <button v-if="!editar" id='btn-salvar-livro' class="btn-padrao" v-on:click="showEditarInput">Editar</button>
+                <button v-else id='btn-salvar-livro' class="btn-padrao" v-on:click="showEditarInput">Cancelar</button>
 
-                <button id='btn-excluir-livro' v-on:click="DeleteLivro" class="btn-danger"><nuxt-img src="icons/trash-can-solid.svg" width="25" height="25"/></button>
-                <button id='btn-emprestimo-livro' class="btn-padrao" >Emprestar</button>
+                <button v-if="!editar" id='btn-emprestimo-livro' class="btn-padrao">Emprestar</button>
+                <button v-else id="btn-acervo" class="btn-padrao" @click.prevent="EditarLivro">Salvar</button>
+
+                <button v-if="editar" id='btn-excluir-livro' v-on:click="DeleteLivro" class="btn-danger"><nuxt-img src="icons/trash-can-solid.svg" width="25" height="25"/></button>
             </div>
             
         </div>
@@ -67,30 +93,56 @@
     justify-content: space-between;
 }
 
+form{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .3rem;
+}
+
+span{
+    background: var(--colorFive);
+    padding: .2rem;
+    border-radius: 5px;
+    font-weight: var(--medium-weight);
+}
+
+#descricao{
+    margin-top: 1rem;
+}
+
+#descricaoDiv{
+/*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
+  grid-area: 4 / 1 / 4 / 4;
+}
+
+#capaDiv{
+  /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
+  grid-area: 3 / 2 / 4 / 4;
+}
+
 h1{
   font-size: 2.5rem;
   border-bottom: solid 2px var(--colorFive);
   width: 100%;
 }
 
-h2{
+h3{
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #acoes-livro{
     display: flex;
     gap: .5rem;
     border-top: solid 2px var(--colorFive);
-    padding-top: 1rem;
+    padding-top: .5rem;
     flex-wrap: wrap;
 }
 
 #h1Editar{
     margin-bottom: 1rem;
-}
-
-#btn-acervo{
-  margin-top: 1rem;
+    /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
+    grid-area: 1 / 1 / 1 / 4;
 }
 
 #btn-voltar-livro{
@@ -99,6 +151,16 @@ h2{
 
 #img-conteiner{
    margin: auto;
+}
+
+textarea {
+    font-size: 1rem;
+    width: 100%;
+    height:20vh;
+    max-width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
 }
 </style>
 
@@ -113,6 +175,9 @@ await livro.GetLivro(route.params.id)
 let nome = ref(livro.livro.nome)
 let editora = ref(livro.livro.editora)
 let capa = ref(livro.livro.capa)
+let autor = ref(livro.livro.autor)
+let genero = ref(livro.livro.genero)
+let descricao = ref(livro.livro.descricao)
 
 // Variavel input para editar
 let editar = ref(false)
@@ -122,9 +187,10 @@ const showEditarInput = ()=>{
 }
 
 const EditarLivro = async()=>{
-    await livro.PutLivro(route.params.id,nome,editora,capa)
+    await livro.PutLivro(route.params.id,nome,capa,autor,editora,genero,descricao)
     editar.value = !editar.value
 }
+
 const DeleteLivro = async()=>{
     await livro.DeleteLivro(route.params.id)
     navigateTo('/auth/acervo/livros')

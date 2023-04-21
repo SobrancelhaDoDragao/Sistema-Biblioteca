@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useLivroStore = defineStore('Livro', {
     state: () => {
       return {
-        livro:{id:'',nome:'',editora:'',capa:''}, //Usado apenas pelo putLivro e Getlivro
+        livro:{id:'',nome:'',capa:'',autor:'',editora:'',genero:'',descricao:''}, //Usado apenas pelo putLivro e Getlivro
         livrosDados: {PageActive:null,quantidadePagina:0,livros:[],nextPageNumber:null,previousPageNumber:null},
       }
     },
@@ -34,7 +34,7 @@ export const useLivroStore = defineStore('Livro', {
         return bearer
       },
 
-      async GetLivros(page,nome,editora){
+      async GetLivros(page,search){
         
         if(page != null){
 
@@ -43,8 +43,10 @@ export const useLivroStore = defineStore('Livro', {
           
           let url = `${urlBase}createlivro/`
 
-          if(nome || editora){
-            url = url + `?nome=${nome}&editora=${editora}`
+          if(search){
+            url = url + `?search=${search}`
+
+            console.log(url)
           }
           else{
             url = url + `?page=${page}`
@@ -68,15 +70,18 @@ export const useLivroStore = defineStore('Livro', {
       },
 
 
-      async CreateLivro(nome,editora,capa){
+      async CreateLivro(nome,capa,autor,editora,genero,descricao){
 
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
 
         let form = {
           nome: nome.value,
+          capa: capa.value,
+          autor: autor.value,
           editora: editora.value,
-          capa: capa.value
+          genero: genero.value,
+          descricao: descricao.value
         }
 
         await $fetch(`${url}createlivro/`,{
@@ -104,10 +109,13 @@ export const useLivroStore = defineStore('Livro', {
         this.livro.id = response.id
         this.livro.nome = response.nome
         this.livro.capa = response.capa
+        this.livro.autor = response.autor
         this.livro.editora = response.editora
+        this.livro.genero = response.genero
+        this.livro.descricao = response.descricao
       },
 
-      async PutLivro(id,nome,editora,capa,){
+      async PutLivro(id,nome,capa,autor,editora,genero,descricao){
 
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
@@ -115,8 +123,11 @@ export const useLivroStore = defineStore('Livro', {
         const form = {
           id:id,
           nome: nome.value,
+          capa: capa.value,
+          autor: autor.value,
           editora: editora.value,
-          capa: capa.value
+          genero: genero.value,
+          descricao: descricao.value
         }
 
         let response = await $fetch(`${url}livro/`,{
@@ -129,7 +140,10 @@ export const useLivroStore = defineStore('Livro', {
         this.livro.id = response.id
         this.livro.nome = response.nome
         this.livro.capa = response.capa
+        this.livro.autor = response.autor
         this.livro.editora = response.editora
+        this.livro.genero = response.genero
+        this.livro.descricao = response.descricao
       },
 
 

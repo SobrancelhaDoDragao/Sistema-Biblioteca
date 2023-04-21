@@ -69,10 +69,6 @@
 
 /* Formularios */
 
-.form-padrao{
-  padding: 1rem;
-}
-
 .form-padrao input{
   width: 100%;
   border:none;
@@ -91,7 +87,7 @@
   font-size: 1rem;
   letter-spacing: 1px;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: .5rem;
 }
 
 /* Conteiners */

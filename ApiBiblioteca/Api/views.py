@@ -7,15 +7,13 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import status
 from django.http import Http404
-from .filters import LivroFilter
-
+from rest_framework import filters
 
 import base64
 from PIL import Image
 from io import BytesIO
 import datetime
 import os
-
 
 from .models import CustomUser as User
 from .models import Livro
@@ -171,11 +169,13 @@ class LivroList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAP
     """
     Exibir todos os livros ou adicionar um novo livro
     """
-    permission_classes = [IsAuthenticated] 
+    #permission_classes = [IsAuthenticated] 
 
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
-    filterset_class = LivroFilter
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nome', 'autor','editora','genero']
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

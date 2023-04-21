@@ -5,25 +5,24 @@
 
             <Transition name="bounce">
                <div v-if="modalFiltro" id="modalFiltro" class="modal">
-                  <h1>Filtrar</h1>
+                  <h1>Pesquisar</h1>
 
                   <form class="form-padrao">
-
-                     <label for="nome">Nome</label>
-                     <input type="text" id="nome" v-model="NomeFiltro" >
-
-                     <label for="editora">Editora</label>
-                     <input type="text" id="editora" v-model="EditoraFiltro" >
+                      
+                  <div id="conteiner-search">
+                     <input type="text" id="search" v-model="search" > <button class="btn-padrao" @click.prevent="filtrar"> <nuxt-img src="icons/magnifying-glass-solid.svg"  width="20" height="20" ></nuxt-img></button>
+                  </div>
+                
                      
                   <div id="group-btn-filtro">
-                    <button class="btn-padrao" @click.prevent="filtrar">Filtrar</button>  <button class="btn-padrao" @click.prevent="livros.GetLivros(1)">Resetar filtro</button>  <button class="btn-padrao" @click.prevent="modalFiltro = false">Cancelar</button>  
+                     <button class="btn-padrao" @click.prevent="livros.GetLivros(1)">Limpar pesquisa</button>  <button class="btn-padrao" @click.prevent="modalFiltro = false">Cancelar</button>  
                   </div>
                   </form>
                </div>
             </Transition>
          </Teleport>
 
-        <button class="btn-padrao" id="btn-modal-filter" @click.prevent="modalFiltro = true">Filtrar</button> 
+        <button class="btn-padrao" id="btn-modal-filter" @click.prevent="modalFiltro = true">Pesquisar</button> 
 
 </template>
 
@@ -46,19 +45,20 @@
 }
 
 #modalFiltro{
-   padding: .5rem;
+   padding: 1rem;
    background: var(--main-background-color-conteiner);
    border-radius: 10px;
 }
 
 #btn-modal-filter{
-   width: 5rem;
+   width: 8rem;
    margin-bottom: 1rem;
    padding: .5rem;
 }
 
 #modalFiltro h1{
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 
@@ -67,7 +67,10 @@
    justify-content: space-between;
    margin-top: 1rem;
 }
-
+#conteiner-search{
+  display: flex;
+  gap: 1rem;
+}
 </style>
 
 
@@ -78,12 +81,11 @@ let livros = useLivroStore()
 // Modal filtro e seus input
 let modalFiltro = ref(false)
 
-let NomeFiltro = ref('')
-let EditoraFiltro = ref('')
+let search = ref('')
 
 const filtrar = async ()=>{
    let page = 0
-   await livros.GetLivros(page,NomeFiltro.value,EditoraFiltro.value)
+   await livros.GetLivros(page,search.value)
    modalFiltro.value = false
 }
 
