@@ -1,9 +1,13 @@
-from django.db import models
-from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.db import models
+from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from django.db.models.signals import pre_delete, pre_save
+from django.dispatch import receiver
+
+import os
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, nome, password=None):
@@ -89,3 +93,21 @@ class Livro(models.Model):
     genero = models.CharField(max_length=50,null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
+
+
+@receiver(pre_delete, sender=Livro)
+def deleteCapa(sender,instance, **kwargs):
+    # Removendo capa dos arquivos
+    os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{instance.capa}")
+
+@receiver(pre_save, sender=Livro)
+def deleteCapaAntiga(sender,instance, **kwargs):
+
+    try:
+        livro = Livro.objects.get(id=instance.id)
+        
+        if livro.capa != instance.capa:
+                # Removendo capa dos arquivos
+                os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{livro.capa}")
+    except Livro.DoesNotExist:
+        pass

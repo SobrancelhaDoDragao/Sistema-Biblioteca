@@ -15,7 +15,6 @@ import base64
 from PIL import Image
 from io import BytesIO
 import datetime
-import os
 
 from .models import CustomUser as User
 from .models import Livro
