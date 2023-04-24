@@ -39,7 +39,7 @@
                         </div>
                         <div id="capaDiv" >
                             <label for="capa">Capa <span>*Obrigatório</span></label>
-                            <input type="file" name="" id="capa" v-on:change="filechange" >
+                            <input type="file" id="capa" ref="capa">
                         </div>
                     
                 </form>  
@@ -148,41 +148,33 @@ let livros = useLivroStore()
 let modal = ref(false)
 
 let nome = ref('')
-let capa = ref('')
+//let capa = ref('')
 let autor = ref('')
 let editora = ref('')
 let genero = ref('')
 let descricao = ref('')
-
 let ErroCadastroForm = ref()
 
-
-let filechange = (event)=>{
-
-const reader = new FileReader()
-
-reader.addEventListener("load",() => {
-
-            // Armazenando o valor data url da imagem na variavel capa
-            capa.value = reader.result
-         },
-
-);
-// Convertendo a imagem em data url
-reader.readAsDataURL(event.target.files[0]);
-
-}
+let capa 
 
 let cadastrolLivro = async()=>{
       
       if(nome.value == ''|| autor.value == ''){
-         ErroCadastroForm.value = 'Preecha todos os campos'
+         ErroCadastroForm.value = 'Preecha todos os campos obrigatórios'
       }
-      else if(capa.value == ''){
-         ErroCadastroForm.value = 'Nenhuma imagem foi enviada'
-      }
+
       else{
-         await livros.CreateLivro(nome,capa,autor,editora,genero,descricao)
+         let formData = new FormData()
+
+         formData.append('nome',nome.value)
+         formData.append('capa',capa.files[0])
+         formData.append('autor',autor.value)
+         formData.append('editora',editora.value)
+         formData.append('genero',genero.value)
+         formData.append('descricao',descricao.value)
+
+         
+         await livros.CreateLivro(formData)
          await livros.GetLivros(livros.livrosDados.PageActive)
          modal.value = false
       }    

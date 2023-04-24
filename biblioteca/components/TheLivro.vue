@@ -2,9 +2,9 @@
     <main id="main-livro" class="conteiner-padrao">
 
        <div id="img-conteiner">
-          <nuxt-img :src="'http://localhost:8000/static/img/CapasLivros/'+livro.livro.capa" fit="fill" sizes='xs:50vw sm:40vw md:35vw lg:28vw xl:300px' placeholder/>
+          <nuxt-img :src="livro.livro.capa" quality="100" fit="contain" width="350" height="500" placeholder/>
        </div>
-      
+    
         <div id="livro-informacao">
 
             <div v-if="!editar">
@@ -51,7 +51,7 @@
                         </div>
                         <div id="capaDiv" >
                             <label for="capa">Capa</label>
-                            <input type="file" name="" id="capa" v-on:change="filechange" >
+                            <input type="file" name="" id="capa" ref="capa">
                         </div>
 
             </form>
@@ -174,7 +174,7 @@ await livro.GetLivro(route.params.id)
 
 let nome = ref(livro.livro.nome)
 let editora = ref(livro.livro.editora)
-let capa = ref(livro.livro.capa)
+let capa 
 let autor = ref(livro.livro.autor)
 let genero = ref(livro.livro.genero)
 let descricao = ref(livro.livro.descricao)
@@ -187,7 +187,29 @@ const showEditarInput = ()=>{
 }
 
 const EditarLivro = async()=>{
-    await livro.PutLivro(route.params.id,nome,capa,autor,editora,genero,descricao)
+
+    let formData = new FormData()
+    
+    if(nome.value != livro.livro.nome){ 
+        formData.append('nome',nome.value) 
+    } 
+    if(capa.files[0]){
+        formData.append('capa',capa.files[0]) 
+    } 
+    if(autor.value != livro.livro.autor){ 
+        formData.append('autor',autor.value)
+    } 
+    if(editora.value != livro.livro.editora){ 
+        formData.append('editora',editora.value) 
+    } 
+    if(genero.value != livro.livro.genero){
+         formData.append('genero',genero.value) 
+    } 
+    if(descricao.value != livro.livro.descricao){ 
+        formData.append('descricao',descricao.value) 
+    }
+    
+    await livro.PutLivro(route.params.id,formData)
     editar.value = !editar.value
 }
 
@@ -196,19 +218,6 @@ const DeleteLivro = async()=>{
     navigateTo('/auth/acervo/livros')
 }
 
-
-let filechange = (event)=>{
-
-const reader = new FileReader()
-
-reader.addEventListener("load",() => {
-            // Armazenando o valor data url da imagem na variavel capa
-            capa.value = reader.result
-         },
-);
-// Convertendo a imagem em data url
-reader.readAsDataURL(event.target.files[0]);
-} 
 </script>
 
 

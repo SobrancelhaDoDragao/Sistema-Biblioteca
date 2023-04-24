@@ -17,7 +17,7 @@
 
                     <nuxt-img  v-if="user.foto == ''" src="icons/user-solid.svg" width="100" height="139"/>
                     <nuxt-img  v-else :src="`http://localhost:8000/static/img/FotoPerfil/${user.foto}`" sizes="sm:80vw lg:20vw" placeholder/>
-                    <input type="file" v-on:change="filechange">
+                    <input type="file" ref="foto">
             </div>
         </div>
 
@@ -84,30 +84,27 @@ const user = useUserStore()
 
 let nome = ref(user.nome)
 let email = ref(user.email)
-let foto = ref(user.foto)
-let password = ref(user.password)
+let foto
 
 
-let filechange = (event)=>{
-
-const reader = new FileReader()
-
-reader.addEventListener("load",() => {
-
-            // Armazenando o valor data url da imagem na variavel capa
-            foto.value = reader.result
-         },
-
-);
-
-// Convertendo a imagem em data url
-reader.readAsDataURL(event.target.files[0]);
-
-} 
 
 const enviar = async () => {
     //Atualizando dados
-    await user.PutUserData(nome,email,foto,password)
+
+    let formData = new FormData()
+    
+    if(nome.value != user.nome){
+        formData.append('nome',nome.value)
+    }
+    if(email.value != user.email){
+        formData.append('email',email.value)
+    }
+
+    if(foto.files[0]){
+        formData.append('foto',foto.files[0])
+    }
+     
+    await user.PutUserData(formData)
     await user.GetUserData()
 }
 

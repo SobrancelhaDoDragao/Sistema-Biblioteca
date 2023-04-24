@@ -5,6 +5,7 @@ export const useUserStore = defineStore('User', {
     return {
       access:'',
       refresh:'',
+      id:'',
       nome:'',
       email:'',
       foto:'',
@@ -33,7 +34,7 @@ export const useUserStore = defineStore('User', {
       } catch (error) {
         
         console.log('RuntimeConfig ainda não está disponivel')
-        return "http://127.0.0.1:8000/api/"
+        return "http://127.0.0.1:8000/"
       }
     
     },
@@ -44,7 +45,7 @@ export const useUserStore = defineStore('User', {
   
       let url = await this.GetUrlBaseRuntimeConfig()
 
-      const response = await $fetch(`${url}user/`,{
+      const response = await $fetch(`${url}UserLogado/`,{
           method:'GET',
           headers:{'Content-Type':'application/json',
           'Authorization': bearer,
@@ -52,7 +53,8 @@ export const useUserStore = defineStore('User', {
       });
 
       const user = response
-
+      
+      this.id = user.id
       this.nome = user.nome
       this.email = user.email
       this.foto = user.foto
@@ -60,28 +62,21 @@ export const useUserStore = defineStore('User', {
       
     },
 
-    async PutUserData(nome,email,foto,password){
+    async PutUserData(form){
 
       let bearer = await this.GetToken()
   
       // Url base do back-end
       let url = await this.GetUrlBaseRuntimeConfig()
 
-      let form = {
-          nome: nome.value,
-          email: email.value,
-          foto: foto.value,
-          password:password.value
-      } 
-     
-      const response = await $fetch(`${url}user/`,{
-        method:'PUT',
-        headers:{'Content-Type':'application/json',
+      const response = await $fetch(`${url}users/${this.id}/`,{
+        method:'PATCH',
+        headers:{
         'Authorization': bearer,
         },
         body:form
        });
-
+       
     }
 
   }

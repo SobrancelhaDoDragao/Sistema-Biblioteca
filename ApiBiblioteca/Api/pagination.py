@@ -10,7 +10,7 @@ class PaginationToFrontEnd(PageNumberPagination):
         
         nextPageNumber = self.get_next_link()
         previousPageNumber = self.get_previous_link()
-        PageActive = 0
+        PageActive = 1
         TotalPages = ceil(self.page.paginator.count/self.page_size) # Sempre será um numero inteiro arredondado para cima
         
         if(data):

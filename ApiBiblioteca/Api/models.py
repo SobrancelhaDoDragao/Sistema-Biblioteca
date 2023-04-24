@@ -1,8 +1,9 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-
+from django.conf import settings
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, nome, password=None):
@@ -45,7 +46,7 @@ class CustomUser(AbstractBaseUser):
     )
     # Campos adicionais
     nome = models.CharField(max_length=50)
-    foto = models.CharField(max_length=100, blank=True)
+    foto = models.ImageField()
 
     
     is_active = models.BooleanField(default=True)
@@ -75,13 +76,16 @@ class CustomUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
     
+
+
+storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
+
 class Livro(models.Model):
 
     nome = models.CharField(max_length=50)
-    capa = models.CharField(max_length=50)
+    capa = models.ImageField(storage=storageCapas)
     autor = models.CharField(max_length=50)
     editora = models.CharField(max_length=50,null=True, blank=True)
     genero = models.CharField(max_length=50,null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
-

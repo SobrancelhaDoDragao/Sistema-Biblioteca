@@ -87,7 +87,8 @@ definePageMeta({
                         headers:{'Content-Type':'application/json'},
                         body:JSON.stringify(credentials)
                     });
-
+                    
+                    console.log(response)
                     let token = response
                     // Salvando tokens
                     access.value = token.access

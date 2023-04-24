@@ -41,12 +41,10 @@ export const useLivroStore = defineStore('Livro', {
           const urlBase = await this.GetUrlBaseRuntimeConfig()
           const token = await this.GetToken()
           
-          let url = `${urlBase}createlivro/`
+          let url = `${urlBase}livros/`
 
           if(search){
             url = url + `?search=${search}`
-
-            console.log(url)
           }
           else{
             url = url + `?page=${page}`
@@ -70,26 +68,17 @@ export const useLivroStore = defineStore('Livro', {
       },
 
 
-      async CreateLivro(nome,capa,autor,editora,genero,descricao){
+      async CreateLivro(form){
 
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
 
-        let form = {
-          nome: nome.value,
-          capa: capa.value,
-          autor: autor.value,
-          editora: editora.value,
-          genero: genero.value,
-          descricao: descricao.value
-        }
-
-        await $fetch(`${url}createlivro/`,{
-          method:'POST',
-          headers:{'Content-Type':'application/json',
-                  'Authorization': token},    
+        let response = await $fetch(`${url}livros/`,{
+          method:'POST', 
+          headers:{'Authorization': token},   
           body:form
           });
+
       },
 
       async GetLivro(id){
@@ -97,43 +86,25 @@ export const useLivroStore = defineStore('Livro', {
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
 
-        const form = {id:id}
-
-        let response = await $fetch(`${url}livro/`,{
-                  method:'POST',
+        let response = await $fetch(`${url}livros/${id}`,{
+                  method:'GET',
                   headers:{'Content-Type':'application/json',
                   'Authorization': token},
-                  body:form
         });
         
-        this.livro.id = response.id
-        this.livro.nome = response.nome
-        this.livro.capa = response.capa
-        this.livro.autor = response.autor
-        this.livro.editora = response.editora
-        this.livro.genero = response.genero
-        this.livro.descricao = response.descricao
+       this.livro = response
+
+       console.log(response.capa)
       },
 
-      async PutLivro(id,nome,capa,autor,editora,genero,descricao){
+      async PutLivro(id,form){
 
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
 
-        const form = {
-          id:id,
-          nome: nome.value,
-          capa: capa.value,
-          autor: autor.value,
-          editora: editora.value,
-          genero: genero.value,
-          descricao: descricao.value
-        }
-
-        let response = await $fetch(`${url}livro/`,{
-                  method:'PUT',
-                  headers:{'Content-Type':'application/json',
-                  'Authorization': token},
+        let response = await $fetch(`${url}livros/${id}/`,{
+                  method:'PATCH',
+                  headers:{'Authorization': token},
                   body:form
         });
         
@@ -152,13 +123,10 @@ export const useLivroStore = defineStore('Livro', {
         const url = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
         
-        const form = {id:id}
-
-        let response = await $fetch(`${url}livro/`,{
+        let response = await $fetch(`${url}livros/${id}`,{
                   method:'DELETE',
                   headers:{'Content-Type':'application/json',
                   'Authorization': token},
-                  body:form
         });
       }
   
