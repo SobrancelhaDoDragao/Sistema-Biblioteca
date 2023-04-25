@@ -6,7 +6,7 @@ from .models import CustomUser, Livro
 
 
 class UserSerializer(serializers.ModelSerializer):
-   
+
     class Meta:
         model = CustomUser 
         fields = ('id','nome', 'email', 'foto','password','is_admin')

@@ -9,6 +9,9 @@ from django.dispatch import receiver
 
 import os
 
+storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
+storageFotos = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/FotosUsuarios",base_url=f'{settings.MEDIA_URL}FotosUsuarios')
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, nome, password=None):
         """
@@ -50,7 +53,7 @@ class CustomUser(AbstractBaseUser):
     )
     # Campos adicionais
     nome = models.CharField(max_length=50)
-    foto = models.ImageField()
+    foto = models.ImageField(storage=storageFotos)
 
     
     is_active = models.BooleanField(default=True)
@@ -81,9 +84,6 @@ class CustomUser(AbstractBaseUser):
         return self.is_admin
     
 
-
-storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
-
 class Livro(models.Model):
 
     nome = models.CharField(max_length=50)
@@ -110,4 +110,16 @@ def deleteCapaAntiga(sender,instance, **kwargs):
                 # Removendo capa dos arquivos
                 os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{livro.capa}")
     except Livro.DoesNotExist:
+        pass
+
+@receiver(pre_save, sender=CustomUser)
+def deleteFotoAntiga(sender,instance, **kwargs):
+
+    try:
+        user = CustomUser.objects.get(id=instance.id)
+        
+        if user.foto != instance.foto:
+                # Removendo foto dos arquivos
+                os.remove(f"{settings.MEDIA_ROOT}/FotosUsuarios/{user.foto}")
+    except CustomUser.DoesNotExist:
         pass

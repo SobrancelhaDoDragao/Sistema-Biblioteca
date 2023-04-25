@@ -5,12 +5,6 @@ export default defineNuxtConfig({
       '@pinia/nuxt',
       '@nuxt/image-edge',
     ],
-    image: {
-      domains: ['http://localhost:8000/static/img'],
-      alias: {
-        serverImage: 'http://localhost:8000/static/img/CapasLivros/'
-      },
-    },
    
     runtimeConfig: {
 

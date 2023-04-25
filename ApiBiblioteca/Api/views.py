@@ -10,11 +10,10 @@ from django.http import Http404
 from rest_framework import filters
 from rest_framework import viewsets
 
+from django.conf import settings
 
-import base64
 from PIL import Image
-from io import BytesIO
-import datetime
+
 
 from .models import CustomUser as User
 from .models import Livro
@@ -57,14 +56,14 @@ class VerifyAuthenticated(APIView):
 class UserCRUD(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def UserLogadoData(self, request, *args, **kwargs):
    
         user = User.objects.get(id=request.user.id)
-
-        serializer = UserSerializer(user)
-
+        # Para gerar a imagem com URL completa precisa passar o contexto 
+        serializer = UserSerializer(user,context={'request': request})
+      
         return Response(serializer.data)
 
 class LivroCRUD(viewsets.ModelViewSet):
