@@ -56,8 +56,7 @@
         email:'',
         password:'',
         password2:'',
-        foto:'',
-        is_admin:''
+        is_admin:0
     })
     
     let erros = ref()
@@ -77,7 +76,7 @@
     }
     const CreateUser = async ()=>{
              
-            let response = await fetch(`${config.apiBase}createuser`,{
+            let response = await fetch(`${config.apiBase}cadastro/`,{
                 method:'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(formulario)
@@ -89,7 +88,8 @@
                await navigateTo('/')
             }
             else{
-                erros.value = resultado['email'][0]
+                console.log(resultado)
+                //erros.value = resultado['email'][0]
             }
             
     

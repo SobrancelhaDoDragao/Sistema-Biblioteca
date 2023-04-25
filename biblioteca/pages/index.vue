@@ -88,7 +88,6 @@ definePageMeta({
                         body:JSON.stringify(credentials)
                     });
                     
-                    console.log(response)
                     let token = response
                     // Salvando tokens
                     access.value = token.access
@@ -98,6 +97,7 @@ definePageMeta({
                     
                 } catch (error) {
                     erro.value = `Algo foi digitado errado`
+                    console.log(credentials)
                 }
                 
  } 

@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('', include(router.urls)),
     path('UserLogado/', views.UserCRUD.as_view({'get': 'UserLogadoData'})),
+    path('cadastro/', views.CadastroUser.as_view()),
 ]
 
 if settings.DEBUG:

@@ -13,30 +13,28 @@ storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",b
 storageFotos = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/FotosUsuarios",base_url=f'{settings.MEDIA_URL}FotosUsuarios')
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, nome, password=None):
+    def create_user(self, nome, email, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User 
         """
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-             nome=nome,
+            nome=nome,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, nome, password=None):
+    def create_superuser(self, nome, email, password=None):
         """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
+        Creates and saves a superuser 
         """
         user = self.create_user(
-            email,
+            email=email,
             password=password,
             nome=nome,
         )
@@ -53,7 +51,7 @@ class CustomUser(AbstractBaseUser):
     )
     # Campos adicionais
     nome = models.CharField(max_length=50)
-    foto = models.ImageField(storage=storageFotos)
+    foto = models.ImageField(storage=storageFotos,null=True, blank=True)
 
     
     is_active = models.BooleanField(default=True)
@@ -121,5 +119,5 @@ def deleteFotoAntiga(sender,instance, **kwargs):
         if user.foto != instance.foto:
                 # Removendo foto dos arquivos
                 os.remove(f"{settings.MEDIA_ROOT}/FotosUsuarios/{user.foto}")
-    except CustomUser.DoesNotExist:
+    except:
         pass

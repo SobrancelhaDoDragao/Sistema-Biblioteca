@@ -14,7 +14,7 @@
             </form>
 
             <div id="FotoPerfil">
-                    <nuxt-img  v-if="user.foto == ''" src="icons/user-solid.svg" width="100" height="139"/>
+                    <nuxt-img  v-if="user.foto == null" src="icons/user-solid.svg" width="100" height="139"/>
                     <nuxt-img  v-else :src="user.foto" width="100" height="139"/>
                     <input type="file" ref="foto">
             </div>

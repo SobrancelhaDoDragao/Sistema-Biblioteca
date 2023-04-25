@@ -59,7 +59,6 @@ export const useUserStore = defineStore('User', {
       this.email = user.email
       this.foto = user.foto
       this.password = user.password
-      
     },
 
     async PutUserData(form){
