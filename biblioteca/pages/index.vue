@@ -97,7 +97,6 @@ definePageMeta({
                     
                 } catch (error) {
                     erro.value = `Algo foi digitado errado`
-                    console.log(credentials)
                 }
                 
  } 

@@ -88,8 +88,7 @@
                await navigateTo('/')
             }
             else{
-                console.log(resultado)
-                //erros.value = resultado['email'][0]
+                erros.value = resultado['email'][0]
             }
             
     
