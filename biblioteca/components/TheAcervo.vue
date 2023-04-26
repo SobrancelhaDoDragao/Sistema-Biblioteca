@@ -1,7 +1,6 @@
 <template>
     <main id="main-acervo" class="conteiner-padrao" >
                
-        
                <div id="LivroConteiner">
                
                   <h1 id="h1Acervo">Acervo</h1>
@@ -15,14 +14,14 @@
 
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
-                           <NuxtLink :to="'/auth/acervo/livro/'+livro.id"> 
-                           <nuxt-img class="livro" :src="livro.capa" format="webp" width="110" height="170" placeholder/>
+                           <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
+                           <nuxt-img class="livro" :src="livro.capa" :placeholder="placeholder" width="110" height="170" />
                            </NuxtLink>
                      
                         </div>
                         
                      </div>
-
+  
                   <div id="btn-group-pagination">
 
                   
@@ -118,9 +117,9 @@ flex-wrap: wrap;
 </style>
 
 <script setup>
-
+   import placeholder from '~/assets/placeholder.png'
    let livros = useLivroStore()
-
+   
       
    if(livros.livrosDados.PageActive){
       livros.GetLivros(livros.livrosDados.PageActive)
