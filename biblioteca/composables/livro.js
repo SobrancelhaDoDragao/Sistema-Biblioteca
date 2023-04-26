@@ -94,7 +94,6 @@ export const useLivroStore = defineStore('Livro', {
         
        this.livro = response
 
-       console.log(response.capa)
       },
 
       async PutLivro(id,form){

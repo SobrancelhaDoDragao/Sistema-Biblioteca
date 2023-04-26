@@ -5,7 +5,12 @@ export default defineNuxtConfig({
       '@pinia/nuxt',
       '@nuxt/image-edge',
     ],
-   
+    image: {
+      domains: [
+        // Só funciona assim, tem que mostrar os dominios permitidos 
+        '127.0.0.1:8000'
+      ],
+    },
     runtimeConfig: {
 
       public: {
