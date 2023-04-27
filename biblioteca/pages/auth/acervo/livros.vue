@@ -10,6 +10,6 @@
   })
 
   useHead({
-    title: 'Biblioteca|Acervo',
+    title: 'Biblioteca | Acervo',
   })
 </script>

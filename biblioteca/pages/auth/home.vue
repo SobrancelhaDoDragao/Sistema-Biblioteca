@@ -12,7 +12,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Biblioteca|Home',
+  title: 'Biblioteca | Home',
 })
 
 // Dados do usuário logado, as vezes não funciona redirect /auth/home server-side

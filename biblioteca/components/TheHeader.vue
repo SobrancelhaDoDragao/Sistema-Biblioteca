@@ -12,7 +12,8 @@
                   <li> <a href="#">Modo dark</a></li>
                   <li><NuxtLink to="/auth/home">Home</NuxtLink></li>
                   <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
-                  <li><NuxtLink id="UserNomeEFoto" to="/auth/user-information-page">
+                  <li><NuxtLink to="/auth/gerenciar-emprestimos/emprestimos">Empréstimos</NuxtLink></li>
+                  <li><NuxtLink to="/auth/user-information-page" id="UserNomeEFoto">
 
                     <nuxt-img  v-if="user.foto == null" src="icons/user-solid.svg" format="webp" width="20" height="20"/>
                     <nuxt-img  v-else :src="user.foto" format="webp" width="20" height="15"/>

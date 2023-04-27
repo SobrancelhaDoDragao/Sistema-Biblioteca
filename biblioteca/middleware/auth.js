@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async ({redirect}) => {
    
     try {
         // Verificando se está logado
-        const response = await $fetch(`${config.public.apiBase}VerifyAuthenticated`,{
+        const response = await $fetch(`${config.public.apiBase}VerifyAuthenticated/`,{
             method:'POST',
             headers:{'Content-Type':'application/json',
             'Authorization': bearer,

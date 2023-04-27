@@ -12,7 +12,7 @@ definePageMeta({
   })
 
 useHead({
-    title: 'Biblioteca|Livro',
+    title: 'Biblioteca | Livro',
 })
 
 </script>

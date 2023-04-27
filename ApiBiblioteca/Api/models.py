@@ -8,6 +8,10 @@ from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
 
 import os
+from datetime import datetime, timedelta
+# Fuso horario
+from django.utils.timezone import now
+
 
 storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
 storageFotos = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/FotosUsuarios",base_url=f'{settings.MEDIA_URL}FotosUsuarios')
@@ -91,6 +95,18 @@ class Livro(models.Model):
     genero = models.CharField(max_length=50,null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
+
+class Emprestimo(models.Model):
+
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_devolucao = models.DateTimeField(default = now() + timedelta(days=30))
+
+
 
 
 @receiver(pre_delete, sender=Livro)

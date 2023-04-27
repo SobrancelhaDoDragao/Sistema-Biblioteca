@@ -15,7 +15,7 @@
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
                            <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                           <nuxt-img class="livro" :src="livro.capa" format="webp" quality="80" placeholder width="110" height="170" />
+                           <nuxt-img class="livro" :src="livro.capa" format="webp" placeholder width="110" height="170" />
                            </NuxtLink>
                      
                         </div>
@@ -117,6 +117,7 @@ flex-wrap: wrap;
 </style>
 
 <script setup>
+
    let livros = useLivroStore()
    
       
