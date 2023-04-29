@@ -100,7 +100,7 @@ class Livro(models.Model):
         return self.nome
 
 class Emprestimo(models.Model):
-
+     
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
     usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)

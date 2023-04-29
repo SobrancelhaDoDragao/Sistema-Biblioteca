@@ -70,7 +70,10 @@ class CadastroUser(APIView):
 class UserCRUD(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['email','id']
     
     def UserLogadoData(self, request, *args, **kwargs):
    

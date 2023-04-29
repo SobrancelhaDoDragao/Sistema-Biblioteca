@@ -9,7 +9,13 @@
         <table>
             <tr><th class="colum-id">#id</th> <th class="colum-usuario" >Usuario</th> <th class="colum-livro" >Livro</th> <th class="colum-date" >Emprestimo</th> <th class="colum-date">Devolução</th> </tr>
 
-            <tr v-for="emprestimo in emprestimos.results" :key="emprestimo.id" ><td class="colum-id">#{{ emprestimo.id }}</td> <td class="colum-usuario">{{ emprestimo.usuario }}</td> <td class="colum-livro">{{ emprestimo.livro }}</td>  <td class="colum-date" >{{ emprestimo.data_criacao }}</td> <td class="colum-date">{{ emprestimo.data_devolucao }}</td></tr>
+            <tr v-for="emprestimo in emprestimos.results" :key="emprestimo.id" >
+                <td class="colum-id">#{{ emprestimo.id }}</td> 
+                <td class="colum-usuario">{{ emprestimo.usuario_nome }}</td> 
+                <td class="colum-livro">{{ emprestimo.livro_nome }}</td>  
+                <td class="colum-date" >{{ emprestimo.data_criacao }}</td> 
+                <td class="colum-date">{{ emprestimo.data_devolucao }}</td>
+            </tr>
 
         </table>
    </main>
@@ -23,8 +29,7 @@ const getEmprestimos = async() =>{
                
         const response = await $fetch('http://127.0.0.1:8000/emprestimos',{
                   method:'GET',
-                  headers:{'Content-Type':'application/json'}
-                 
+                  headers:{'Content-Type':'application/json'}        
         });
 
         return response

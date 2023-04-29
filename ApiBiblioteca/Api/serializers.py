@@ -29,15 +29,17 @@ class LivroSerializer(serializers.ModelSerializer):
         fields = ('id','nome','capa','autor','editora','genero','descricao')
 
 class EmprestimoSerializer(serializers.ModelSerializer):
+    
+    # Esses campos não existem no banco de dados, são apenas de visualização 
+    livro_nome = serializers.ReadOnlyField(source='livro.nome')
+    usuario_nome = serializers.ReadOnlyField(source='usuario.nome')
 
-    livro = serializers.StringRelatedField()
-    usuario = serializers.StringRelatedField()
     data_criacao = serializers.SerializerMethodField()
     data_devolucao = serializers.SerializerMethodField()
 
     class Meta:
         model = Emprestimo
-        fields = ('id','livro','usuario','data_criacao','data_devolucao')
+        fields = ('id','livro','usuario','data_criacao','data_devolucao','livro_nome','usuario_nome')
 
 
     def get_data_criacao(self, obj):
