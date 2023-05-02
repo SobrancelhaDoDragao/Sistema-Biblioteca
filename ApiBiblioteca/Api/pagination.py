@@ -3,8 +3,11 @@ from rest_framework.response import Response
 from math import ceil
 
 class PaginationToFrontEnd(PageNumberPagination):
+    """
+    Paginacao criada para facilitar a implementacao do front-end com algumas novas variaveis retornadas
+    """
 
-    page_size = 8
+    page_size = 15
 
     def get_paginated_response(self, data):
         
@@ -50,3 +53,11 @@ class PaginationToFrontEnd(PageNumberPagination):
             'count': self.page.paginator.count,
             'results': data
        })
+
+
+class PaginationToEmprestimo(PaginationToFrontEnd):
+    """
+    Paginacao customizada criada apenas para alterar o page size
+    """
+
+    page_size = 5

@@ -12,6 +12,7 @@ from PIL import Image
 
 from .models import CustomUser as User
 from .models import Livro, Emprestimo
+from .pagination import PaginationToEmprestimo
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -96,6 +97,7 @@ class EmprestimoCRUD(viewsets.ModelViewSet):
 
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
+    pagination_class = PaginationToEmprestimo
 
     
  
