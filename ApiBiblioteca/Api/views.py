@@ -68,9 +68,10 @@ class CadastroUser(APIView):
 
 
 class UserCRUD(viewsets.ModelViewSet):
+    #permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    #permission_classes = [IsAuthenticated]
+   
 
     filter_backends = [filters.SearchFilter]
     search_fields = ['email','id']
@@ -84,7 +85,7 @@ class UserCRUD(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class LivroCRUD(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
     filter_backends = [filters.SearchFilter]

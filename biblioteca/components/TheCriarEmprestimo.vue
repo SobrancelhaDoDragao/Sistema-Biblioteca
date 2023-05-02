@@ -47,16 +47,16 @@
 
         <form id="form2">
             <h1>Livro do empréstimo</h1>
-            <div v-if="livro.livro.nome">
-                 <h2>{{livro.livro.nome}}</h2>
- 
-                 <nuxt-img :src="livro.livro.capa" placeholder width="100" height="150" />
+            <div v-if="livroEmprestimo">
+                 <h2>{{livroEmprestimo.nome}} teste</h2>
+                 
+                 <nuxt-img :src="livroEmprestimo.capa" placeholder width="100" height="150" />
             </div>
             <button v-on:click.prevent="modal = true" class="btn-padrao">Escolher livro</button>
         </form>
 
 
-        <button  id="ComfirmarEmprestimo" class="btn-padrao"  @click="CriarEmprestimo" >Comfirmar emprestimo</button>
+        <button id="ComfirmarEmprestimo" class="btn-padrao"  @click="CriarEmprestimo">Comfirmar emprestimo</button>
 
    </main>
 </template>
@@ -170,18 +170,21 @@ h2{
 
 
 <script setup>
+// UseState
+let emprestimo = useEmprestimoStore()
+let livro = useLivroStore()
 
+//Campos de pesquisa
 let searchLivro = ref()
 let searchUsuario = ref()
 
 let user = ref()
+let livroEmprestimo = ref()
 
 // Modal
 let modal = ref(false)
 
-let livro = useLivroStore()
-
-// Limpando os dados da pagina
+// Limpando variaveis
 livro.livrosDados.livros = 0
 
 let PesquisarLivro = () =>{
@@ -189,37 +192,17 @@ let PesquisarLivro = () =>{
 }
 
 let PesquisarUsuario = async ()=>{
-        const response = await $fetch(`http://localhost:8000/users/?search=${searchUsuario.value}`,{
-            method:'GET',
-            headers:{'Content-Type':'application/json'}
-        });
+    user.value = await emprestimo.GetUsuarioEmprestimo(searchUsuario.value)
+}
 
-        // Sempre ira retornar apenas um
-        user.value = response.results[0]
-
-
-  }
-
-const livroEscolhiodo = (id)=>{
-    livro.GetLivro(id)
+const livroEscolhiodo = async (id)=>{
+    livroEmprestimo.value = await emprestimo.GetLivroEmprestimo(id)
     modal.value = false
 }
 
-
-let CriarEmprestimo = async ()=>{
-
-    let form = {
-        "livro":livro.livro.id,
-        "usuario":user.value.id
-    } 
-
-    const response = await $fetch(`http://localhost:8000/emprestimos/`,{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:form
-      });
-
-    console.log(response)
+const CriarEmprestimo = async () =>{
+    await emprestimo.CriarEmprestimo(livroEmprestimo.value.id,user.value.id,)
+    navigateTo('/auth/gerenciar-emprestimos/emprestimos')
 }
 
 

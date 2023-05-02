@@ -20,7 +20,7 @@ export const useLivroStore = defineStore('Livro', {
         } catch (error) {
           
           console.log('RuntimeConfig ainda não está disponivel')
-          return "http://127.0.0.1:8000/api/"
+          return "http://127.0.0.1:8000/"
         }  
       },
 

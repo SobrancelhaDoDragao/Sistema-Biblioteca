@@ -4,7 +4,7 @@ from math import ceil
 
 class PaginationToFrontEnd(PageNumberPagination):
 
-    page_size = 15
+    page_size = 8
 
     def get_paginated_response(self, data):
         
