@@ -103,4 +103,8 @@ th{
     border-radius: 5px;
     font-size: 1rem;
 }
+
+.active{
+   background: var(--colorOne);
+}
 </style>

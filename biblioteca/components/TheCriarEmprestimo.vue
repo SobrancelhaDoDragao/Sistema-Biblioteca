@@ -48,7 +48,7 @@
         <form id="form2">
             <h1>Livro do empréstimo</h1>
             <div v-if="livroEmprestimo">
-                 <h2>{{livroEmprestimo.nome}} teste</h2>
+                 <h2>{{livroEmprestimo.nome}}</h2>
                  
                  <nuxt-img :src="livroEmprestimo.capa" placeholder width="100" height="150" />
             </div>
