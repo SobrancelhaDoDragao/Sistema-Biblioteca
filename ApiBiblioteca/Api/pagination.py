@@ -60,4 +60,4 @@ class PaginationToEmprestimo(PaginationToFrontEnd):
     Paginacao customizada criada apenas para alterar o page size
     """
 
-    page_size = 5
+    page_size = 7

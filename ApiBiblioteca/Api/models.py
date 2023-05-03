@@ -103,10 +103,9 @@ class Emprestimo(models.Model):
      
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
     usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50,default="Emprestado")
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_devolucao = models.DateTimeField(default = now() + timedelta(days=30))
-
-
 
 
 @receiver(pre_delete, sender=Livro)

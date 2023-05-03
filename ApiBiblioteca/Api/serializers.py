@@ -39,7 +39,7 @@ class EmprestimoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Emprestimo
-        fields = ('id','livro','usuario','data_criacao','data_devolucao','livro_nome','usuario_nome')
+        fields = ('id','livro','usuario','status','data_criacao','data_devolucao','livro_nome','usuario_nome')
 
 
     def get_data_criacao(self, obj):
