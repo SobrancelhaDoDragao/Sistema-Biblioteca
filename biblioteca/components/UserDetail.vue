@@ -85,8 +85,6 @@ let nome = ref(user.nome)
 let email = ref(user.email)
 let foto
 
-
-
 const enviar = async () => {
     //Atualizando dados
 
