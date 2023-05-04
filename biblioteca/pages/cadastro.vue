@@ -1,5 +1,5 @@
 <template>
-
+   <NuxtLoadingBar/>
     <div id="conteiner">
 
   
