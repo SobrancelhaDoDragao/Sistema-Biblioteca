@@ -11,13 +11,18 @@
                 </form>
 
 
-                <div id="resultado">
-                     <h3>Resultado</h3>
+               
+
+                <fieldset id="resultado">
+
+                    <legend>Resultado</legend>
+                     
 
                      <div id="LivroResultado">
                            <nuxt-img v-on:click="livroEscolhiodo(livro.id)" v-for="livro in livro.livrosDados.livros" :key="livro.id" class="livro" :src="livro.capa" format="webp" placeholder width="110" height="170" />
                      </div>
-                </div>
+                </fieldset>
+            
                
                 <button v-on:click.prevent="modal = false" class="btn-padrao">Fechar</button>
                </div>
@@ -79,7 +84,7 @@
 #form1{
     /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
     grid-area: 2 / 1 / 2 / 2;
-    border: solid var(--colorFive);
+    border: solid var(--colorFive) 3px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,7 +99,7 @@
 
     /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
     grid-area: 2 / 2 / 2 / 2;
-    border: solid var(--colorFive);
+    border: solid var(--colorFive) 3px;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -67,6 +67,35 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
 
       }
       },
+      async getEmprestimo(id){
+
+        const urlBase = await this.GetUrlBaseRuntimeConfig()
+   
+        const response = await $fetch(`${urlBase}emprestimos/${id}`,{
+                method:'GET',
+                headers:{'Content-Type':'application/json'}
+        });
+
+        return response
+           
+      },
+
+      async CriarEmprestimo(livro, user){
+
+        const urlBase = await this.GetUrlBaseRuntimeConfig()
+
+        let form = {
+              "livro":livro,
+              "usuario":user
+        } 
+        
+        const response = await $fetch(`${urlBase}emprestimos/`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:form
+        });
+           
+      },
 
       async GetUsuarioEmprestimo(searchUsuario){
 
@@ -94,23 +123,6 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
              
         return response
       },
-
-      async CriarEmprestimo(livro, user){
-
-        const urlBase = await this.GetUrlBaseRuntimeConfig()
-
-        let form = {
-              "livro":livro,
-              "usuario":user
-        } 
-        
-        const response = await $fetch(`${urlBase}emprestimos/`,{
-                method:'POST',
-                headers:{'Content-Type':'application/json'},
-                body:form
-        });
-           
-      }
     }
   
   })

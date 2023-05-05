@@ -12,8 +12,8 @@
             <tr v-for="emprestimo in emprestimo.emprestimosDados.emprestimos" :key="emprestimo.id" @click="RedirectEmprestimo(emprestimo.id)" class="LinkEmprestimo" >
 
                 <td>#{{ emprestimo.id }}</td> 
-                <td>{{ emprestimo.usuario_nome }}</td> 
-                <td>{{ emprestimo.livro_nome }}</td>  
+                <td>{{ emprestimo.UsuarioDados.nome }}</td> 
+                <td>{{ emprestimo.LivroDados.nome }}</td>  
                 <td>{{ emprestimo.data_criacao }}</td> 
                 <td>{{ emprestimo.data_devolucao }}</td>
                 <td>{{ emprestimo.status }}</td>
