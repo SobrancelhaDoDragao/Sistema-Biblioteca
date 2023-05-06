@@ -25,12 +25,30 @@
         </div> 
 
         <div id="status">
-            <span>Status: {{ dados.status }}</span>
+   
+            <label v-if="editar" for="select-emprestimo">Status:</label>
+            
+            <select v-if="editar" id="select-emprestimo" v-model="selected">
+                <option value="atrasado">Atrasado</option>
+                <option value="devolvido">Devolvido</option>
+                <option value="emprestado">Emprestado</option>
+            </select>
+
+            <span v-else >Status: {{ dados.status }}</span>
         </div>
 
 
         <NuxtLink to="/auth/gerenciar-emprestimos/emprestimos" class="btn-padrao" id="voltar-emprestimo"><nuxt-img src="icons/arrow-left-solid.svg" width="25" height="25"/></NuxtLink> 
-        <button class="btn-padrao"  id="alterar-emprestimo" >Alterar emprestimo</button>
+        
+
+        <div>
+
+        <button class="btn-padrao"  id="alterar-emprestimo" v-if="editar" @click.prevent="editar = false">Cancelar</button>
+        <button class="btn-padrao"  id="alterar-emprestimo" v-else @click.prevent="editar = true">Alterar emprestimo</button>
+
+        <button class="btn-padrao" @click="SalvarAlteracao" > Salvar</button>
+
+        </div>
             
     </section>
 
@@ -101,7 +119,6 @@ h2{
 
 span{
     font-size: 1.5rem;
-    font-weight: var(--thin-weight);
     border-bottom: solid 3px white;
 }
 
@@ -119,10 +136,32 @@ span{
     justify-self: flex-end;
 }
 
+#select-emprestimo{
+  font-size: 1rem;
+  font-weight: var(--bold-weight);
+  align-self: center;
+  padding: 5px;
+  border: none;
+  background: var(--main-background-color-conteiner);
+  border-radius: 10px;
+  width: 50%;
+}
+label{
+    font-size: 1rem;
+    font-weight: var(--bold-weight);
+    margin-right: 4px;
+}
+
 </style>
 
 
 <script setup>
+
+let selected = ref('emprestado')
+
+let SalvarAlteracao = ()=>{
+    console.log(selected)
+}
 
 const route = useRoute()
 const id = route.params.id
@@ -131,4 +170,5 @@ let emprestimo = useEmprestimoStore()
 
 let dados = await emprestimo.getEmprestimo(id)
 
+let editar = ref(false)
 </script>

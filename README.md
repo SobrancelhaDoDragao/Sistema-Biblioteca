@@ -36,18 +36,26 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ## Tecnologias usadas
 
-- Python
-- Javascript
-- Django rest framework
-- Vue.js
-- Nuxt
-- Html 
-- Css
-- Pinia
+- Front-End
+    - Nuxt
+    - Vue.js
+    - Javascript
+    - Html
+    - CSS
+    - Pinia
+- Back-End
+    - Python
+    - Django rest framework
+    - uWsgi
+    - Nginx
 
 ## Banco de dados
 
 Em andamendo
+
+## Estrutura do servidor / Projeto
+
+Em andamento
 
 ## Testes
 
