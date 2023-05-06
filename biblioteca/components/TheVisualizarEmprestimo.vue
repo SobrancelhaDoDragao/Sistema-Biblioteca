@@ -48,6 +48,8 @@
 
         <button class="btn-padrao" @click="SalvarAlteracao" > Salvar</button>
 
+        <button class="btn-padrao" @click="Excluir">Excluir</button>
+
         </div>
             
     </section>
@@ -159,10 +161,6 @@ label{
 
 let selected = ref('emprestado')
 
-let SalvarAlteracao = ()=>{
-    console.log(selected)
-}
-
 const route = useRoute()
 const id = route.params.id
 
@@ -171,4 +169,16 @@ let emprestimo = useEmprestimoStore()
 let dados = await emprestimo.getEmprestimo(id)
 
 let editar = ref(false)
+
+let SalvarAlteracao = async ()=>{
+
+    await emprestimo.PutEmprestimo(id,selected.value)
+    dados = await emprestimo.getEmprestimo(id)
+    editar.value = false
+}
+
+const Excluir = async()=>{
+    await emprestimo.DeleteEmprestimo(id)
+    navigateTo('/auth/gerenciar-emprestimos/emprestimos')
+}
 </script>

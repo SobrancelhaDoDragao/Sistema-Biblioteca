@@ -65,7 +65,7 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
           this.emprestimosDados.quantidadePagina = response.links.TotalPages
           this.emprestimosDados.PageActive = response.links.PageActive
 
-      }
+        }
       },
       async getEmprestimo(id){
 
@@ -123,6 +123,29 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
              
         return response
       },
+
+      async PutEmprestimo(id,status){
+
+        const urlBase = await this.GetUrlBaseRuntimeConfig()
+
+        const response = await $fetch(`${urlBase}emprestimos/${id}/`,{
+                method:'PATCH',
+                headers:{'Content-Type':'application/json'},
+                body:{ "status": status }
+        });
+
+      },
+
+      async DeleteEmprestimo(id){
+
+        const urlBase = await this.GetUrlBaseRuntimeConfig()
+
+        const response = await $fetch(`${urlBase}emprestimos/${id}/`,{
+                method:'DELETE',
+                headers:{'Content-Type':'application/json'},
+        });
+
+      }
     }
   
   })
