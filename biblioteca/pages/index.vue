@@ -1,5 +1,5 @@
 <template>
-
+   <NuxtLoadingBar/>
     <div class="main-login">
         
         <div class="explicao">

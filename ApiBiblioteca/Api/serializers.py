@@ -30,16 +30,15 @@ class LivroSerializer(serializers.ModelSerializer):
 
 class EmprestimoSerializer(serializers.ModelSerializer):
     
-    # Esses campos não existem no banco de dados, são apenas de visualização 
-    livro_nome = serializers.ReadOnlyField(source='livro.nome')
-    usuario_nome = serializers.ReadOnlyField(source='usuario.nome')
+    UsuarioDados = UserSerializer(source='usuario',read_only=True)
+    LivroDados = LivroSerializer(source='livro',read_only=True)
 
     data_criacao = serializers.SerializerMethodField()
     data_devolucao = serializers.SerializerMethodField()
 
     class Meta:
         model = Emprestimo
-        fields = ('id','livro','usuario','data_criacao','data_devolucao','livro_nome','usuario_nome')
+        fields = ('id','livro','usuario','status','data_criacao','data_devolucao','UsuarioDados','LivroDados')
 
 
     def get_data_criacao(self, obj):
@@ -51,5 +50,4 @@ class EmprestimoSerializer(serializers.ModelSerializer):
         data = obj.data_devolucao
         data_formatada = data.strftime('%d/%m/%Y')
         return data_formatada
-
 

@@ -100,13 +100,22 @@ class Livro(models.Model):
         return self.nome
 
 class Emprestimo(models.Model):
+
+    EMPRESTADO = 'emprestado'
+    ATRASADO = 'atrasado'
+    DEVOLVIDO = 'devolvido'
+
+    STATUS_CHOICES = [
+        (EMPRESTADO, 'Emprestado'),
+        (ATRASADO, 'Atrasado'),
+        (DEVOLVIDO, 'Devolvido'),
+    ]
      
     livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
     usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50,default=EMPRESTADO,choices=STATUS_CHOICES)
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_devolucao = models.DateTimeField(default = now() + timedelta(days=30))
-
-
 
 
 @receiver(pre_delete, sender=Livro)

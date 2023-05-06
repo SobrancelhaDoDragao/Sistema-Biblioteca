@@ -7,11 +7,9 @@ from rest_framework import viewsets,filters,status
 
 from django.conf import settings
 
-from PIL import Image
-
-
 from .models import CustomUser as User
 from .models import Livro, Emprestimo
+from .pagination import PaginationToEmprestimo
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -68,9 +66,10 @@ class CadastroUser(APIView):
 
 
 class UserCRUD(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    #permission_classes = [IsAuthenticated]
+   
 
     filter_backends = [filters.SearchFilter]
     search_fields = ['email','id']
@@ -92,9 +91,10 @@ class LivroCRUD(viewsets.ModelViewSet):
 
 
 class EmprestimoCRUD(viewsets.ModelViewSet):
-
+    permission_classes = [IsAuthenticated]
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
+    pagination_class = PaginationToEmprestimo
 
     
  

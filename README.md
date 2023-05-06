@@ -31,23 +31,32 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 - [x] Cadastro de usuários e bibliotecários
 - [x] Autenticação de usuários e bibliotecários
 - [x] Gerenciamento de livros (adicionar, remover, editar e visualizar)
-- [ ] Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
+- [x] Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
 - [ ] Pesquisa de livros e empréstimos
 
 ## Tecnologias usadas
 
-- Python
-- Javascript
-- Django rest framework
-- Vue.js
-- Nuxt
-- Html 
-- Css
-- Pinia
+- Front-End
+    - Nuxt
+    - Vue.js
+    - Javascript
+    - Html
+    - CSS
+    - Pinia
+- Back-End
+    - Python
+    - Django rest framework
+    - uWsgi
+    - Nginx
+    - SqlLite (Pretendo trocar no futuro para o Postgresql)
 
 ## Banco de dados
 
 Em andamendo
+
+## Estrutura do servidor / Projeto
+
+Em andamento
 
 ## Testes
 
