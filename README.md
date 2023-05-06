@@ -48,6 +48,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
     - Django rest framework
     - uWsgi
     - Nginx
+    - SqlLite (Pretendo trocar no futuro para o Postgresql)
 
 ## Banco de dados
 

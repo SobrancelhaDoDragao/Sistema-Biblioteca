@@ -7,9 +7,6 @@ from rest_framework import viewsets,filters,status
 
 from django.conf import settings
 
-from PIL import Image
-
-
 from .models import CustomUser as User
 from .models import Livro, Emprestimo
 from .pagination import PaginationToEmprestimo
@@ -69,7 +66,7 @@ class CadastroUser(APIView):
 
 
 class UserCRUD(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
    
@@ -86,7 +83,7 @@ class UserCRUD(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class LivroCRUD(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
     filter_backends = [filters.SearchFilter]
@@ -94,7 +91,7 @@ class LivroCRUD(viewsets.ModelViewSet):
 
 
 class EmprestimoCRUD(viewsets.ModelViewSet):
-
+    permission_classes = [IsAuthenticated]
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
     pagination_class = PaginationToEmprestimo

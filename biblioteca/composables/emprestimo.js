@@ -53,7 +53,8 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
     
           const response = await $fetch(url,{
                     method:'GET',
-                    headers:{'Content-Type':'application/json'}        
+                    headers:{'Content-Type':'application/json',
+                    'Authorization': token}   
           });
 
           const emprestimos = response.results
@@ -70,10 +71,11 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
       async getEmprestimo(id){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
-   
+        const token = await this.GetToken()
+
         const response = await $fetch(`${urlBase}emprestimos/${id}`,{
                 method:'GET',
-                headers:{'Content-Type':'application/json'}
+                headers:{'Content-Type':'application/json', 'Authorization': token} 
         });
 
         return response
@@ -83,6 +85,7 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
       async CriarEmprestimo(livro, user){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
 
         let form = {
               "livro":livro,
@@ -91,19 +94,21 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
         
         const response = await $fetch(`${urlBase}emprestimos/`,{
                 method:'POST',
-                headers:{'Content-Type':'application/json'},
+                headers:{'Content-Type':'application/json','Authorization': token},
                 body:form
         });
            
       },
 
+
       async GetUsuarioEmprestimo(searchUsuario){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
-        
+        const token = await this.GetToken()
+
         const response = await $fetch(`${urlBase}/users/?search=${searchUsuario}`,{
             method:'GET',
-            headers:{'Content-Type':'application/json'}
+            headers:{'Content-Type':'application/json','Authorization': token}
         });
 
         // Sempre ira retornar apenas um
@@ -127,10 +132,11 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
       async PutEmprestimo(id,status){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
 
         const response = await $fetch(`${urlBase}emprestimos/${id}/`,{
                 method:'PATCH',
-                headers:{'Content-Type':'application/json'},
+                headers:{'Content-Type':'application/json','Authorization': token},
                 body:{ "status": status }
         });
 
@@ -139,10 +145,11 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
       async DeleteEmprestimo(id){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
+        const token = await this.GetToken()
 
         const response = await $fetch(`${urlBase}emprestimos/${id}/`,{
                 method:'DELETE',
-                headers:{'Content-Type':'application/json'},
+                headers:{'Content-Type':'application/json','Authorization': token}
         });
 
       }

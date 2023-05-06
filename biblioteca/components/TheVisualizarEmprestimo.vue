@@ -41,12 +41,12 @@
         <NuxtLink to="/auth/gerenciar-emprestimos/emprestimos" class="btn-padrao" id="voltar-emprestimo"><nuxt-img src="icons/arrow-left-solid.svg" width="25" height="25"/></NuxtLink> 
         
 
-        <div>
+        <div id="btn-group-emprestimo">
 
         <button class="btn-padrao"  id="alterar-emprestimo" v-if="editar" @click.prevent="editar = false">Cancelar</button>
         <button class="btn-padrao"  id="alterar-emprestimo" v-else @click.prevent="editar = true">Alterar emprestimo</button>
 
-        <button class="btn-padrao" @click="SalvarAlteracao" > Salvar</button>
+        <button class="btn-padrao" v-if="editar == true" @click="SalvarAlteracao" > Salvar</button>
 
         <button class="btn-padrao" @click="Excluir">Excluir</button>
 
@@ -154,6 +154,10 @@ label{
     margin-right: 4px;
 }
 
+#btn-group-emprestimo{
+    display: flex;
+    gap: 5px;
+}
 </style>
 
 
