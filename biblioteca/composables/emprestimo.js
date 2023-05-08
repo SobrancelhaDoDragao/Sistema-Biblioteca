@@ -34,6 +34,17 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
         return bearer
       },
 
+      FormatarData(dataString){
+
+        const data = new Date(dataString);
+        const ano = data.getFullYear();
+        const mes = ("0" + (data.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda do mês, se necessário
+        const dia = ("0" + data.getDate()).slice(-2); // Adiciona um zero à esquerda do dia, se necessário
+        const dataFormatada = dia + '/' + mes + '/' + ano;
+
+        return dataFormatada
+      },
+
       async getEmprestimos(page,search){
 
         if(page != null){
@@ -59,6 +70,14 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
 
           const emprestimos = response.results
 
+          // Formatando data
+          for (let index = 0; index < emprestimos.length; index++) {
+            
+            const dataFormatada = this.FormatarData(emprestimos[index].data_devolucao);
+            
+            emprestimos[index].data_devolucao = dataFormatada
+          }
+          
           this.emprestimosDados.emprestimos = emprestimos
 
           this.emprestimosDados.nextPageNumber = response.links.nextPageNumber
@@ -77,6 +96,10 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
                 method:'GET',
                 headers:{'Content-Type':'application/json', 'Authorization': token} 
         });
+
+        const dataFormatada = this.FormatarData(response.data_devolucao);
+
+        response.data_devolucao = dataFormatada
 
         return response
            
@@ -129,15 +152,21 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
         return response
       },
 
-      async PutEmprestimo(id,status){
+      async PutEmprestimo(id,status,data){
 
         const urlBase = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
+        
+        let form = { "status": status}
 
+        if(data){
+          form = { "status": status, "data_devolucao":data}
+        }
+       
         const response = await $fetch(`${urlBase}emprestimos/${id}/`,{
                 method:'PATCH',
                 headers:{'Content-Type':'application/json','Authorization': token},
-                body:{ "status": status }
+                body:form
         });
 
       },

@@ -91,7 +91,7 @@ class LivroCRUD(viewsets.ModelViewSet):
 
 
 class EmprestimoCRUD(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
     pagination_class = PaginationToEmprestimo

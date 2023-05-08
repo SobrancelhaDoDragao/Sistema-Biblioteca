@@ -15,7 +15,7 @@
                 <td>{{ emprestimo.UsuarioDados.nome }}</td> 
                 <td>{{ emprestimo.LivroDados.nome }}</td>  
                 <td>{{ emprestimo.data_criacao }}</td> 
-                <td>{{ emprestimo.data_devolucao }}</td>
+                <td>{{ emprestimo.data_devolucao}}</td>
                 <td>{{ emprestimo.status }}</td>
 
             </tr>
