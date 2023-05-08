@@ -20,8 +20,13 @@
         
 
         <div id="datas">
-            <span>Emprestimo: {{ dados.data_criacao }}</span>
-            <span>Devolução: {{ dados.data_devolucao }}</span>
+
+            <span v-if="editar == false">Emprestimo: {{ dados.data_criacao }}</span>
+            <span v-if="editar == false">Devolução: {{ dados.data_devolucao }}</span>
+            
+            <span v-if="editar">Devolução:</span>
+            <input v-if="editar" type="datetime-local" v-model="data">
+            
         </div> 
 
         <div id="status">
@@ -164,6 +169,7 @@ label{
 <script setup>
 
 let selected = ref('emprestado')
+let data = ref()
 
 const route = useRoute()
 const id = route.params.id
@@ -176,7 +182,7 @@ let editar = ref(false)
 
 let SalvarAlteracao = async ()=>{
 
-    await emprestimo.PutEmprestimo(id,selected.value)
+    await emprestimo.PutEmprestimo(id,selected.value,data.value)
     dados = await emprestimo.getEmprestimo(id)
     editar.value = false
 }

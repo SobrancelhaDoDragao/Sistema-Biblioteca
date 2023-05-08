@@ -32,22 +32,18 @@ class EmprestimoSerializer(serializers.ModelSerializer):
     
     UsuarioDados = UserSerializer(source='usuario',read_only=True)
     LivroDados = LivroSerializer(source='livro',read_only=True)
-
+    
+    # Eu posso editar esse campo no seralizar porque ele nunca vai ser alterado, mas o devolucao não posso
     data_criacao = serializers.SerializerMethodField()
-    data_devolucao = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Emprestimo
         fields = ('id','livro','usuario','status','data_criacao','data_devolucao','UsuarioDados','LivroDados')
-
 
     def get_data_criacao(self, obj):
         data = obj.data_criacao
         data_formatada = data.strftime('%d/%m/%Y')
         return data_formatada
 
-    def get_data_devolucao(self, obj):
-        data = obj.data_devolucao
-        data_formatada = data.strftime('%d/%m/%Y')
-        return data_formatada
-
+ 
