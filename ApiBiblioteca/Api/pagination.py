@@ -61,3 +61,10 @@ class PaginationToEmprestimo(PaginationToFrontEnd):
     """
 
     page_size = 7
+
+class PaginationToRecomedacao(PaginationToFrontEnd):
+    """
+    Paginacao customizada criada apenas para recomedaca
+    """
+
+    page_size = 5

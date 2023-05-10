@@ -6,7 +6,8 @@ from .models import CustomUser, Livro, Emprestimo
 
 
 class UserSerializer(serializers.ModelSerializer):
-     
+
+
     class Meta:
         model = CustomUser 
         fields = ('id','nome', 'email', 'foto','password','is_admin')
@@ -20,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
         else:
             user = CustomUser.objects.create_user(validated_data['nome'],validated_data['email'],validated_data['password'])
             return user
+
 
       
 class LivroSerializer(serializers.ModelSerializer):
@@ -40,6 +42,7 @@ class EmprestimoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Emprestimo
         fields = ('id','livro','usuario','status','data_criacao','data_devolucao','UsuarioDados','LivroDados')
+    
 
     def get_data_criacao(self, obj):
         data = obj.data_criacao

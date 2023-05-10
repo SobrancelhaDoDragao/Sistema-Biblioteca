@@ -9,7 +9,6 @@
 
           <nav>
               <ul>
-                  <li> <a href="#">Modo dark</a></li>
                   <li><NuxtLink to="/auth/home">Home</NuxtLink></li>
                   <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
                   <li><NuxtLink to="/auth/gerenciar-emprestimos/emprestimos">Empréstimos</NuxtLink></li>

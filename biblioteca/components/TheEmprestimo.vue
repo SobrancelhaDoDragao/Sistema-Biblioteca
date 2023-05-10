@@ -89,8 +89,6 @@ th{
     cursor: pointer;
 }
 
-
-
 #btn-group-pagination{
    display: flex;
    justify-content: center;

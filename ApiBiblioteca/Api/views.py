@@ -4,12 +4,13 @@ from .serializers import UserSerializer, LivroSerializer, EmprestimoSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import viewsets,filters,status
+from rest_framework import generics
 
 from django.conf import settings
 
 from .models import CustomUser as User
 from .models import Livro, Emprestimo
-from .pagination import PaginationToEmprestimo
+from .pagination import PaginationToEmprestimo, PaginationToRecomedacao
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -64,9 +65,8 @@ class CadastroUser(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class UserCRUD(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
    
@@ -95,6 +95,53 @@ class EmprestimoCRUD(viewsets.ModelViewSet):
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
     pagination_class = PaginationToEmprestimo
+
+
+class ListarEmprestimosUsuario(generics.ListAPIView):
+    """
+    Todos os empréstimos relacionados ao usuario
+    """
+
+    serializer_class = EmprestimoSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+
+        emprestimos = Emprestimo.objects.filter(usuario_id=pk)
+        
+        return emprestimos
+
+
+class Recomedacao(generics.ListAPIView):
+    """
+    Recomecao de livros. Por enquanto vai ser aleatorio
+    """
+
+    serializer_class = LivroSerializer
+    pagination_class = PaginationToRecomedacao
+
+    def get_queryset(self):
+        
+        # recupera 10 registros aleatórios do modelo
+        random_items = Livro.objects.order_by('?')[:5]
+        
+        # Esse ('?') é um comando lento quanto tem muito items no banco de dados
+        return random_items
+
+class NovosLivros(generics.ListAPIView):
+    """
+    Novos livro do acervo
+    """
+
+    serializer_class = LivroSerializer
+    pagination_class = PaginationToRecomedacao
+
+    def get_queryset(self):
+        
+        # recupera 10 registros aleatórios do modelo
+        queryset = Livro.objects.all().order_by('-data_criacao')[:5]
+        
+        return queryset
 
     
  
