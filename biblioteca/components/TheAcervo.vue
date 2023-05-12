@@ -15,7 +15,7 @@
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
                            <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                           <nuxt-img class="livro" :src="livro.capa" format="webp" placeholder width="110" height="170" />
+                           <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder width="110" height="170"/>
                            </NuxtLink>
                      
                         </div>
@@ -71,11 +71,6 @@
 
 #h1Acervo{
    text-align: center;
-}
-
-.livro:hover{
-   border: solid var(--colorTwo) 4px;
-   cursor: pointer;
 }
 
 .imagem-none{
