@@ -105,10 +105,9 @@
 }
 
 .sobre-livros:hover {
-  border-radius: 10px;
+  border-radius: 15px;
   transform: scale(1.1);
-  outline: solid var(--colorTwo) 5px;
-  opacity: 0.5;
+  box-shadow: rgb(0, 0, 0) 5px 10px 40px;
 }
 
 /*---      Modal       ---------*/
