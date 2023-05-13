@@ -11,7 +11,7 @@ header{
       display: grid;
       height: 100vh;
       grid-template-columns: repeat(4,1fr);
-      grid-template-rows: .3fr 1fr 1fr;
+      grid-template-rows: 10vh 1fr 1fr;
       gap: 1rem;
   }
   

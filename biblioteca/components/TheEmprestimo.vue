@@ -70,10 +70,18 @@ h1{
 }
 
 table,td,th{
-    border: 2px solid var(--colorFive);
     border-collapse: collapse;
     text-align: center;
     padding: .5rem;
+}
+
+table,th{
+    border: 2px solid var(--colorFive);
+}
+
+td{
+    border-right:2px solid var(--colorFive);
+    border-bottom:2px dashed var(--colorFive);
 }
 
 table{

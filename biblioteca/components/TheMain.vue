@@ -9,7 +9,7 @@
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
 
-                       <nuxt-img fit="fill" class='sobre-livros' :src="livro.capa" placeholder sizes="sm:30vw md:10vw lg:120px"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" placeholder sizes="sm:30vw md:15vw lg:9vw"/>
                      
                       </NuxtLink>
                   </div>
@@ -22,7 +22,7 @@
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in acervolivrosnovos.results" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder sizes="sm:30vw md:10vw lg:120px"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder sizes="sm:30vw md:15vw lg:9vw"/>
                     </NuxtLink>
                   </div>
 
@@ -38,7 +38,7 @@
 
 #conteiner-livros-recomendados,#conteiner-livros-novos{
     display: flex;
-    gap: 5px;
+    gap: 1rem;
     justify-content: center;
     overflow-x: auto;
     padding: .5rem;
