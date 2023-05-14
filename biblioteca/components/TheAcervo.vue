@@ -3,7 +3,7 @@
                
                <div id="LivroConteiner">
                
-                  <h1 id="h1Acervo">Acervo</h1>
+                  <h1>Acervo</h1>
 
                   <div  id="btn-modal-group">
                   <TheModalCadastro></TheModalCadastro>  <TheModalFiltro></TheModalFiltro>     
@@ -50,8 +50,10 @@
 
 #LivroConteiner{
    grid-area: livro;
-   border-left:solid var(--colorOne)10px;
-   border-right: solid var(--colorOne) 10px;
+   border-left:solid var(--colorFive)10px;
+   border-right: solid var(--colorFive) 10px;
+   border-top: solid var(--colorFive) 5px;
+   border-bottom:solid var(--colorFive) 5px;
    border-radius: 30px;
    background: var(--main-background-color);
    overflow: auto;
@@ -67,10 +69,6 @@
   justify-content: center;
   align-content: center;
   flex: 1;
-}
-
-#h1Acervo{
-   text-align: center;
 }
 
 .imagem-none{
@@ -108,7 +106,6 @@ flex-wrap: wrap;
 .active{
    background: var(--colorOne);
 }
-
 
 </style>
 

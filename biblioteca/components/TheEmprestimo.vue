@@ -5,22 +5,26 @@
         <nuxt-link id="criar-emprestimo-btn" class="btn-padrao" to="/auth/gerenciar-emprestimos/criar-emprestimo">
         <button id="criar-emprestimo-btn" class="btn-padrao">Novo emprestimo</button>
         </nuxt-link>
-        
-        <table>
-            <tr><th class="colum-id">#id</th> <th class="colum-usuario">Usuario</th> <th class="colum-livro" >Livro</th> <th class="colum-date" >Emprestimo</th> <th class="colum-date">Devolução</th><th>Status</th></tr>
-           
-            <tr v-for="emprestimo in emprestimo.emprestimosDados.emprestimos" :key="emprestimo.id" @click="RedirectEmprestimo(emprestimo.id)" class="LinkEmprestimo" >
 
-                <td>#{{ emprestimo.id }}</td> 
-                <td>{{ emprestimo.UsuarioDados.nome }}</td> 
-                <td>{{ emprestimo.LivroDados.nome }}</td>  
-                <td>{{ emprestimo.data_criacao }}</td> 
-                <td>{{ emprestimo.data_devolucao}}</td>
-                <td>{{ emprestimo.status }}</td>
+        <div id="table-conteiner">
 
-            </tr>
+            <table>
+                <tr><th class="colum-id">#id</th> <th class="colum-usuario">Usuario</th> <th class="colum-livro" >Livro</th> <th class="colum-date" >Emprestimo</th> <th class="colum-date">Devolução</th><th>Status</th></tr>
+            
+                <tr v-for="emprestimo in emprestimo.emprestimosDados.emprestimos" :key="emprestimo.id" @click="RedirectEmprestimo(emprestimo.id)" class="LinkEmprestimo" >
 
-        </table>
+                    <td>#{{ emprestimo.id }}</td> 
+                    <td>{{ emprestimo.UsuarioDados.nome }}</td> 
+                    <td>{{ emprestimo.LivroDados.nome }}</td>  
+                    <td>{{ emprestimo.data_criacao }}</td> 
+                    <td>{{ emprestimo.data_devolucao}}</td>
+                    <td>{{ emprestimo.status }}</td>
+
+                </tr>
+
+            </table>
+
+        </div>
 
         <div id="btn-group-pagination">
 
@@ -56,9 +60,6 @@ const RedirectEmprestimo = (id) => {
 
 
 <style scoped>
-main{
-    overflow: auto;
-}
 
 h1{
     text-align: center;
@@ -67,6 +68,11 @@ h1{
 #criar-emprestimo-btn{
     margin-bottom: 1rem;
     text-decoration: none;
+}
+
+#table-conteiner{
+    display: flex;
+    overflow: auto;
 }
 
 table,td,th{

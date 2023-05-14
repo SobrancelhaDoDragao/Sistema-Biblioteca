@@ -1,6 +1,6 @@
 <template>
       <div id="sidebar">
-            <h3>Livros emprestados</h3>
+            <h1>Livros emprestados</h1>
 
             <div id="conteiner-livros-emprestados">
                   <!-- Mudar nome das varoaveis -->
@@ -48,13 +48,12 @@
     padding: 1rem;
     border-radius: 20px;
     flex: 2;
-    border-left:solid var(--colorFive) 10px;
-    border-right:solid var(--colorFive) 10px;
-}
 
-h3{
-      text-align: center;
-      margin-bottom: 1rem;
+    border-left:solid var(--colorFive)10px;
+    border-right: solid var(--colorFive) 10px;
+    border-top: solid var(--colorFive) 5px;
+    border-bottom:solid var(--colorFive) 5px;
+    border-radius: 30px;
 }
 
 #conteiner-livros-emprestados{

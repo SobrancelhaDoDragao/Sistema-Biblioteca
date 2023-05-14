@@ -1,7 +1,7 @@
 <template>
      <main id="main-home" class="conteiner-padrao" >
        
-       <h3>Recomedação de livros</h3>
+       <h1>Recomedação de livros</h1>
 
         <div id="conteiner-livros-recomendados">
                   <!-- Mudar nome das varoaveis -->
@@ -9,20 +9,20 @@
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
 
-                       <nuxt-img class='sobre-livros' :src="livro.capa" placeholder sizes="sm:30vw md:15vw lg:9vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" placeholder sizes="sm:30vw md:15vw lg:8vw"/>
                      
                       </NuxtLink>
                   </div>
 
         </div>
 
-        <h3>Novos livros adicionados ao acervo</h3>
+        <h1>Novos livros adicionados ao acervo</h1>
 
         <div id="conteiner-livros-novos">
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in acervolivrosnovos.results" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder sizes="sm:30vw md:15vw lg:9vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder sizes="sm:30vw md:15vw lg:8vw"/>
                     </NuxtLink>
                   </div>
 
@@ -41,18 +41,17 @@
     gap: 1rem;
     justify-content: center;
     overflow-x: auto;
-    padding: .5rem;
+    padding: 1rem;
     background: var(--main-background-color);
     border: solid var(--colorFive);
     border-radius: 1rem;
     align-items: center;
+    margin-top: .5rem;
 }
 
-h3{
-    text-align: center;
-    margin-bottom: 1rem;
+#conteiner-livros-recomendados{
+    margin-bottom: .5rem;
 }
-
 
 @media only screen and (max-width:550px){
     #conteiner-livros-recomendados,#conteiner-livros-novos{

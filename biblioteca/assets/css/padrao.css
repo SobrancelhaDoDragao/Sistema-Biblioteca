@@ -36,7 +36,15 @@
     --margem-bordas:5rem;
   }
 
+/*Font-Size */
+
+h1{
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 /*Resetando style*/
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -45,6 +53,7 @@
     font-weight: var(--regular-weight);
 }
 /* Botoes */
+
 .btn-padrao{
   background: var(--colorOne);
   color:var(--colorTwo);
@@ -132,7 +141,28 @@
  
 }
 
+/*Scroll*/
 
+/* width */
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--colorFive);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--colorOne);
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 
  
