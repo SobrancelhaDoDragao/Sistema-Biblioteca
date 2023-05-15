@@ -9,7 +9,7 @@
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
 
-                       <nuxt-img class='sobre-livros' :src="livro.capa" placeholder="../public/img/placeholdLivro.png" sizes="sm:30vw md:15vw lg:8vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" sizes="sm:30vw md:15vw lg:8vw"/>
                      
                       </NuxtLink>
                   </div>

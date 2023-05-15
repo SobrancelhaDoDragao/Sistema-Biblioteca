@@ -7,7 +7,7 @@
                   <div v-for="emprestimo in user.emprestimos" :key="emprestimo.id">
 
                         <NuxtLink :to="'/auth/gerenciar-emprestimos/'+emprestimo.id">
-                        <nuxt-img class='sobre-livros' :src="emprestimo.LivroDados.capa" format="webp" placeholder sizes="sm:20vw md:10vw lg:120px" />
+                        <nuxt-img class='sobre-livros' :src="emprestimo.LivroDados.capa" format="webp" sizes="sm:20vw md:10vw lg:120px" />
                        </NuxtLink>
 
                   </div>
