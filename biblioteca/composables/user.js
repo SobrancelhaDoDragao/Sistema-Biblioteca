@@ -10,6 +10,8 @@ export const useUserStore = defineStore('User', {
       email:'',
       foto:'',
       password:'',
+      recomedacao:[],
+      emprestimos:[]
     }
   },
   
@@ -76,6 +78,33 @@ export const useUserStore = defineStore('User', {
         body:form
        });
        
+    },
+
+    async GetRecomendacao(){
+
+      // Url base do back-end
+      const url = await this.GetUrlBaseRuntimeConfig()
+
+      
+      const response = await $fetch(`${url}recomendacao/`,{
+                    method:'GET',
+                    headers:{'Content-Type':'application/json'}
+      });
+        
+      this.recomedacao = response.results
+    },
+
+    async GetLivrosEmprestimos(){
+
+      // Url base do back-end
+      const url = await this.GetUrlBaseRuntimeConfig()
+
+      const response = await $fetch(`${url}usuarios/${this.id}/emprestimos/`,{
+                    method:'GET',
+                    headers:{'Content-Type':'application/json'}
+       });
+        
+      this.emprestimos = response.results
     }
 
   }

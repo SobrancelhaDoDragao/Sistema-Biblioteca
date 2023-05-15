@@ -5,6 +5,7 @@ export const useLivroStore = defineStore('Livro', {
       return {
         livro:{id:'',nome:'',capa:'',autor:'',editora:'',genero:'',descricao:''}, //Usado apenas pelo putLivro e Getlivro
         livrosDados: {PageActive:null,quantidadePagina:0,livros:[],nextPageNumber:null,previousPageNumber:null},
+        novoslivros: []
       }
     },
   
@@ -127,6 +128,18 @@ export const useLivroStore = defineStore('Livro', {
                   headers:{'Content-Type':'application/json',
                   'Authorization': token},
         });
+      },
+
+      async GetNovosLivros(){
+
+        const url = await this.GetUrlBaseRuntimeConfig()
+
+        const response = await $fetch(`${url}novoslivros/`,{
+                      method:'GET',
+                      headers:{'Content-Type':'application/json'}
+        });
+  
+        this.novoslivros = response.results
       }
   
     }

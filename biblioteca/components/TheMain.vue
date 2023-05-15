@@ -5,7 +5,7 @@
 
         <div id="conteiner-livros-recomendados" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
-                  <div v-for="livro in livros.results" :key="livro.id">
+                  <div v-for="livro in user.recomedacao" :key="livro.id">
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
 
@@ -20,7 +20,7 @@
 
         <div id="conteiner-livros-novos" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
-                  <div v-for="livro in acervolivrosnovos.results" :key="livro.id">
+                  <div v-for="livro in livros.novoslivros" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
                        <nuxt-img class='sobre-livros' :src="livro.capa" format="webp" placeholder sizes="sm:30vw md:15vw lg:8vw"/>
                     </NuxtLink>
@@ -61,29 +61,17 @@
 
 <script setup>
        
-   const recomedacao = ()=>{
-        let response = $fetch(`http://127.0.0.1:8000/recomendacao/`,{
-                    method:'GET',
-                    headers:{'Content-Type':'application/json'}
-            });
-        
-        return response
-   }
+   let user = useUserStore()
+   let livros = useLivroStore()
 
-   let livros = await recomedacao()
+   // Se estiver vazio
+   if(!user.recomedacao.length){
+        // Recomendacao de livros
+        user.GetRecomendacao()
+    }
+    
+   livros.GetNovosLivros()
 
-
-   const novoslivros = ()=>{
-        let response = $fetch(`http://localhost:8000/novoslivros/`,{
-                    method:'GET',
-                    headers:{'Content-Type':'application/json'}
-            });
-        
-        return response
-   }
-
-   let acervolivrosnovos = await novoslivros()
-   
 </script>
 
 

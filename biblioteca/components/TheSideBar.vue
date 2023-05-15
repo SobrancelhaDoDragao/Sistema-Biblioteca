@@ -4,7 +4,7 @@
 
             <div id="conteiner-livros-emprestados" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
-                  <div v-for="emprestimo in teste.results" :key="emprestimo.id">
+                  <div v-for="emprestimo in user.emprestimos" :key="emprestimo.id">
 
                         <NuxtLink :to="'/auth/gerenciar-emprestimos/'+emprestimo.id">
                         <nuxt-img class='sobre-livros' :src="emprestimo.LivroDados.capa" format="webp" placeholder sizes="sm:20vw md:10vw lg:120px" />
@@ -26,19 +26,8 @@
    let user = useUserStore()
 
    await user.GetUserData()
-   
-  
-   const emprestimos = ()=>{
-        let response = $fetch(`http://127.0.0.1:8000/usuarios/${user.id}/emprestimos/`,{
-                    method:'GET',
-                    headers:{'Content-Type':'application/json'}
-            });
-        
-        return response
-   }
-   
 
-   let teste = await emprestimos()
+   user.GetLivrosEmprestimos()
    
 </script>
 
