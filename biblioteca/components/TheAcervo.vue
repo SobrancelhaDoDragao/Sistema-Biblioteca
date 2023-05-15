@@ -10,7 +10,7 @@
                   </div>
                    
 
-                     <div class="Livros">
+                  <div class="Livros">
 
                         <div v-for="livro in livros.livrosDados.livros" :key="livro.id" >
 
@@ -20,7 +20,7 @@
                      
                         </div>
                         
-                     </div>
+                  </div>
   
                   <div id="btn-group-pagination">
 
@@ -32,6 +32,7 @@
                      <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.nextPageNumber)">Proxima</button>
 
                   </div>
+                  
                </div>
    </main>
 </template>

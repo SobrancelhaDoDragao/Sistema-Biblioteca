@@ -1,8 +1,8 @@
 <template>
-      <div id="sidebar">
-            <h1>Livros emprestados</h1>
+      <div id="sidebar" class="conteiner-padrao">
+            <h1 id="h1-side-bar">Livros emprestados</h1>
 
-            <div id="conteiner-livros-emprestados">
+            <div id="conteiner-livros-emprestados" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="emprestimo in teste.results" :key="emprestimo.id">
 
@@ -49,19 +49,20 @@
     border-radius: 20px;
     flex: 2;
 
-    border-left:solid var(--colorFive)10px;
-    border-right: solid var(--colorFive) 10px;
-    border-top: solid var(--colorFive) 5px;
-    border-bottom:solid var(--colorFive) 5px;
-    border-radius: 30px;
+   
 }
 
 #conteiner-livros-emprestados{
    display: flex;
    justify-content: center;
-   gap: 5px;
+   gap: 1rem;
    /*overflow-x: auto;*/
    flex-wrap: wrap;
+   padding: 1rem;
+}
+
+#h1-side-bar{
+      margin-bottom: 1rem;
 }
 
 </style>

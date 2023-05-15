@@ -3,7 +3,7 @@
        
        <h1>Recomedação de livros</h1>
 
-        <div id="conteiner-livros-recomendados">
+        <div id="conteiner-livros-recomendados" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in livros.results" :key="livro.id">
 
@@ -18,7 +18,7 @@
 
         <h1>Novos livros adicionados ao acervo</h1>
 
-        <div id="conteiner-livros-novos">
+        <div id="conteiner-livros-novos" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in acervolivrosnovos.results" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
@@ -42,9 +42,6 @@
     justify-content: center;
     overflow-x: auto;
     padding: 1rem;
-    background: var(--main-background-color);
-    border: solid var(--colorFive);
-    border-radius: 1rem;
     align-items: center;
     margin-top: .5rem;
 }
