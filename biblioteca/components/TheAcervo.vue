@@ -24,7 +24,6 @@
   
                   <div id="btn-group-pagination">
 
-                  
                      <button class="btn-pagination" v-on:click="livros.GetLivros(livros.livrosDados.previousPageNumber)">Voltar</button>
                        
                      <button :class="{ active: livros.livrosDados.PageActive == pagina }" class="btn-pagination" v-on:click="livros.GetLivros(pagina)" v-for="pagina in livros.livrosDados.quantidadePagina">{{ pagina }}</button>
