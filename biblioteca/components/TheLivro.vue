@@ -2,19 +2,21 @@
     <main id="main-livro" class="conteiner-padrao">
 
        <div id="img-conteiner">
-          <nuxt-img :src="livro.livro.capa" quality="100" fit="contain" width="350" height="500" placeholder/>
+          <nuxt-img :src="livro.livro.capa"  format="png" sizes="sm:50vw md:10vw lg:320px"/>
        </div>
     
         <div id="livro-informacao">
 
             <div v-if="!editar">
 
-                <h1>{{ livro.livro.nome }}</h1>
+                <h1 id='nome-livro'>{{ livro.livro.nome }}</h1>
 
                 <p id="descricao">{{ livro.livro.descricao }}</p>
-
-                <h3><span>Autor: {{ livro.livro.autor }}</span> <span>Editora: {{ livro.livro.editora }}</span> <span>Gênero: {{ livro.livro.genero }}</span></h3>
-            
+               
+                <div id='livro-dados'>
+                 <span>Autor: {{ livro.livro.autor }}</span> <span>Editora: {{ livro.livro.editora }}</span> <span>Gênero: {{ livro.livro.genero }}</span>
+                </div>
+                
             </div>
 
             <form v-else class="form-padrao">
@@ -27,12 +29,12 @@
                         </div>
                         
 
-                        <div>
+                        <div id="input-editora-livro">
                         <label for="editora">Editora</label>
                         <input type="text" id="editora" v-model="editora" >
                         </div>
                         
-                        <div>
+                        <div id="input-autor-livro">
                         <label for="autor">Autor</label>
                         <input type="text" id="autor" v-model="autor">
                         </div>
@@ -43,7 +45,7 @@
                         </div>
 
                         <div id="descricaoDiv">
-                            <label for="descricao">Descrição</label>
+                            <label for="descricao">Sinopse</label>
                    
                             <textarea id="descricao" v-model="descricao">
                   
@@ -87,7 +89,6 @@
 }
 
 #livro-informacao{
-    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -108,6 +109,7 @@ span{
 
 #descricao{
     margin-top: 1rem;
+    overflow: auto;
 }
 
 #descricaoDiv{
@@ -120,15 +122,22 @@ span{
   grid-area: 3 / 2 / 4 / 4;
 }
 
-h1{
+
+#nome-livro{
+  text-align: left;
   font-size: 2.5rem;
   border-bottom: solid 2px var(--colorFive);
   width: 100%;
 }
 
-h3{
+
+#livro-dados{
+    font-size: 1.2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 #acoes-livro{
@@ -161,6 +170,46 @@ textarea {
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
+}
+
+@media only screen and (max-width:550px){
+    #main-livro{
+        flex-direction: column;
+    }
+
+    #nome-livro{
+        text-align: center;
+    }
+
+    form{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #input-editora-livro{
+        grid-column: 1 / 2;
+        grid-row: 3
+    }
+
+    #input-autor-livro{
+        grid-column: 2 / 4;
+        grid-row: 3
+    }
+
+    #descricaoDiv{
+    /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
+        grid-column: 1 / 4;
+        grid-row: 5;
+    }
+
+    #capaDiv{
+        grid-column: 1 / 4;
+        grid-row: 4;
+    }
+
+    #acoes-livro{
+      justify-content: center;
+    }
+    
 }
 </style>
 

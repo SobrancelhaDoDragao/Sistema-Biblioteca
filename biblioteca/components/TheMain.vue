@@ -8,7 +8,7 @@
                   <div v-for="livro in user.recomedacao" :key="livro.id">
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-
+                       
                        <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:30vw md:15vw lg:8vw"/>
                      
                       </NuxtLink>
@@ -55,7 +55,6 @@
         justify-content: flex-start;
     }
 }
-
 </style>
 
 
