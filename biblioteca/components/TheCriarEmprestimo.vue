@@ -33,34 +33,37 @@
     <main  id="conteinerCriarEmprestimo" class="conteiner-padrao" >
        
         <h1 id="TituloNovoEmprestimo">Novo empréstimo</h1>
+        
+        <div id='conteiner-formularios-emprestimo'>
 
-        <form class="form-padrao" id="form1" >
-          <h1>Usuario</h1>
+            <form class="form-padrao" id="form1" >
+                <h1>Usuario</h1>
 
-          <div v-if="user" >
-            
-            <h2>{{ user.nome }}</h2>
-            
-            <nuxt-img v-if="user.foto" :src="user.foto" placeholder width="220" height="200" />
+                <div v-if="user" >
+                    
+                    <h2>{{ user.nome }}</h2>
+                    
+                    <nuxt-img v-if="user.foto" :src="user.foto" placeholder width="220" height="200" />
 
-            <nuxt-img v-else src="icons/user-solid.svg" placeholder width="220" height="200" />
+                    <nuxt-img v-else src="icons/user-solid.svg" placeholder width="220" height="200" />
 
-          </div>
-         
-          <input type="text" v-model="searchUsuario" placeholder="Pesquisar por email ou Id" > <button  v-on:click.prevent="PesquisarUsuario" class="btn-padrao">Pesquisar</button>
-        </form>
+                </div>
+                
+                <input type="text" v-model="searchUsuario" placeholder="Pesquisar por email ou Id" > <button  v-on:click.prevent="PesquisarUsuario" class="btn-padrao">Pesquisar</button>
+            </form>
 
-        <form id="form2">
-            <h1>Livro do empréstimo</h1>
-            <div v-if="livroEmprestimo">
-                 <h2>{{livroEmprestimo.nome}}</h2>
-                 
-                 <nuxt-img :src="livroEmprestimo.capa" placeholder width="100" height="150" />
-            </div>
-            <button v-on:click.prevent="modal = true" class="btn-padrao">Escolher livro</button>
-        </form>
+            <form id="form2">
+                <h1>Livro do empréstimo</h1>
+                <div v-if="livroEmprestimo">
+                    <h2>{{livroEmprestimo.nome}}</h2>
+                    
+                    <nuxt-img :src="livroEmprestimo.capa" placeholder width="100" height="150" />
+                </div>
+                <button v-on:click.prevent="modal = true" class="btn-padrao">Escolher livro</button>
+            </form>
 
-
+        </div>
+        
         <button id="ComfirmarEmprestimo" class="btn-padrao"  @click="CriarEmprestimo">Comfirmar emprestimo</button>
 
    </main>
@@ -69,21 +72,24 @@
 <style>
 
 #conteinerCriarEmprestimo{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#conteiner-formularios-emprestimo{
+    display: flex;
+    gap: 1rem;
+    flex: 1;
 }
 
 
 #TituloNovoEmprestimo{
-  /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
-  grid-area: 1 / 1 / 1 / 3;
   text-align: center;
 }
 
 #form1{
     /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
-    grid-area: 2 / 1 / 2 / 2;
     border: solid var(--colorFive) 3px;
     display: flex;
     flex-direction: column;
@@ -93,12 +99,11 @@
     justify-content: center;
     padding: .3rem;
     border-radius: 1rem;
+
+    flex: 1;
 }
 
 #form2{
-
-    /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
-    grid-area: 2 / 2 / 2 / 2;
     border: solid var(--colorFive) 3px;
     display: flex;
     flex-direction: column;
@@ -108,12 +113,12 @@
     justify-content: center;
     padding: .3rem;
     border-radius: 1rem;
+    flex:1;
 }
 
 #ComfirmarEmprestimo{
      /*  grid-row-start | grid-column-start | grid-row-end | grid-column-end*/
-     grid-area: 3 / 1 / 3 / 3;
-     width: 30%;
+     width: 50%;
      justify-self: center;
      align-self: center;
      height: 3rem;
@@ -171,6 +176,17 @@ h2{
    cursor: pointer;
 }
 
+
+@media only screen and (max-width:550px){
+    #conteiner-formularios-emprestimo{
+     flex-direction: column;
+     min-height: 70vh;
+  }
+
+  #ComfirmarEmprestimo{
+     width: 100%;
+}
+}
 </style>
 
 
