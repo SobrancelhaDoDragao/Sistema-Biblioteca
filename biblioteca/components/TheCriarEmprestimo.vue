@@ -17,7 +17,6 @@
 
                     <legend>Resultado</legend>
                      
-
                      <div id="LivroResultado">
                            <nuxt-img v-on:click="livroEscolhiodo(livro.id)" v-for="livro in livro.livrosDados.livros" :key="livro.id" class="livro" :src="livro.capa" format="webp" placeholder width="110" height="170" />
                      </div>
@@ -160,15 +159,16 @@ h2{
     padding: .5rem;
     background:var(--main-background-color);
     border: solid var(--colorFive) 2px;
-    margin-bottom: .5rem;
+    margin-bottom: .5rem;  
 }
 
 #LivroResultado{
     display: flex;
     gap: .5rem;
     overflow: auto;
-    justify-content: center;
-    padding: .5rem;   
+    padding: .5rem; 
+    max-width: 76vw;
+    justify-content: flex-start;
 }
 
 .livro:hover{
@@ -181,11 +181,21 @@ h2{
     #conteiner-formularios-emprestimo{
      flex-direction: column;
      min-height: 70vh;
-  }
+    }
 
-  #ComfirmarEmprestimo{
-     width: 100%;
-}
+    #ComfirmarEmprestimo{
+        width: 100%;
+    }
+
+    #modalCriarEmprestimo{
+        width: 90vw;
+        margin-left: -45vw; /* Metade da largura */
+    }
+
+    #LivroResultado{
+        max-width: 75vw;
+        justify-content: flex-start;
+    }
 }
 </style>
 

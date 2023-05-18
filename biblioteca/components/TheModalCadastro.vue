@@ -138,6 +138,15 @@ textarea {
   color: red;
   text-align: center;
 }
+
+@media only screen and (max-width:550px){
+
+  #modalCadastro{
+    width: 90vw;
+    margin-left: -45vw; /* Metade da largura */
+  }
+  
+}
 </style>
 
 

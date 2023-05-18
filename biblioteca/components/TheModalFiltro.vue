@@ -71,6 +71,15 @@
   display: flex;
   gap: 1rem;
 }
+
+@media only screen and (max-width:550px){
+
+   #modalFiltro{
+      width: 90vw;
+      margin-left: -45vw; /* Metade da largura */
+   }
+
+}
 </style>
 
 
