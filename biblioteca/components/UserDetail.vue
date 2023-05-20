@@ -83,7 +83,7 @@ const user = useUserStore()
 
 let nome = ref(user.nome)
 let email = ref(user.email)
-let foto
+let foto = ref(null)
 
 const enviar = async () => {
     //Atualizando dados
@@ -97,8 +97,8 @@ const enviar = async () => {
         formData.append('email',email.value)
     }
 
-    if(foto.files[0]){
-        formData.append('foto',foto.files[0])
+    if(foto.value.files[0]){
+        formData.append('foto',foto.value.files[0])
     }
      
     await user.PutUserData(formData)

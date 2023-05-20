@@ -69,7 +69,7 @@ export const useUserStore = defineStore('User', {
   
       // Url base do back-end
       let url = await this.GetUrlBaseRuntimeConfig()
-
+      
       const response = await $fetch(`${url}users/${this.id}/`,{
         method:'PATCH',
         headers:{
@@ -77,6 +77,8 @@ export const useUserStore = defineStore('User', {
         },
         body:form
        });
+
+
        
     },
 

@@ -164,7 +164,7 @@ let genero = ref('')
 let descricao = ref('')
 let ErroCadastroForm = ref()
 
-let capa 
+let capa = ref(null)
 
 let cadastrolLivro = async()=>{
       
@@ -176,7 +176,7 @@ let cadastrolLivro = async()=>{
          let formData = new FormData()
 
          formData.append('nome',nome.value)
-         formData.append('capa',capa.files[0])
+         formData.append('capa',capa.value.files[0])
          formData.append('autor',autor.value)
          formData.append('editora',editora.value)
          formData.append('genero',genero.value)

@@ -12,6 +12,7 @@
     "nuxt": "^3.3.1"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@pinia/nuxt": "^0.4.7"
   },
   "overrides": {

@@ -223,7 +223,7 @@ await livro.GetLivro(route.params.id)
 
 let nome = ref(livro.livro.nome)
 let editora = ref(livro.livro.editora)
-let capa 
+let capa = ref(null)
 let autor = ref(livro.livro.autor)
 let genero = ref(livro.livro.genero)
 let descricao = ref(livro.livro.descricao)
@@ -242,8 +242,8 @@ const EditarLivro = async()=>{
     if(nome.value != livro.livro.nome){ 
         formData.append('nome',nome.value) 
     } 
-    if(capa.files[0]){
-        formData.append('capa',capa.files[0]) 
+    if(capa.value.files[0]){
+        formData.append('capa',capa.value.files[0]) 
     } 
     if(autor.value != livro.livro.autor){ 
         formData.append('autor',autor.value)
