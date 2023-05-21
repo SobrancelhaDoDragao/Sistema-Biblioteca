@@ -177,7 +177,7 @@ h2{
 }
 
 
-@media only screen and (max-width:550px){
+@media only screen and (max-width:768px){
     #conteiner-formularios-emprestimo{
      flex-direction: column;
      min-height: 70vh;

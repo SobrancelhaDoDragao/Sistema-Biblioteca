@@ -9,7 +9,7 @@
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
                        
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:10vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:8vw"/>
                      
                       </NuxtLink>
                   </div>
@@ -22,7 +22,7 @@
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in livros.novoslivros" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:10vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:8vw"/>
                     </NuxtLink>
                   </div>
 
