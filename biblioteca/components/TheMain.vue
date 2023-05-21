@@ -1,7 +1,7 @@
 <template>
      <main id="main-home" class="conteiner-padrao" >
        
-       <h1>Recomedação de livros</h1>
+       <h2>Recomedação de livros</h2>
 
         <div id="conteiner-livros-recomendados" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
@@ -9,20 +9,20 @@
 
                       <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
                        
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:30vw md:15vw lg:8vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:10vw"/>
                      
                       </NuxtLink>
                   </div>
 
         </div>
 
-        <h1>Novos livros adicionados ao acervo</h1>
+        <h2>Novos livros adicionados ao acervo</h2>
 
         <div id="conteiner-livros-novos" class="conteiner-two">
                   <!-- Mudar nome das varoaveis -->
                   <div v-for="livro in livros.novoslivros" :key="livro.id">
                     <NuxtLink :to="'/auth/acervo/livro/'+livro.id">
-                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:30vw md:15vw lg:8vw"/>
+                       <nuxt-img class='sobre-livros' :src="livro.capa" format="png" sizes="sm:35vw md:20vw lg:10vw"/>
                     </NuxtLink>
                   </div>
 
@@ -50,7 +50,7 @@
     margin-bottom: .5rem;
 }
 
-@media only screen and (max-width:550px){
+@media only screen and (max-width:768px){
     #conteiner-livros-recomendados,#conteiner-livros-novos{
         justify-content: flex-start;
     }

@@ -9,6 +9,7 @@
 
           <nav>
               <ul>
+              
                   <li><NuxtLink to="/auth/home">Home</NuxtLink></li>
                   <li><NuxtLink to="/auth/acervo/livros">Acervo</NuxtLink></li>
                   <li><NuxtLink to="/auth/gerenciar-emprestimos/emprestimos">Empréstimos</NuxtLink></li>
@@ -19,7 +20,11 @@
                     {{ user.nome }}
                     </NuxtLink>
                     
-                </li>
+                  </li>
+
+                  <label for="nav_check" class="hamburger fecharNavBar" >
+                    <h1>X</h1>
+                  </label>
               </ul>
           </nav>
           
@@ -79,10 +84,12 @@
         text-decoration: none;
         display: block;
         color:var(--colorThree);
-        margin: 0 2px;
+        margin: 0 5px;
         padding: 10px;
         transition: 0.2s;
-        border-radius: 8px;
+        border-radius: 10px;
+        border-bottom: solid 5px var(--colorFive);
+        border-right:solid 2px var(--colorFive);
     }
 
     nav ul li a:hover{
@@ -126,6 +133,10 @@
         align-items: center;
     }
 
+    .fecharNavBar{
+        border: solid var(--colorFive);
+    }
+
     /* Reposividade do header */
   @media only screen and (max-width: 1100px){
       header{
@@ -134,10 +145,10 @@
   
       nav{
          position: absolute;
-         left: -300px;
+         left: -50vw;
          top:0;
          z-index:999;
-         width: 280px;
+         width: 50vw;
          height: 100vh;
          background-color:  #fefefe;
          transition: 0.2s;
@@ -170,6 +181,18 @@
       .hamburger{
          display: block;
       }
+
+  }
+
+  @media only screen and (max-width:  600px){
+ 
+      nav{
+         left: -85vw;
+         width: 85vw;
+      }
+   
+
+     
   }
   
 </style>

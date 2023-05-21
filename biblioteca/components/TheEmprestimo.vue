@@ -60,11 +60,6 @@ const RedirectEmprestimo = (id) => {
 
 
 <style scoped>
-
-h1{
-    text-align: center;
-}
-
 #criar-emprestimo-btn{
     margin-bottom: 1rem;
     text-decoration: none;

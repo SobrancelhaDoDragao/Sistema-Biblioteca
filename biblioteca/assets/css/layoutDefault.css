@@ -9,7 +9,7 @@ header{
   
   .container{
       display: grid;
-      height: 100vh;
+      min-height: 100vh;
       grid-template-columns: repeat(4,1fr);
       grid-template-rows: 10vh 1fr 1fr;
       gap: 1rem;
@@ -39,9 +39,12 @@ header{
   
   
   footer a{
+    display: flex;
+    align-items: center;
     color:var(--main-background-color-conteiner);
     text-decoration: none;
     font-weight: var(--thin-weight);
+    height: 2rem;
   }
 
   footer a:hover{
@@ -49,10 +52,9 @@ header{
   }
   /* Mobile */
   
-  @media only screen and (max-width:550px){
+  @media only screen and (max-width:768px){
       .container{
           grid-template-columns: 1fr;
-          height: auto;
       }
   
       main,#sidebar{

@@ -28,8 +28,7 @@
 
 <style scoped>
 
-main h1,h3{
-    font-weight: var(--thin-weight);
+main h1{
     margin-bottom: 1rem;
 }
 
