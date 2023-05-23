@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('', include(router.urls)),
     path('UserLogado/', views.UserCRUD.as_view({'get': 'UserLogadoData'})),
-    path('cadastro/', views.CadastroUser.as_view()),
+    path('cadastro/', views.CadastroUser.as_view(),name='cadastro'),
     path('emprestimos/', views.CadastroUser.as_view()),
     path('usuarios/<int:pk>/emprestimos/', views.ListarEmprestimosUsuario.as_view()),
     path('recomendacao/', views.Recomedacao.as_view()),

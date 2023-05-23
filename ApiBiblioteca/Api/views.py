@@ -67,7 +67,7 @@ class CadastroUser(APIView):
 
 class UserCRUD(viewsets.ModelViewSet):
     #permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
    
 
