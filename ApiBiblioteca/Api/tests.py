@@ -3,8 +3,14 @@ from rest_framework import status
 from django.urls import reverse
 from django_seed import Seed
 
+from django.conf import settings
+from PIL import Image
+import io
+from django.core.files.uploadedfile import SimpleUploadedFile
+import os
 
 from .models import CustomUser as User
+from .models import Livro
 
 
 class UserTests(APITestCase):
@@ -147,6 +153,36 @@ class UserTests(APITestCase):
 
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class LivroTests(APITestCase):
+
+    def test_create_livro(self):
+        """
+        Criando um livro, com uma capa vermelha
+        """
+        
+        # Criação de uma imagem
+        image = Image.new('RGB', (500, 500), 'red')
+        image_file = io.BytesIO()
+        image.save(image_file, format='JPEG')
+        image_file.seek(0)
+
+        # Criar um objeto de modelo com a imagem em memória
+        model_data = {
+            "nome": "livroteste",
+            "autor": "autorTeste",
+            "capa": SimpleUploadedFile("test_image.jpg", image_file.read(), content_type="image/jpeg"),
+        }
+
+        response = self.client.post("/livros/", model_data, format="multipart")
+        
+        # Verificando a resposta 
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # Deletando imagem criada
+        os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{model_data['capa']}")
+
+       
 
         
     
