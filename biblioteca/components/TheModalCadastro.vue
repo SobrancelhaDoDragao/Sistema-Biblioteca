@@ -176,13 +176,21 @@ let cadastrolLivro = async()=>{
          let formData = new FormData()
 
          formData.append('nome',nome.value)
-         formData.append('capa',capa.value.files[0])
+
+         if(capa.value.files[0]){
+            formData.append('capa',capa.value.files[0])
+            console.log('teste')
+          }
+         else{
+          console.log('Testando 2222222')
+            formData.append('capa','')
+         }
+
          formData.append('autor',autor.value)
          formData.append('editora',editora.value)
          formData.append('genero',genero.value)
          formData.append('descricao',descricao.value)
 
-         
          await livros.CreateLivro(formData)
          await livros.GetLivros(livros.livrosDados.PageActive)
          modal.value = false

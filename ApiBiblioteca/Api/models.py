@@ -6,13 +6,18 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
-from PIL import Image
+
 
 import os
 from datetime import datetime, timedelta
+from PIL import Image, ImageDraw, ImageFont
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
+from io import BytesIO
+
+
 # Fuso horario
 from django.utils.timezone import now
-
 
 storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
 storageFotos = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/FotosUsuarios",base_url=f'{settings.MEDIA_URL}FotosUsuarios')
@@ -90,8 +95,8 @@ class CustomUser(AbstractBaseUser):
 class Livro(models.Model):
 
     nome = models.CharField(max_length=50)
-    capa = models.ImageField(storage=storageCapas)
     autor = models.CharField(max_length=50)
+    capa = models.ImageField(storage=storageCapas,null=True, blank=True)
     editora = models.CharField(max_length=50,null=True, blank=True)
     genero = models.CharField(max_length=50,null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
@@ -104,14 +109,53 @@ class Livro(models.Model):
         """
         Diminuindo o tamanho das imagens para economizar espaço e padronizar.
         """
-        super().save(*args,**kwargs)
-        img = Image.open(self.capa.path)
+        width = 540
+        height = 800
 
-        output_size = (540,800)
-
-        img = img.resize(output_size)
-        img.save(self.capa.path)
+        image_size = (width,height)
         
+        # Quando é enviado uma capa
+        try:
+            img = Image.open(self.capa)
+            img = img.resize(image_size)
+            # Salvando em memorio para não salvar fisicamente no computador
+            image_io = BytesIO()
+            # Salvar a imagem no objeto BytesIO
+            img.save(image_io, format='png')
+            # 'save=false' por tem que salvar apenas no final do try
+            self.capa.save(f"{self.nome}.png", image_io, save=False)
+
+        # Caso não tenha uma capa então uma é criada
+        except:
+            image = Image.new('RGB', image_size, (227,233,247))
+
+            nome_do_livro = self.nome
+
+            font_size = 40
+
+            texto = ImageDraw.Draw(image)
+                    
+            # Obter o caminho da fonte padrão da pillow
+            fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", font_size)
+            # pegando tamanho do texto
+            text_width, text_height = texto.textsize(nome_do_livro, font=fnt)
+
+            text_position = (((width - text_width) // 2, (height - text_height) // 2))
+            # Escrevendo na imagem
+            texto.text(text_position, nome_do_livro ,font=fnt, fill=(0, 0, 0, 255))
+            # Salvando no bytes.Io
+            image_io = BytesIO()
+
+            image.save(image_io,format='png')
+            
+            self.capa.save(f"{self.nome}.png", image_io, save=False)
+     
+        super().save(*args, **kwargs)
+            
+
+            
+       
+           
 
 class Emprestimo(models.Model):
 
@@ -137,6 +181,7 @@ def deleteCapa(sender,instance, **kwargs):
     # Removendo capa dos arquivos
     os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{instance.capa}")
 
+"""
 @receiver(pre_save, sender=Livro)
 def deleteCapaAntiga(sender,instance, **kwargs):
 
@@ -148,6 +193,7 @@ def deleteCapaAntiga(sender,instance, **kwargs):
                 os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{livro.capa}")
     except Livro.DoesNotExist:
         pass
+"""
 
 @receiver(pre_save, sender=CustomUser)
 def deleteFotoAntiga(sender,instance, **kwargs):

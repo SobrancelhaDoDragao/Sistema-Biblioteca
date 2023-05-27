@@ -4,7 +4,7 @@ from django.urls import reverse
 from django_seed import Seed
 
 from django.conf import settings
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import io
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
@@ -162,17 +162,10 @@ class LivroTests(APITestCase):
         Criando um livro, com uma capa vermelha
         """
         
-        # Criação de uma imagem
-        image = Image.new('RGB', (500, 500), 'red')
-        image_file = io.BytesIO()
-        image.save(image_file, format='JPEG')
-        image_file.seek(0)
-
         # Criar um objeto de modelo com a imagem em memória
         model_data = {
-            "nome": "livroteste",
+            "nome": "Eudson",
             "autor": "autorTeste",
-            "capa": SimpleUploadedFile("test_image.jpg", image_file.read(), content_type="image/jpeg"),
         }
 
         response = self.client.post("/livros/", model_data, format="multipart")
@@ -180,7 +173,7 @@ class LivroTests(APITestCase):
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         # Deletando imagem criada
-        os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{model_data['capa']}")
+        #os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{model_data['capa']}")
 
        
 
