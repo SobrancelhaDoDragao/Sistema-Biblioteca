@@ -7,13 +7,11 @@ from django.conf import settings
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
 
-
 import os
 from datetime import datetime, timedelta
-from PIL import Image, ImageDraw, ImageFont
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import SimpleUploadedFile
 from io import BytesIO
+from PIL import Image
+from .utils import CreateCapa
 
 
 # Fuso horario
@@ -107,7 +105,7 @@ class Livro(models.Model):
 
     def save(self,*args,**kwargs):
         """
-        Diminuindo o tamanho das imagens para economizar espaço e padronizar.
+        Diminuindo o tamanho das imagens para economizar espaço e padronizar, ou criando uma capa caso não tenha
         """
         width = 540
         height = 800
@@ -120,42 +118,24 @@ class Livro(models.Model):
             img = img.resize(image_size)
             # Salvando em memorio para não salvar fisicamente no computador
             image_io = BytesIO()
-            # Salvar a imagem no objeto BytesIO
+            # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
             img.save(image_io, format='png')
-            # 'save=false' por tem que salvar apenas no final do try
+            # 'save=false' por que tem salvar apenas no final do try
             self.capa.save(f"{self.nome}.png", image_io, save=False)
 
         # Caso não tenha uma capa então uma é criada
         except:
-            image = Image.new('RGB', image_size, (227,233,247))
-
-            nome_do_livro = self.nome
-
-            font_size = 40
-
-            texto = ImageDraw.Draw(image)
-                    
-            # Obter o caminho da fonte padrão da pillow
-            fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", font_size)
-            # pegando tamanho do texto
-            text_width, text_height = texto.textsize(nome_do_livro, font=fnt)
-
-            text_position = (((width - text_width) // 2, (height - text_height) // 2))
-            # Escrevendo na imagem
-            texto.text(text_position, nome_do_livro ,font=fnt, fill=(0, 0, 0, 255))
-            # Salvando no bytes.Io
+            
             image_io = BytesIO()
 
+            image = CreateCapa(width,height,self.nome,self.autor)
+            # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
             image.save(image_io,format='png')
             
             self.capa.save(f"{self.nome}.png", image_io, save=False)
      
         super().save(*args, **kwargs)
             
-
-            
-       
-           
 
 class Emprestimo(models.Model):
 

@@ -162,10 +162,11 @@ class LivroTests(APITestCase):
         Criando um livro, com uma capa vermelha
         """
         
-        # Criar um objeto de modelo com a imagem em memória
+        # Criar um livro sem capa
         model_data = {
-            "nome": "Eudson",
-            "autor": "autorTeste",
+            "nome": "O Alienista",
+            "autor": "Machado de assis",
+            "capa": '' 
         }
 
         response = self.client.post("/livros/", model_data, format="multipart")
