@@ -40,7 +40,7 @@ def CreateCapa(width,height,nome,autor):
     # X = width, y = height 
     # Como a linha é reta, a altura do começo e do final são as mesmas
 
-    Altura_da_linha = (Titulo_position[1] + Titulo_height) + Titulo_height * 0.15 # Mas 10% apos o titulo
+    Altura_da_linha = (Titulo_position[1] + Titulo_height) + Titulo_height * 0.15 # Mais 15% apos o titulo
 
     StartX = Titulo_position[0] # Pocisao no eixo X, Width ou Largura
     StartY = Altura_da_linha  # Pocisao no eixo Y, Height ou Altura

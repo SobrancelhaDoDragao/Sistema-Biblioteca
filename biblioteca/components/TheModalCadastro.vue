@@ -38,7 +38,7 @@
                             </textarea>
                         </div>
                         <div id="capaDiv" >
-                            <label for="capa">Capa <span>*Obrigatório</span></label>
+                            <label for="capa">Capa</label>
                             <input type="file" id="capa" ref="capa">
                         </div>
                     
@@ -157,14 +157,13 @@ let livros = useLivroStore()
 let modal = ref(false)
 
 let nome = ref('')
-//let capa = ref('')
+let capa = ref(null)
 let autor = ref('')
 let editora = ref('')
 let genero = ref('')
 let descricao = ref('')
 let ErroCadastroForm = ref()
 
-let capa = ref(null)
 
 let cadastrolLivro = async()=>{
       

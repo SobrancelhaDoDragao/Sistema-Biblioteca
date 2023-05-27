@@ -161,7 +161,7 @@ def deleteCapa(sender,instance, **kwargs):
     # Removendo capa dos arquivos
     os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{instance.capa}")
 
-"""
+
 @receiver(pre_save, sender=Livro)
 def deleteCapaAntiga(sender,instance, **kwargs):
 
@@ -173,7 +173,7 @@ def deleteCapaAntiga(sender,instance, **kwargs):
                 os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{livro.capa}")
     except Livro.DoesNotExist:
         pass
-"""
+
 
 @receiver(pre_save, sender=CustomUser)
 def deleteFotoAntiga(sender,instance, **kwargs):
