@@ -113,18 +113,35 @@ class Livro(models.Model):
         image_size = (width,height)
         
         # Quando é enviado uma capa
-        try:
-            img = Image.open(self.capa)
-            img = img.resize(image_size)
-            # Salvando em memorio para não salvar fisicamente no computador
-            image_io = BytesIO()
-            # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
-            img.save(image_io, format='png')
-            # 'save=false' por que tem salvar apenas no final do try
-            self.capa.save(f"{self.nome}.png", image_io, save=False)
+        if self.capa:
+            try:
+                livro = Livro.objects.get(id=self.id)
+                
+                if livro.capa != self.capa:
+
+                    img = Image.open(self.capa)
+                    img = img.resize(image_size)
+                    # Salvando em memorio para não salvar fisicamente no computador
+                    image_io = BytesIO()
+                    # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
+                    img.save(image_io, format='png')
+                    # 'save=false' por que tem salvar apenas no final do try
+                    self.capa.save(f"{self.nome}.png", image_io, save=False)
+
+            except Livro.DoesNotExist:
+                
+                img = Image.open(self.capa)
+                img = img.resize(image_size)
+                # Salvando em memorio para não salvar fisicamente no computador
+                image_io = BytesIO()
+                # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
+                img.save(image_io, format='png')
+                # 'save=false' por que tem salvar apenas no final do try
+                self.capa.save(f"{self.nome}.png", image_io, save=False)
+            
 
         # Caso não tenha uma capa então uma é criada
-        except:
+        else:
             
             image_io = BytesIO()
 

@@ -178,10 +178,8 @@ let cadastrolLivro = async()=>{
 
          if(capa.value.files[0]){
             formData.append('capa',capa.value.files[0])
-            console.log('teste')
           }
          else{
-          console.log('Testando 2222222')
             formData.append('capa','')
          }
 

@@ -2,6 +2,7 @@
 Arquivo para armazenar funções que serao usadas em todo sistema
 """
 from PIL import Image, ImageDraw, ImageFont
+from random import randint
 
 def CreateCapa(width,height,nome,autor):
     """
@@ -15,11 +16,11 @@ def CreateCapa(width,height,nome,autor):
     nome_do_autor = autor
     font_size = 60
     black = (0, 0, 0)
-    backGround = (255,255,100)
+    backGround = [(255,255,100),(146, 82, 162),(146, 82, 43),(255, 124, 43),(137, 251, 70),(137, 57, 146),(88, 167, 146)]
 
     image_size = (width,height)
-    
-    image = Image.new('RGB', image_size, backGround)
+    # Capa tera um cor escolhida aleatoriamente
+    image = Image.new('RGB', image_size, backGround[randint(0,6)])
 
     texto = ImageDraw.Draw(image)
     draw = ImageDraw.Draw(image) # Para linha
@@ -36,7 +37,7 @@ def CreateCapa(width,height,nome,autor):
     Titulo_position = (((width - Titulo_width) // 	2, (height - Titulo_height) // 3))
     Autor_position = (((width - Autor_width) // 2, (height - Autor_height) // 2))
 
-    # Para desenhar uma linha é preciso do ponto do comeco(x,y) e o ponto no final(x,y). E a linha ligará os pontos  
+    # Para desenhar uma linha é preciso do ponto do comeco(x,y) e o ponto no final(x,y). E a linha ligará os pontos. 
     # X = width, y = height 
     # Como a linha é reta, a altura do começo e do final são as mesmas
 
