@@ -1,12 +1,12 @@
+<div align="center">
+
+<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/Alpha-3.0/biblioteca/public/img/meninoLendo.png" alt="Menino lendo um livro na lua" width="200">
+
+</div>
+
 <h1 align="center">Sistema Biblioteca</h1>
 
 <h3 align="center">Gereciamento de livros, empréstimos e acervo de biblioteca</h3>
-
-<div align="center">
-
-<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/Alpha-3.0/biblioteca/public/img/meninoLendo.png" alt="Menino lendo um livro na lua" width="100">
-
-</div>
 
 <h4 align="center">Status: em progresso</h4>
 
