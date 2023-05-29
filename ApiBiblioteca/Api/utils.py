@@ -3,13 +3,33 @@ Arquivo para armazenar funções que serao usadas em todo sistema
 """
 from PIL import Image, ImageDraw, ImageFont
 from random import randint
+from io import BytesIO
+
+def ResizeCapa(image,image_size):
+    """
+    Função para redimensionar uma imagem
+
+    Input: image, image_size
+    Output: Image file
+    """
+    # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
+    # Buffer para salvar a imagem
+    image_io = BytesIO()
+
+    scaled_image = Image.open(image)
+    scaled_image = scaled_image.resize(image_size)
+
+    # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
+    scaled_image.save(image_io, format='png')
+
+    return image_io
 
 def CreateCapa(width,height,nome,autor):
     """
     Função parar criar uma capa de livro
 
     Input: width, height, nome, autor
-    Output: Image
+    Output: Pillow object Image
     """
 
     nome_do_livro = nome
@@ -17,6 +37,10 @@ def CreateCapa(width,height,nome,autor):
     font_size = 60
     black = (0, 0, 0)
     backGround = [(255,255,100),(146, 82, 162),(146, 82, 43),(255, 124, 43),(137, 251, 70),(137, 57, 146),(88, 167, 146)]
+    
+    # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
+    # Buffer para salvar a imagem
+    image_io = BytesIO()
 
     image_size = (width,height)
     # Capa tera um cor escolhida aleatoriamente
@@ -54,5 +78,8 @@ def CreateCapa(width,height,nome,autor):
     # Escrevendo na imagem
     texto.text(Titulo_position, nome_do_livro ,font=Titulo, fill=black)
     texto.text(Autor_position, nome_do_autor ,font=Autor, fill=black)
+    
+    # Salvando imagem no buffer
+    image.save(image_io,format='png')
 
-    return image
+    return image_io

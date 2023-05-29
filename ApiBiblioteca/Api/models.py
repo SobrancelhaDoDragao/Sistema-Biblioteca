@@ -9,9 +9,7 @@ from django.dispatch import receiver
 
 import os
 from datetime import datetime, timedelta
-from io import BytesIO
-from PIL import Image
-from .utils import CreateCapa
+from .utils import CreateCapa, ResizeCapa
 
 
 # Fuso horario
@@ -107,8 +105,8 @@ class Livro(models.Model):
         """
         Diminuindo o tamanho das imagens para economizar espaço e padronizar, ou criando uma capa caso não tenha
         """
-        width = 540
-        height = 800
+        width = settings.CAPAWIDTH
+        height = settings.CAPAHEIGHT
 
         image_size = (width,height)
         
@@ -118,38 +116,24 @@ class Livro(models.Model):
                 livro = Livro.objects.get(id=self.id)
                 
                 if livro.capa != self.capa:
-
-                    img = Image.open(self.capa)
-                    img = img.resize(image_size)
-                    # Salvando em memorio para não salvar fisicamente no computador
-                    image_io = BytesIO()
-                    # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
-                    img.save(image_io, format='png')
+                    # Redimensionando imagem 
+                    scaled_image = ResizeCapa(self.capa, image_size)
                     # 'save=false' por que tem salvar apenas no final do try
-                    self.capa.save(f"{self.nome}.png", image_io, save=False)
+                    self.capa.save(f"{self.nome}.png", scaled_image, save=False)
 
             except Livro.DoesNotExist:
-                
-                img = Image.open(self.capa)
-                img = img.resize(image_size)
-                # Salvando em memorio para não salvar fisicamente no computador
-                image_io = BytesIO()
-                # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
-                img.save(image_io, format='png')
+                # Redimensionando imagem 
+                scaled_image = ResizeCapa(self.capa, image_size)
                 # 'save=false' por que tem salvar apenas no final do try
-                self.capa.save(f"{self.nome}.png", image_io, save=False)
+                self.capa.save(f"{self.nome}.png", scaled_image, save=False)
             
 
         # Caso não tenha uma capa então uma é criada
         else:
             
-            image_io = BytesIO()
-
             image = CreateCapa(width,height,self.nome,self.autor)
-            # Salvando a imagem no objeto BytesIO, ao em vez de salvar no HD
-            image.save(image_io,format='png')
             
-            self.capa.save(f"{self.nome}.png", image_io, save=False)
+            self.capa.save(f"{self.nome}.png", image, save=False)
      
         super().save(*args, **kwargs)
             

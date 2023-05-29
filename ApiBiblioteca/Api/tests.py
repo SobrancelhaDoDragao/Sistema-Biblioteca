@@ -2,13 +2,12 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
 from django_seed import Seed
-
-from django.conf import settings
-from PIL import Image, ImageDraw, ImageFont
-import io
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files.storage import default_storage
+from django.conf import settings
 import os
 
+from .utils import CreateCapa
 from .models import CustomUser as User
 from .models import Livro
 
@@ -157,9 +156,9 @@ class UserTests(APITestCase):
 
 class LivroTests(APITestCase):
 
-    def test_create_livro(self):
+    def test_create_livro_sem_capa(self):
         """
-        Criando um livro, com uma capa vermelha
+        Criando um livro sem enviar uma capa
         """
         
         # Criar um livro sem capa
@@ -170,11 +169,76 @@ class LivroTests(APITestCase):
         }
 
         response = self.client.post("/livros/", model_data, format="multipart")
-        
-        # Verificando a resposta 
+
+        # Verificando se foi criado com sucesso
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Recuperando do banco para ter acesso ao metodo path
+        livro = Livro.objects.get(id=response.data['id'])
+
+        # Verificando se o arquivo existe
+        self.assertTrue(default_storage.exists(livro.capa.path))
+
+        # Verificando se foi salvo corretemente
+        self.assertEqual(livro.nome, model_data['nome'])
+        self.assertEqual(livro.autor, model_data['autor'])
+
         # Deletando imagem criada
-        #os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{model_data['capa']}")
+        livro.capa.delete(livro.capa)
+        
+        
+    def test_create_livro_com_capa(self): 
+        """
+        Criando um livro e enviando uma capa
+        """
+        
+        nome = 'Forest Gump'
+        autor = 'Winston'
+        # Criando fora do padrao para testar o redimensionamento
+        width = 5000
+        height = 4000
+
+        capa = CreateCapa(width,height,nome,autor)
+        # Preparando para enviar o arquivo
+        capa = SimpleUploadedFile(f'{nome}.png',capa.getbuffer())
+
+        model_data = {
+            "nome": nome,
+            "autor": autor,
+            "capa": capa
+        }
+
+        response = self.client.post("/livros/", model_data, format="multipart")
+        
+        # Verificando se foi criado com sucesso
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        livro = Livro.objects.get(id=response.data['id'])
+        
+        # Verificando se o arquivo existe
+        self.assertTrue(default_storage.exists(livro.capa.path))
+        
+        # Verificando as dimensoes da capa
+        self.assertEqual(livro.capa.width, settings.CAPAWIDTH)
+        self.assertEqual(livro.capa.height, settings.CAPAHEIGHT)
+
+        # Verificando os dados
+        self.assertEqual(model_data['nome'], livro.nome)
+        self.assertEqual(model_data['autor'], livro.autor)
+     
+        # Deletando imagem criada
+        livro.capa.delete(livro.capa)
+
+
+        # Tentar salvar difersos formatos de arquivos 
+         
+        
+
+
+        
+
+        
+        
 
        
 

@@ -194,3 +194,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
 
+# Dimesoes padroes das capas
+CAPAWIDTH = 540
+CAPAHEIGHT = 800
+
