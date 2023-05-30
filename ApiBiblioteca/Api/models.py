@@ -118,8 +118,10 @@ class Livro(models.Model):
                 if livro.capa != self.capa:
                     # Redimensionando imagem 
                     scaled_image = ResizeCapa(self.capa, image_size)
-                    # 'save=false' por que tem salvar apenas no final do try
+                    # 'save=false' por que tem salvar apenas no final do try se não entra no loop infinito
                     self.capa.save(f"{self.nome}.png", scaled_image, save=False)
+                    # Excluindo a capa antiga
+                    livro.capa.delete(livro.capa)
 
             except Livro.DoesNotExist:
                 # Redimensionando imagem 
@@ -161,20 +163,6 @@ class Emprestimo(models.Model):
 def deleteCapa(sender,instance, **kwargs):
     # Removendo capa dos arquivos
     os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{instance.capa}")
-
-
-@receiver(pre_save, sender=Livro)
-def deleteCapaAntiga(sender,instance, **kwargs):
-
-    try:
-        livro = Livro.objects.get(id=instance.id)
-        
-        if livro.capa != instance.capa:
-                # Removendo capa dos arquivos
-                os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{livro.capa}")
-    except Livro.DoesNotExist:
-        pass
-
 
 @receiver(pre_save, sender=CustomUser)
 def deleteFotoAntiga(sender,instance, **kwargs):

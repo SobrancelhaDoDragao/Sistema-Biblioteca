@@ -145,7 +145,7 @@ class UserTests(APITestCase):
         Deletendo um usuario
         """
         
-        usuario = User.objects.create(nome=['teste'], email='teste@gmail.com',password='123',is_admin=0)
+        usuario = User.objects.create(nome='teste', email='teste@gmail.com',password='123',is_admin=0)
         
         # Deletando usuario
         response = self.client.delete(f'/users/{usuario.id}/', format='json')
@@ -158,7 +158,7 @@ class LivroTests(APITestCase):
 
     def test_create_livro_sem_capa(self):
         """
-        Criando um livro sem enviar uma capa
+        Criando um livro sem enviar uma capa e verificando se capa foi criada corretamente
         """
         
         # Criar um livro sem capa
@@ -176,7 +176,7 @@ class LivroTests(APITestCase):
         # Recuperando do banco para ter acesso ao metodo path
         livro = Livro.objects.get(id=response.data['id'])
 
-        # Verificando se o arquivo existe
+        # Verificando se o arquivo foi salvo
         self.assertTrue(default_storage.exists(livro.capa.path))
 
         # Verificando se foi salvo corretemente
@@ -189,7 +189,7 @@ class LivroTests(APITestCase):
         
     def test_create_livro_com_capa(self): 
         """
-        Criando um livro e enviando uma capa
+        Criando um livro e enviando uma capa e verificando se a capa foi redimensionada
         """
         
         nome = 'Forest Gump'
@@ -215,7 +215,7 @@ class LivroTests(APITestCase):
 
         livro = Livro.objects.get(id=response.data['id'])
         
-        # Verificando se o arquivo existe
+        # Verificando se o arquivo foi salvo
         self.assertTrue(default_storage.exists(livro.capa.path))
         
         # Verificando as dimensoes da capa
@@ -228,12 +228,55 @@ class LivroTests(APITestCase):
      
         # Deletando imagem criada
         livro.capa.delete(livro.capa)
-
-
-        # Tentar salvar difersos formatos de arquivos 
          
         
+    def test_edit_livro(self):
+        """
+        Editando dados do livro e verificando se a capa antiga foi excluida
+        """
+        # Criando capa para o teste
+        capa = CreateCapa(2000,2500,'Teste','TesteAutor')
 
+        capa = SimpleUploadedFile('Teste.png',capa.getbuffer())
+        # Criando um livro
+        livro = Livro.objects.create(nome='Teste', autor='teste',capa=capa)
+        
+        OutroNome = 'Outro nome'
+        OutroAutor = 'Outro Autor'
+        # Criando um nova capa para substituir a antiga
+        OutraCapa = CreateCapa(2000,2500,OutroNome,OutroAutor)
+
+        OutraCapa = SimpleUploadedFile(f'{OutroNome}.png', OutraCapa.getbuffer())
+
+        data = {
+            "nome": OutroNome,
+            "autor": OutroAutor,
+            "capa": OutraCapa
+        }
+        # Alterando os dados do livro 
+        response = self.client.put(f"/livros/{livro.id}/", data, format="multipart")
+        
+        # Verificando se a capa antiga foi deletada
+        self.assertEqual(default_storage.exists(livro.capa.path), False)
+        
+        livro = Livro.objects.get(id=response.data['id'])
+
+        # Verificando se o arquivo foi salvo
+        self.assertTrue(default_storage.exists(livro.capa.path))
+
+        # Verificando as dimensoes da capa
+        self.assertEqual(livro.capa.width, settings.CAPAWIDTH)
+        self.assertEqual(livro.capa.height, settings.CAPAHEIGHT)
+
+        # Verificando se foi salvo corretemente
+        self.assertEqual(livro.nome, data['nome'])
+        self.assertEqual(livro.autor, data['autor'])
+
+        # Deletando imagem criada
+        livro.capa.delete(livro.capa)
+        
+     
+     
 
         
 
