@@ -35,7 +35,6 @@ urlpatterns = [
 ]
 
 # Desativar na produção, o ngix vai servir os arquivos media
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

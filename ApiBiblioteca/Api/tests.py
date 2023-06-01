@@ -232,7 +232,7 @@ class LivroTests(APITestCase):
         
     def test_edit_livro(self):
         """
-        Editando dados do livro e verificando se a capa antiga foi excluida
+        Visualizando e editando dados do livro e verificando se a capa antiga foi excluida
         """
         # Criando capa para o teste
         capa = CreateCapa(2000,2500,'Teste','TesteAutor')
@@ -274,7 +274,41 @@ class LivroTests(APITestCase):
 
         # Deletando imagem criada
         livro.capa.delete(livro.capa)
+
+    def test_delete_livro(self):
+        """
+        Deletando livro e verificando se a capa foi apagada
+        """
+
+        # Criando capa para o teste
+        capa = CreateCapa(2000,2500,'Teste','TesteAutor')
+
+        capa = SimpleUploadedFile('Teste.png',capa.getbuffer())
+        # Criando um livro
+        livro = Livro.objects.create(nome='Teste', autor='teste',capa=capa)
+
+        # Alterando os dados do livro 
+        response = self.client.get(f"/livros/{livro.id}/")
         
+        # Verificando os dados
+        self.assertEqual(response.data['nome'], livro.nome)
+        self.assertEqual(response.data['autor'], livro.autor)
+
+        # Verificando se o arquivo foi salvo
+        self.assertTrue(default_storage.exists(livro.capa.path))
+        
+        # Deletando usuario
+        response = self.client.delete(f'/livros/{livro.id}/', format='json')
+
+        # Verificando a resposta 
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # Verificando se a capa foi deletada
+        self.assertEqual(default_storage.exists(livro.capa.path),False)
+       
+      
+
+            
      
      
 
