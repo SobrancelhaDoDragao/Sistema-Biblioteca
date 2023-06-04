@@ -139,7 +139,7 @@ export const useLivroStore = defineStore('Livro', {
                       headers:{'Content-Type':'application/json'}
         });
   
-        this.novoslivros = response.results
+        this.novoslivros = response
       }
   
     }

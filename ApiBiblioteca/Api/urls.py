@@ -25,11 +25,9 @@ urlpatterns = [
 
     path('', include(router.urls)),
     path('cadastro/', views.CadastroUser.as_view(),name='cadastro'),
-    #path('livros/', views.View_Livros.as_view()),
-    path('emprestimos/', views.CadastroUser.as_view()),
-    path('usuarios/<int:pk>/emprestimos/', views.ListarEmprestimosUsuario.as_view()),
-    path('recomendacao/', views.Recomedacao.as_view()),
-    path('novoslivros/', views.NovosLivros.as_view())
+    path('usuarios/<int:pk>/emprestimos/', views.EmprestimoCRUD.as_view({'get':'ListarEmprestimosUsuario'})),
+    path('recomendacao/', views.Livros.as_view({'get':'Recomedacao'})),
+    path('novoslivros/', views.Livros.as_view({'get':'NovosLivros'}))
 ]
 
 # Desativar na produção, o ngix vai servir os arquivos media

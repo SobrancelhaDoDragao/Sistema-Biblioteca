@@ -129,7 +129,7 @@ export const useEmprestimoStore = defineStore('Emprestimo', {
         const urlBase = await this.GetUrlBaseRuntimeConfig()
         const token = await this.GetToken()
 
-        const response = await $fetch(`${urlBase}/users/?search=${searchUsuario}`,{
+        const response = await $fetch(`${urlBase}all_users/?search=${searchUsuario}`,{
             method:'GET',
             headers:{'Content-Type':'application/json','Authorization': token}
         });

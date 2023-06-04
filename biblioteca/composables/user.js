@@ -91,7 +91,7 @@ export const useUserStore = defineStore('User', {
                     headers:{'Content-Type':'application/json'}
       });
         
-      this.recomedacao = response.results
+      this.recomedacao = response
     },
 
     async GetLivrosEmprestimos(){
@@ -104,7 +104,7 @@ export const useUserStore = defineStore('User', {
                     headers:{'Content-Type':'application/json'}
        });
         
-      this.emprestimos = response.results
+      this.emprestimos = response
     }
 
   }
