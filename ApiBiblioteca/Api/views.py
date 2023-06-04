@@ -1,16 +1,15 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer, LivroSerializer, EmprestimoSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework import viewsets,filters,status
 from rest_framework import generics
 
-from django.conf import settings
-
 from .models import CustomUser as User
 from .models import Livro, Emprestimo
 from .pagination import PaginationToEmprestimo, PaginationToRecomedacao
+from .serializers import UserSerializer, LivroSerializer, EmprestimoSerializer
+from .permissions import ReadOnly
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -65,33 +64,50 @@ class CadastroUser(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserCRUD(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated]
+class UsersAdmin(viewsets.ModelViewSet):
+    """
+    End-point que mostra todos os usuarios do sistema, acesso permitido apenas para admins
+    """
+
+    permission_classes = [IsAdminUser]
+    # Todos os usuarios do sistema
     queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
-   
-
     filter_backends = [filters.SearchFilter]
     search_fields = ['email','id']
     
-    def UserLogadoData(self, request, *args, **kwargs):
-   
-        user = User.objects.get(id=request.user.id)
-        # Para gerar a imagem com URL completa precisa passar o contexto 
-        serializer = UserSerializer(user,context={'request': request})
-      
-        return Response(serializer.data)
 
-class LivroCRUD(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated]
+class UserNormal(viewsets.ModelViewSet):
+    """
+    End-point para limitar o acesso do usuario para apenas seus proprio dados 
+    """
+    
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    # Retornando apenas os dados do usuario logado
+    def get_queryset(self):
+        
+        user = User.objects.filter(id=self.request.user.id)
+
+        return user
+    
+
+class Livros(viewsets.ModelViewSet):
+    """
+    Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios permitido apenas visualização.
+    """
+    permission_classes = [IsAdminUser|ReadOnly]
     queryset = Livro.objects.all().order_by('-data_criacao')
     serializer_class = LivroSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['nome', 'editora','autor','genero']
 
-
 class EmprestimoCRUD(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    """
+    Para adicionar, visualizar, alterar e excluir emprestimos. Acesso restrito a admins. 
+    """
+    permission_classes = [IsAdminUser|ReadOnly]
     queryset = Emprestimo.objects.all().order_by('data_criacao')
     serializer_class = EmprestimoSerializer
     pagination_class = PaginationToEmprestimo
@@ -116,7 +132,6 @@ class Recomedacao(generics.ListAPIView):
     """
     Recomecao de livros. Por enquanto vai ser aleatorio
     """
-
     serializer_class = LivroSerializer
     pagination_class = PaginationToRecomedacao
 
@@ -132,7 +147,6 @@ class NovosLivros(generics.ListAPIView):
     """
     Novos livro do acervo
     """
-
     serializer_class = LivroSerializer
     pagination_class = PaginationToRecomedacao
 

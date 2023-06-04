@@ -1,4 +1,4 @@
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APILiveServerTestCase
 from rest_framework import status
 from django.urls import reverse
 from django_seed import Seed
@@ -13,6 +13,11 @@ from .models import Livro
 
 
 class UserTests(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Set up data for the whole TestCase
+        cls.user = User.objects.create(nome=['teste'], email='teste@gmail.com',password='123',is_admin=0)
 
     def generate_users(self,total_users):
         """
@@ -45,6 +50,9 @@ class UserTests(APITestCase):
         self.assertEqual(response.data['nome'], data['nome'])
         self.assertEqual(response.data['email'], data['email'])
         self.assertEqual(response.data['is_admin'], data['is_admin'])
+        
+        # Salvando como atributo
+        self.user = response.data
 
     def test_create_super_user(self):
         """
@@ -63,6 +71,7 @@ class UserTests(APITestCase):
         self.assertEqual(response.data['email'], data['email'])
         self.assertEqual(response.data['is_admin'], data['is_admin'])
 
+
     def test_create_user_with_an_existing_email(self):
         """
         Criando um usuario com um email que ja existe, o sistema não deve permitir
@@ -79,6 +88,7 @@ class UserTests(APITestCase):
       
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     
 
     def test_retrieve_users(self):
@@ -87,6 +97,8 @@ class UserTests(APITestCase):
         """
         # Sem usuarios cadastrados
         response = self.client.get('/users/')
+
+        print(response.data)
 
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -294,7 +306,7 @@ class LivroTests(APITestCase):
         self.assertEqual(response.data['nome'], livro.nome)
         self.assertEqual(response.data['autor'], livro.autor)
 
-        # Verificando se o arquivo foi salvo
+        # Verificando se a capa foi salva
         self.assertTrue(default_storage.exists(livro.capa.path))
         
         # Deletando usuario

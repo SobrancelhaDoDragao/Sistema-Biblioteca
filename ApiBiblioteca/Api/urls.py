@@ -11,13 +11,11 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-
 router = DefaultRouter()
-router.register(r'users', views.UserCRUD,basename="user")
-router.register(r'livros', views.LivroCRUD,basename="livro")
+router.register(r'user', views.UserNormal,basename="user")
+router.register(r'all_users', views.UsersAdmin,basename="users_admin")
+router.register(r'livros', views.Livros,basename="livros")
 router.register(r'emprestimos', views.EmprestimoCRUD,basename="emprestimo")
-
-
 
 urlpatterns = [
     path('',views.getRoutes),
@@ -26,8 +24,8 @@ urlpatterns = [
     path('VerifyAuthenticated/', views.VerifyAuthenticated.as_view()),
 
     path('', include(router.urls)),
-    path('UserLogado/', views.UserCRUD.as_view({'get': 'UserLogadoData'})),
     path('cadastro/', views.CadastroUser.as_view(),name='cadastro'),
+    #path('livros/', views.View_Livros.as_view()),
     path('emprestimos/', views.CadastroUser.as_view()),
     path('usuarios/<int:pk>/emprestimos/', views.ListarEmprestimosUsuario.as_view()),
     path('recomendacao/', views.Recomedacao.as_view()),

@@ -47,15 +47,15 @@ export const useUserStore = defineStore('User', {
   
       let url = await this.GetUrlBaseRuntimeConfig()
 
-      const response = await $fetch(`${url}UserLogado/`,{
+      const response = await $fetch(`${url}user/`,{
           method:'GET',
           headers:{'Content-Type':'application/json',
           'Authorization': bearer,
           },
       });
-
-      const user = response
       
+      const user = response.results[0]
+  
       this.id = user.id
       this.nome = user.nome
       this.email = user.email
@@ -70,15 +70,13 @@ export const useUserStore = defineStore('User', {
       // Url base do back-end
       let url = await this.GetUrlBaseRuntimeConfig()
       
-      const response = await $fetch(`${url}users/${this.id}/`,{
+      const response = await $fetch(`${url}user/${this.id}/`,{
         method:'PATCH',
         headers:{
         'Authorization': bearer,
         },
         body:form
        });
-
-
        
     },
 

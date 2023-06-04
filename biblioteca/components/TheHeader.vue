@@ -207,7 +207,6 @@ let user = useUserStore()
 if(user.nome == ''){
     await user.GetUserData()
 }
-
 </script>
 
 
