@@ -1,5 +1,4 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework import viewsets,filters,status, generics
@@ -10,24 +9,30 @@ from .pagination import PaginationToEmprestimo, PaginationToRecomedacao
 from .serializers import UserSerializer, LivroSerializer, EmprestimoSerializer
 from .permissions import ReadOnly
 
-@api_view(['GET'])
-def getRoutes(request):
+
+class getRoutes(APIView):
     """
     Todas as url da Api biblioteca
     """
-    routes = [
-        '------- Rotas que não precisa estar autenticado -----',
-        'cadastro/',
-        'VerifyAuthenticated/',
-        'token/',
-        'token/refresh/',
-        '------- Precisa estar autenticado -----',
-        'UserLogado/',
-        'users/',
-        'livros/'
-    ]
+    def get(self,request):
 
-    return Response(routes)
+        routes = [
+            '------- Rotas que não precisa estar autenticado -----',
+            'cadastro/',
+            'VerifyAuthenticated/',
+            'token/',
+            'token/refresh/',
+            'usuarios/<int:pk>/emprestimos/'
+            'recomendacao/'
+            'novoslivros/'
+            'livros/'
+            'emprestimos'
+            '------- Precisa estar autenticado -----',
+            'UserNormal',
+            'all_users',
+        ]
+
+        return Response(routes)
 
 class VerifyAuthenticated(APIView):
     """
@@ -93,7 +98,7 @@ class Livros(viewsets.ModelViewSet):
 
     def Recomedacao(self,request):
         """
-        Recomecao de livros. Por enquanto vai ser aleatorio
+        Recomecao de livros. Por enquanto vai ser aleatorio.
         """
         # recupera 10 registros aleatórios do modelo
         random_livros = self.queryset.order_by('?')[:5]

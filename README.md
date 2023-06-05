@@ -29,9 +29,12 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 ## Funcionalidades
 
 - [x] Cadastro de usuários e bibliotecários
-- [x] Autenticação de usuários e bibliotecários
+- [x] Autenticação de usuários e bibliotecários com JWT (JSON Web Token)
 - [x] Gerenciamento de livros (adicionar, remover, editar e visualizar)
 - [x] Gerenciamento de empréstimos (adicionar, remover, editar e visualizar)
+- [x] Gerenciamento de arquivos de imagens para livros e fotos de usuários
+- [x] Hierarquia de funcionalidades: a edição de livros e empréstimos é permitida apenas para administradores, enquanto os usuários comuns têm acesso a requisições seguras, como GET, HEAD e OPTIONS.
+- [x] Responsividade
 - [ ] Pesquisa de livros e empréstimos
 
 ## Tecnologias usadas
@@ -52,7 +55,13 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ## Banco de dados
 
-Em andamendo
+### Diagrama do banco de dados
+
+<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/Alpha-3.0/biblioteca/public/img/diagrama_banco_de_dados.png" alt="Diagrama do banco de dados">
+
+### End-points
+
+Em andamento
 
 ## Estrutura do servidor / Projeto
 

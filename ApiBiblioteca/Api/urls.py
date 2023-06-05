@@ -18,7 +18,7 @@ router.register(r'livros', views.Livros,basename="livros")
 router.register(r'emprestimos', views.EmprestimoCRUD,basename="emprestimo")
 
 urlpatterns = [
-    path('',views.getRoutes),
+    path('',views.getRoutes.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('VerifyAuthenticated/', views.VerifyAuthenticated.as_view()),
