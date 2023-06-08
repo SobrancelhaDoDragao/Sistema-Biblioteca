@@ -69,7 +69,7 @@ Em andamento
 
 ## Testes
 
-Em andamento
+Para executar testes unitários entre na pasta ApiBiblioteca e digite o comando:<code>python manage.py test</code>
 
 ## Instalação
 
