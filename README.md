@@ -57,7 +57,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ### Diagrama do banco de dados relacional
 
-<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/biblioteca/public/img/diagrama_banco_de_dados.png" alt="Diagrama do banco de dados">
+<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/screenshots/diagrama_banco.png" alt="Diagrama do banco de dados">
 
 ### End-points
 
