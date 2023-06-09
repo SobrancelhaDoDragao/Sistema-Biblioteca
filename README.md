@@ -12,6 +12,7 @@
     
 ![Bower](https://img.shields.io/bower/l/mi?color=9cf&style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/SobrancelhaDoDragao/Sistema-Biblioteca?color=9cf&style=for-the-badge)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg?color=9cf&style=for-the-badge)](https://www.python.org/downloads/release/python-3100/)
     
 </div>
 
