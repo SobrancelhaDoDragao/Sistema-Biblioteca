@@ -33,6 +33,28 @@ class TestBase(APITestCase):
         response = self.client.post(url, data, format='json')
 
         return data, response
+
+    def cadastro_livro(self,capa=''):
+        """
+        Métododo para cadastrar livro
+
+        Input: None ou imagem
+        Output: Dados do livro, retorno da response
+        """
+
+        seeder = Seed.seeder()
+        
+        
+        #Dado do livro sem capa enviar uma capa
+        data = {
+        "nome": seeder.faker.user_name(),
+        "autor": seeder.faker.user_name(),
+        "capa": capa 
+        }
+        # Enviando dados
+        response = self.client.post("/livros/", data, format="multipart")
+
+        return data, response
         
     def login(self,credentials):
         """
@@ -188,12 +210,15 @@ class UserTests(TestBase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 class LivroTests(TestBase):
+    """
+    Testando funcionalidades relacionadas ao livros
+    """
 
     def test_acesso_views(self):
         """
         Verificando se usuarios comums tem acesso a view de admins
         """
-        # Criando um usuario 
+        # Criando um usuario comum
         data, response = self.cadastro_user()
 
         # Logando 
@@ -201,13 +226,7 @@ class LivroTests(TestBase):
         self.login(credentials)
 
         # POST - Criação de livro
-        model_data = {
-            "nome": "O Alienista",
-            "autor": "Machado de assis",
-            "capa": '' 
-        }
-
-        response = self.client.post("/livros/", model_data, format="multipart")
+        data, response = self.cadastro_livro()
 
         # Verificando a resposta, não pode permitir acesso de usuarios comuns
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -226,13 +245,7 @@ class LivroTests(TestBase):
         self.login(credentials)
         
         # Criar um livro sem capa
-        model_data = {
-            "nome": "O Alienista",
-            "autor": "Machado de assis",
-            "capa": '' 
-        }
-
-        response = self.client.post("/livros/", model_data, format="multipart")
+        data, response = self.cadastro_livro()
 
         # Verificando se foi criado com sucesso
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -244,17 +257,8 @@ class LivroTests(TestBase):
         self.assertTrue(default_storage.exists(livro.capa.path))
 
         # Verificando se foi salvo corretemente
-        self.assertEqual(livro.nome, model_data['nome'])
-        self.assertEqual(livro.autor, model_data['autor'])
-
-        # Criando um usuario comum para verificar se ele tem acesso
-        data, response = self.cadastro_user()
-
-        # Logando como admin
-        credentials = {'email':data['email'],'password':data['password']}
-        self.login(credentials)
-
-        response = self.client.post("/livros/", model_data, format="multipart")
+        self.assertEqual(livro.nome, data['nome'])
+        self.assertEqual(livro.autor, data['autor'])
 
         # Deletando imagem criada
         livro.capa.delete(livro.capa)
@@ -281,15 +285,9 @@ class LivroTests(TestBase):
         capa = CreateCapa(width,height,nome,autor)
         # Preparando para enviar o arquivo
         capa = SimpleUploadedFile(f'{nome}.png',capa.getbuffer())
-
-        model_data = {
-            "nome": nome,
-            "autor": autor,
-            "capa": capa
-        }
-
-        response = self.client.post("/livros/", model_data, format="multipart")
         
+        data, response = self.cadastro_livro(capa)
+           
         # Verificando se foi criado com sucesso
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -303,8 +301,8 @@ class LivroTests(TestBase):
         self.assertEqual(livro.capa.height, settings.CAPAHEIGHT)
 
         # Verificando os dados
-        self.assertEqual(model_data['nome'], livro.nome)
-        self.assertEqual(model_data['autor'], livro.autor)
+        self.assertEqual(data['nome'], livro.nome)
+        self.assertEqual(data['autor'], livro.autor)
      
         # Deletando imagem criada
         livro.capa.delete(livro.capa)
@@ -399,7 +397,13 @@ class LivroTests(TestBase):
         # Verificando se a capa foi deletada
         self.assertEqual(default_storage.exists(livro.capa.path),False)
        
-      
+
+class EmprestimoTests(TestBase):
+    """
+    Testando funcionalidades relacionadas a emprestimo
+    """
+    pass
+
 
             
      
