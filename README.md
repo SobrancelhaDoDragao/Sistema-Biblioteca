@@ -94,6 +94,7 @@ Para executar testes unitários entre na pasta ApiBiblioteca e digite o comando:
 3. Ative o ambiente virtual: <code>source env/bin/activate</code>
 4. Agora digite: <code>pip install -r requirements.txt</code>, para instalar as bibliotecas
 5. E finalmente rode o projeto:<code>python manage.py runserver</code>
+6. Para cadastrar 55 livros apartir do backup <code>python manage.py loaddata livros_backup.json</code>
 
 ## Licensa
 
