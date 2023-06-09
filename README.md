@@ -8,6 +8,13 @@
 
 <h3 align="center">Gereciamento de livros, empréstimos e acervo de biblioteca</h3>
 
+<div align="center">
+    
+![Bower](https://img.shields.io/bower/l/mi?color=9cf&style=for-the-badge)
+![Bower](https://img.shields.io/github/stars/SobrancelhaDoDragao/Sistema-Biblioteca?color=9cf&style=for-the-badge)
+    
+</div>
+
 <h4 align="center">Status: em progresso</h4>
 
 ## Tópicos
