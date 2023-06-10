@@ -21,11 +21,11 @@ urlpatterns = [
     path('',views.getRoutes.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('VerifyAuthenticated/', views.VerifyAuthenticated.as_view()),
+    path('VerifyAuthenticated/', views.VerifyAuthenticated.as_view(), name='VerifyAuthenticated'),
 
     path('', include(router.urls)),
     path('cadastro/', views.CadastroUser.as_view(),name='cadastro'),
-    path('usuarios/<int:pk>/emprestimos/', views.EmprestimoCRUD.as_view({'get':'ListarEmprestimosUsuario'})),
+    path('usuarios/<int:pk>/emprestimos/', views.EmprestimoCRUD.as_view({'get':'ListarEmprestimosUsuario'}),name='all_emprestimos_users'),
     path('recomendacao/', views.Livros.as_view({'get':'Recomedacao'})),
     path('novoslivros/', views.Livros.as_view({'get':'NovosLivros'}))
 ]

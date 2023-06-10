@@ -17,6 +17,23 @@ class TestBase(APITestCase):
     """
     Classe com metodos padrões que serão usadas em todos os testes
     """
+    seeder = Seed.seeder()
+
+    # urls relacionas a usuarios
+    cadastro_url = reverse('cadastro')
+    user_url_data = '/user/'
+    users_url_admin = '/all_users/'
+
+    # urls relacionas a livros
+    livros_url = '/livros/'
+
+    # urls relacionadas a autenticação
+    token_url = reverse('token_obtain_pair')
+    VerifyAuthenticated = reverse('VerifyAuthenticated')
+
+    # urls relacionadas a emprestimos
+    # all_emprestimos_users = reverse('all_emprestimos_users')
+    emprestimos_url = 'emprestimos'
 
     def cadastro_user(self,admin=False):
         """
@@ -25,12 +42,9 @@ class TestBase(APITestCase):
         Input: admin, padrão False.
         Output: Dados do usuario, retorno da response
         """
+        data = {'nome':self.seeder.faker.user_name(),'email':self.seeder.faker.email(),'password':'123','is_admin':admin}
 
-        seeder = Seed.seeder()
-        url = reverse('cadastro')
-        data = {'nome':seeder.faker.user_name(),'email':seeder.faker.email(),'password':'123','is_admin':admin}
-
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(self.cadastro_url, data, format='json')
 
         return data, response
 
@@ -41,18 +55,14 @@ class TestBase(APITestCase):
         Input: None ou imagem
         Output: Dados do livro, retorno da response
         """
-
-        seeder = Seed.seeder()
-        
-        
-        #Dado do livro sem capa enviar uma capa
+        # Dado do livro sem capa enviar uma capa
         data = {
-        "nome": seeder.faker.user_name(),
-        "autor": seeder.faker.user_name(),
+        "nome": self.seeder.faker.user_name(),
+        "autor": self.seeder.faker.user_name(),
         "capa": capa 
         }
         # Enviando dados
-        response = self.client.post("/livros/", data, format="multipart")
+        response = self.client.post(self.livros_url, data, format="multipart")
 
         return data, response
         
@@ -62,8 +72,7 @@ class TestBase(APITestCase):
 
         Input: Credentials
         """
-        token_url = reverse('token_obtain_pair')
-        token = self.client.post(token_url,credentials,format='json')
+        token = self.client.post(self.token_url,credentials,format='json')
 
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token.data['access'])
 
@@ -105,13 +114,12 @@ class UserTests(TestBase):
         """
         Criando um usuario com um email que ja existe, o sistema não deve permitir
         """
-        url = reverse('cadastro')
         # Criando o primeiro usuario
         User.objects.create(nome=['teste'], email='teste@gmail.com',password='123',is_admin=0)
         # Criando um segundo com email repetido
         data = {'nome':'outroUsuario','email':'teste@gmail.com','password':'123','is_admin':0}
         
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(self.cadastro_url, data, format='json')
       
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -128,7 +136,7 @@ class UserTests(TestBase):
         self.login(credentials)
         
         # Retornando usuarios
-        response = self.client.get('/all_users/')
+        response = self.client.get(self.users_url_admin)
 
         # Verificando a resposta, não pode permitir acesso de usuarios comuns
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -141,7 +149,7 @@ class UserTests(TestBase):
         self.login(credentials)
 
         # Retornando usuarios
-        response = self.client.get('/all_users/')
+        response = self.client.get(self.users_url_admin)
         
         # O admin deve ter acesso
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -159,8 +167,8 @@ class UserTests(TestBase):
         # Logando
         credentials = {'email':data['email'],'password':data['password']}
         self.login(credentials)
-
-        response = self.client.get(f"/user/{response.data['id']}/")
+        
+        response = self.client.get(f"{self.user_url_data}{response.data['id']}/")
         
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -184,7 +192,7 @@ class UserTests(TestBase):
         # Alterando o nome
         data = {'nome':'outronome','email':data['email'],'password':data['password'],'is_admin':data['is_admin']}
 
-        response = self.client.put(f"/user/{response.data['id']}/", data, format='json')
+        response = self.client.put(f"{self.user_url_data}{response.data['id']}/", data, format='json')
 
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -204,7 +212,7 @@ class UserTests(TestBase):
         self.login(credentials)
 
         # Deletando usuario
-        response = self.client.delete(f"/user/{response.data['id']}/", format='json')
+        response = self.client.delete(f"{self.user_url_data}{response.data['id']}/", format='json')
 
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -339,7 +347,7 @@ class LivroTests(TestBase):
             "capa": OutraCapa
         }
         # Alterando os dados do livro 
-        response = self.client.put(f"/livros/{livro.id}/", data, format="multipart")
+        response = self.client.put(f"{self.livros_url}{livro.id}/", data, format="multipart")
         
         # Verificando se a capa antiga foi deletada
         self.assertEqual(default_storage.exists(livro.capa.path), False)
@@ -379,7 +387,7 @@ class LivroTests(TestBase):
         # Criando um livro
         livro = Livro.objects.create(nome='Teste', autor='teste',capa=capa)
  
-        response = self.client.get(f"/livros/{livro.id}/")
+        response = self.client.get(f"{self.livros_url}{livro.id}/")
         
         # Verificando os dados
         self.assertEqual(response.data['nome'], livro.nome)
@@ -389,7 +397,7 @@ class LivroTests(TestBase):
         self.assertTrue(default_storage.exists(livro.capa.path))
         
         # Deletando usuario
-        response = self.client.delete(f'/livros/{livro.id}/', format='json')
+        response = self.client.delete(f'{self.livros_url}{livro.id}/', format='json')
 
         # Verificando a resposta 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -403,6 +411,7 @@ class EmprestimoTests(TestBase):
     Testando funcionalidades relacionadas a emprestimo
     """
     pass
+
 
 
             
