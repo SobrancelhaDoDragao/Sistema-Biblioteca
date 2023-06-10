@@ -18,6 +18,12 @@
 
 <h4 align="center">Status: em progresso</h4>
 
+<div align="center">
+    
+<img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/screenshots/aprensentacao2.gif">
+    
+</div>
+
 ## Tópicos
 
 1. [Sobre](#sobre)
