@@ -72,79 +72,36 @@ def CreateCapa(width,height,nome,autor):
                 
                 w_text, h_text = pen.textsize(linha, font=fonte)
                 # Calculando a posição centralizado do titulo e autor
-                x,y = (width - w_text) // 2, (height - h_text) // altura_pocisao
+                x,y = (width - w_text) // 2, height // altura_pocisao - h_text
                 pen.text((x,y),linha,font=fonte, fill=black)
                 altura_pocisao -= 1
         else:
             # Calculando a posição centralizado do titulo e autor
-            x,y = (width - w_text) // 2, (height - h_text) // altura_pocisao
+            x,y = (width - w_text) // 2, height // altura_pocisao - h_text
             # Escrevendo na imagem
             pen.text((x,y),texto,font=fonte, fill=black)
             altura_pocisao -= 1
-            
+    
+
+    # Para desenhar uma linha é preciso do ponto do comeco(x,y) e o ponto no final(x,y). E a linha ligará os pontos. 
+    # X = width, y = height 
+    # Como a linha é reta, a altura do começo e do final são as mesmas
+
+    # Desenhando linha
+    draw = ImageDraw.Draw(image) 
+
+    Altura_da_linha = (y + h_text) + h_text * 0.15
+
+    StartX = x + w_text  # Pocisao no eixo X, Width ou Largura
+    StartY = Altura_da_linha  # Pocisao no eixo Y, Height ou Altura
+    
+    EndX = x # Width ou Largura
+    EndY = Altura_da_linha  # Height ou Altura 
+
+    draw.line((StartX,StartY,EndX,EndY), fill=black,width=3)
+
     # Salvando imagem no buffer
     image.save(image_io,format='png')
 
     return image_io
 
-
-"""
-       # Verficando se o titulo é maior que a largura da capa
-        if(tamanho_width_inicial > width):
-            nome = nome_do_livro.split(" ", 1)
-
-            numero = 4
-
-            for linha in nome:
-                
-                # Pegando tamanho do texto
-                Titulo_width, Titulo_height = texto.textsize(linha, font=Titulo)
-                    
-                # Calculando a posição centralizado do titulo e autor
-                Titulo_position = (((width - Titulo_width) // 	2, (height - Titulo_height) // numero))
-
-                texto.text(Titulo_position, linha ,font=Titulo, fill=black)
-
-                numero -= 1
-        else:
-            # Pegando tamanho do texto
-            Titulo_width, Titulo_height = texto.textsize(nome_do_livro, font=Titulo)
-            # Calculando a posição centralizado do titulo e autor
-            Titulo_position = (((width - Titulo_width) // 	2, (height - Titulo_height) // 3))
-            #Autor_position = (((width - Autor_width) // 2, (height - Autor_height) // 2))    
-                
-            # Escrevendo na imagem
-            texto.text(Titulo_position, nome_do_livro ,font=Titulo, fill=black)
-            #texto.text(Autor_position, nome_do_autor ,font=Autor, fill=black)
-"""
-
-    # Para desenhar uma linha é preciso do ponto do comeco(x,y) e o ponto no final(x,y). E a linha ligará os pontos. 
-    # X = width, y = height 
-    # Como a linha é reta, a altura do começo e do final são as mesmas
-"""
-    draw = ImageDraw.Draw(image) # Para linha
-
-    Altura_da_linha = (Titulo_position[1] + Titulo_height) + Titulo_height * 0.15 # Mais 15% apos o titulo
-
-    StartX = Titulo_position[0] # Pocisao no eixo X, Width ou Largura
-    StartY = Altura_da_linha  # Pocisao no eixo Y, Height ou Altura
-    
-    EndX = Titulo_position[0] + Titulo_width # Width ou Largura
-    EndY = Altura_da_linha  # Height ou Altura 
-
-    draw.line((StartX,StartY,EndX,EndY), fill=black,width=3)
-"""
-
-"""
-    # Pegando tamanho do texto
-    Titulo_width, Titulo_height = texto.textsize(nome_do_livro, font=Titulo)
-    Autor_width, Autor_height = texto.textsize(nome_do_autor, font=Autor)
-    
-    # Calculando a posição centralizado do titulo e autor
-    Titulo_position = (((width - Titulo_width) // 	2, (height - Titulo_height) // 3))
-    Autor_position = (((width - Autor_width) // 2, (height - Autor_height) // 2))
-
-    # Escrevendo na imagem
-    texto.text(Titulo_position, nome_do_livro ,font=Titulo, fill=black)
-    texto.text(Autor_position, nome_do_autor ,font=Autor, fill=black)
-"""
