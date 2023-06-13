@@ -56,9 +56,9 @@ def CreateCapa(width,height,nome,autor):
     
     altura_pocisao = 2 + len(textos_para_escrever)
 
-    for count, texto in enumerate(textos_para_escrever,start=1):
+    for count, texto in enumerate(textos_para_escrever):
 
-        fonte = h1 if count == 1 else h2
+        fonte = h1 if count == 0 else h2
         
         # width, height do texto
         w_text, h_text = pen.textsize(texto, font=fonte)
@@ -68,7 +68,7 @@ def CreateCapa(width,height,nome,autor):
             
             altura_pocisao += 1
 
-            for i, linha in enumerate(quebra_de_linha,start=1):
+            for linha in quebra_de_linha:
                 
                 w_text, h_text = pen.textsize(linha, font=fonte)
                 # Calculando a posição centralizado do titulo e autor
