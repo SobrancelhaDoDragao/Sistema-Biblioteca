@@ -72,17 +72,16 @@ def CreateCapa(width,height,nome,autor):
                 
                 w_text, h_text = pen.textsize(linha, font=fonte)
                 # Calculando a posição centralizado do titulo e autor
-                x,y = (width - w_text) // 2, height // altura_pocisao - h_text
+                x,y = (width - w_text) / 2, (height - h_text) / altura_pocisao 
                 pen.text((x,y),linha,font=fonte, fill=black)
                 altura_pocisao -= 1
         else:
             # Calculando a posição centralizado do titulo e autor
-            x,y = (width - w_text) // 2, height // altura_pocisao - h_text
+            x,y = (width - w_text) / 2, (height - h_text) / altura_pocisao 
             # Escrevendo na imagem
             pen.text((x,y),texto,font=fonte, fill=black)
             altura_pocisao -= 1
     
-
     # Para desenhar uma linha é preciso do ponto do comeco(x,y) e o ponto no final(x,y). E a linha ligará os pontos. 
     # X = width, y = height 
     # Como a linha é reta, a altura do começo e do final são as mesmas
