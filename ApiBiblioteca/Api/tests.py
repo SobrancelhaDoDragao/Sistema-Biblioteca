@@ -33,7 +33,7 @@ class TestBase(APITestCase):
 
     # urls relacionadas a emprestimos
     # all_emprestimos_users = reverse('all_emprestimos_users')
-    emprestimos_url = 'emprestimos'
+    emprestimos_url = '/emprestimos/'
 
     def cadastro_user(self,admin=False):
         """
@@ -410,7 +410,42 @@ class EmprestimoTests(TestBase):
     """
     Testando funcionalidades relacionadas a emprestimo
     """
-    pass
+
+    def test_create_with_normal_user(self):
+        """
+        O sistema não deve permitir
+        """
+        pass
+    
+    def test_create_emprestimo(self):
+        """
+        Função para verificar se está sendo possivel criar emprestimo. só admin pode criar emprestimo.
+        """
+        # Criando admin
+        user, response_user = self.cadastro_user(admin=True)
+        # Logando como admin
+        credentials = {'email':user['email'],'password':user['password']}
+
+        self.login(credentials)
+
+        livro , reponse_livro = self.cadastro_livro()
+       
+        emprestimo_data = {'livro':response_user.data['id'],'usuario':reponse_livro.data['id']}
+        
+        emprestimo_response = self.client.post(self.emprestimos_url, emprestimo_data, format='json')
+
+        # Verificando a resposta 
+        self.assertEqual(emprestimo_response.status_code, status.HTTP_201_CREATED)
+
+        livro = Livro.objects.get(id=reponse_livro.data['id'])
+
+        # Deletando imagem criada
+        livro.capa.delete(livro.capa)
+        
+        
+        
+
+
 
 
 

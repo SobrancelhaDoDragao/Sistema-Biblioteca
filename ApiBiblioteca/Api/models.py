@@ -9,13 +9,13 @@ from django.dispatch import receiver
 
 import os
 from datetime import datetime, timedelta
-from .utils import CreateCapa, ResizeCapa
-
+from .custom_system_storage import CoverManagementSystem
 
 # Fuso horario
 from django.utils.timezone import now
 
-storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
+storageCapas = CoverManagementSystem()
+#storageCapas = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/CapasLivros",base_url=f'{settings.MEDIA_URL}CapasLivros')
 storageFotos = FileSystemStorage(location=f"{settings.MEDIA_ROOT}/FotosUsuarios",base_url=f'{settings.MEDIA_URL}FotosUsuarios')
 
 class MyUserManager(BaseUserManager):
@@ -105,19 +105,16 @@ class Livro(models.Model):
         """
         Diminuindo o tamanho das imagens para economizar espaço e padronizar, ou criando uma capa caso não tenha
         """
-        width = settings.CAPAWIDTH
-        height = settings.CAPAHEIGHT
-
-        image_size = (width,height)
-        
+ 
         # Quando é enviado uma capa
         if self.capa:
             try:
                 livro = Livro.objects.get(id=self.id)
                 
                 if livro.capa != self.capa:
+
                     # Redimensionando imagem 
-                    scaled_image = ResizeCapa(self.capa, image_size)
+                    scaled_image = storageCapas.cover_resize(self.capa)
                     # 'save=false' por que tem salvar apenas no final do try se não entra no loop infinito
                     self.capa.save(f"{self.nome}.png", scaled_image, save=False)
                     # Excluindo a capa antiga
@@ -125,18 +122,17 @@ class Livro(models.Model):
 
             except Livro.DoesNotExist:
                 # Redimensionando imagem 
-                scaled_image = ResizeCapa(self.capa, image_size)
+                scaled_image = storageCapas.cover_resize(self.capa)
                 # 'save=false' por que tem salvar apenas no final do try
                 self.capa.save(f"{self.nome}.png", scaled_image, save=False)
             
 
         # Caso não tenha uma capa então uma é criada
         else:
-            
-            image = CreateCapa(width,height,self.nome,self.autor)
+            image = storageCapas.CreateCapa(self.nome,self.autor)
             
             self.capa.save(f"{self.nome}.png", image, save=False)
-     
+        # Chamando a função pai, com isso estou estedento o codigo
         super().save(*args, **kwargs)
             
 
