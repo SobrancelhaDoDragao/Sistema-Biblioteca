@@ -3,21 +3,22 @@ from rest_framework import status
 from django.urls import reverse
 from django_seed import Seed
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.files.storage import default_storage
 from django.conf import settings
 import os
 
-from .utils import CreateCapa
 from .models import CustomUser as User
 from .models import Livro
+from .custom_system_storage import CoverManagementSystem
 
 from rest_framework.test import APIClient
+
 
 class TestBase(APITestCase):
     """
     Classe com metodos padrões que serão usadas em todos os testes
     """
     seeder = Seed.seeder()
+    storage = CoverManagementSystem()
 
     # urls relacionas a usuarios
     cadastro_url = reverse('cadastro')
@@ -65,6 +66,24 @@ class TestBase(APITestCase):
         response = self.client.post(self.livros_url, data, format="multipart")
 
         return data, response
+
+    def cadastro_emprestimo(self):
+        """
+        Cadastrando emprestimo
+
+        Input: None
+        Output: Dados do emprestimo, retorno da response
+        """
+        # Criando user comum que será do emprestimo
+        user, response_user = self.cadastro_user()
+      
+        livro, reponse_livro = self.cadastro_livro()
+
+        emprestimo_data = {'livro':reponse_livro.data['id'],'usuario':response_user.data['id']}
+        
+        emprestimo_response = self.client.post(self.emprestimos_url, emprestimo_data, format='json')
+
+        return emprestimo_data, emprestimo_response
         
     def login(self,credentials):
         """
@@ -99,7 +118,6 @@ class UserTests(TestBase):
         """
         Criando um usuario administrador
         """
-        
         data, response = self.cadastro_user(admin=True)
 
         # Verificando a resposta 
@@ -262,7 +280,7 @@ class LivroTests(TestBase):
         livro = Livro.objects.get(id=response.data['id'])
 
         # Verificando se o arquivo foi salvo
-        self.assertTrue(default_storage.exists(livro.capa.path))
+        self.assertTrue(self.storage.exists(livro.capa.path))
 
         # Verificando se foi salvo corretemente
         self.assertEqual(livro.nome, data['nome'])
@@ -287,10 +305,8 @@ class LivroTests(TestBase):
         nome = 'Forest Gump'
         autor = 'Winston'
         # Criando fora do padrao para testar o redimensionamento
-        width = 5000
-        height = 4000
-
-        capa = CreateCapa(width,height,nome,autor)
+   
+        capa = self.storage.CreateCapa(nome=nome,autor=autor)
         # Preparando para enviar o arquivo
         capa = SimpleUploadedFile(f'{nome}.png',capa.getbuffer())
         
@@ -302,7 +318,7 @@ class LivroTests(TestBase):
         livro = Livro.objects.get(id=response.data['id'])
         
         # Verificando se o arquivo foi salvo
-        self.assertTrue(default_storage.exists(livro.capa.path))
+        self.assertTrue(self.storage.exists(livro.capa.path))
         
         # Verificando as dimensoes da capa
         self.assertEqual(livro.capa.width, settings.CAPAWIDTH)
@@ -328,7 +344,7 @@ class LivroTests(TestBase):
         self.login(credentials)
 
         # Criando capa para o teste
-        capa = CreateCapa(2000,2500,'Teste','TesteAutor')
+        capa = self.storage.CreateCapa(nome='Teste',autor='TesteAutor')
 
         capa = SimpleUploadedFile('Teste.png',capa.getbuffer())
         # Criando um livro
@@ -337,7 +353,7 @@ class LivroTests(TestBase):
         OutroNome = 'Outro nome'
         OutroAutor = 'Outro Autor'
         # Criando um nova capa para substituir a antiga
-        OutraCapa = CreateCapa(2000,2500,OutroNome,OutroAutor)
+        OutraCapa = self.storage.CreateCapa(OutroNome,OutroAutor)
 
         OutraCapa = SimpleUploadedFile(f'{OutroNome}.png', OutraCapa.getbuffer())
 
@@ -350,12 +366,12 @@ class LivroTests(TestBase):
         response = self.client.put(f"{self.livros_url}{livro.id}/", data, format="multipart")
         
         # Verificando se a capa antiga foi deletada
-        self.assertEqual(default_storage.exists(livro.capa.path), False)
+        self.assertEqual(self.storage.exists(livro.capa.path), False)
         
         livro = Livro.objects.get(id=response.data['id'])
 
         # Verificando se o arquivo foi salvo
-        self.assertTrue(default_storage.exists(livro.capa.path))
+        self.assertTrue(self.storage.exists(livro.capa.path))
 
         # Verificando as dimensoes da capa
         self.assertEqual(livro.capa.width, settings.CAPAWIDTH)
@@ -380,7 +396,7 @@ class LivroTests(TestBase):
         self.login(credentials)
         
         # Criando capa para o teste
-        capa = CreateCapa(2000,2500,'Teste','TesteAutor')
+        capa = self.storage.CreateCapa('Teste','TesteAutor')
 
         capa = SimpleUploadedFile('Teste.png',capa.getbuffer())
 
@@ -394,7 +410,7 @@ class LivroTests(TestBase):
         self.assertEqual(response.data['autor'], livro.autor)
 
         # Verificando se a capa foi salva
-        self.assertTrue(default_storage.exists(livro.capa.path))
+        self.assertTrue(self.storage.exists(livro.capa.path))
         
         # Deletando usuario
         response = self.client.delete(f'{self.livros_url}{livro.id}/', format='json')
@@ -403,7 +419,7 @@ class LivroTests(TestBase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         # Verificando se a capa foi deletada
-        self.assertEqual(default_storage.exists(livro.capa.path),False)
+        self.assertEqual(self.storage.exists(livro.capa.path),False)
        
 
 class EmprestimoTests(TestBase):
@@ -413,10 +429,21 @@ class EmprestimoTests(TestBase):
 
     def test_create_with_normal_user(self):
         """
-        O sistema não deve permitir
+        Criando um usuario sem permissão de criar emprestimo. O sistema não deve permitir.
         """
-        pass
-    
+        user, response_user = self.cadastro_user()
+
+        credentials = {'email':user['email'],'password':user['password']}
+
+        self.login(credentials)
+
+        emprestimo_data = {'livro':1,'usuario':1}
+
+        response = self.client.post(self.emprestimos_url, emprestimo_data, format='json')
+        
+        # Verificando a resposta, não pode permitir acesso de usuarios comuns
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        
     def test_create_emprestimo(self):
         """
         Função para verificar se está sendo possivel criar emprestimo. só admin pode criar emprestimo.
@@ -428,19 +455,70 @@ class EmprestimoTests(TestBase):
 
         self.login(credentials)
 
-        livro , reponse_livro = self.cadastro_livro()
-       
-        emprestimo_data = {'livro':response_user.data['id'],'usuario':reponse_livro.data['id']}
-        
-        emprestimo_response = self.client.post(self.emprestimos_url, emprestimo_data, format='json')
+        data_emprestimo, emprestimo_response = self.cadastro_emprestimo()
 
         # Verificando a resposta 
         self.assertEqual(emprestimo_response.status_code, status.HTTP_201_CREATED)
 
-        livro = Livro.objects.get(id=reponse_livro.data['id'])
+        livro = Livro.objects.get(id=data_emprestimo['livro'])
 
         # Deletando imagem criada
         livro.capa.delete(livro.capa)
+
+
+    def test_delete_emprestimo(self):
+        """
+        Testando delete de emprestimo, apenas admins podem deletar
+        """
+        # Criando admin
+        user, response_user = self.cadastro_user(admin=True)
+        # Logando como admin
+        credentials = {'email':user['email'],'password':user['password']}
+
+        self.login(credentials)
+
+        data_emprestimo, emprestimo_response = self.cadastro_emprestimo()
+
+        # Verificando a resposta 
+        self.assertEqual(emprestimo_response.status_code, status.HTTP_201_CREATED)
+   
+        delete_reponse = self.client.delete(f"{self.emprestimos_url}{emprestimo_response.data['id']}/", format='json')
+        
+        # Verificando a resposta 
+        self.assertEqual(delete_reponse.status_code, status.HTTP_204_NO_CONTENT)
+
+        livro = Livro.objects.get(id=data_emprestimo['livro'])
+
+        # Deletando imagem criada
+        livro.capa.delete(livro.capa)
+
+    def test_edit_emprestimo(self):
+        """
+        Verificando se é possivel editar emprestimo
+        """
+        # Criando admin
+        user, response_user = self.cadastro_user(admin=True)
+
+        # Logando como admin
+        credentials = {'email':user['email'],'password':user['password']}
+
+        self.login(credentials)
+
+        data_emprestimo, emprestimo_response = self.cadastro_emprestimo()
+
+        # Novos dados do emprestimo
+        data = {'livro':data_emprestimo['livro'],'usuario':data_emprestimo['usuario']}
+
+        response = self.client.put(f"{self.emprestimos_url}{emprestimo_response.data['id']}/", data, format="multipart")
+
+        # Verificando a resposta 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        livro = Livro.objects.get(id=data_emprestimo['livro'])
+
+        # Deletando imagem criada
+        livro.capa.delete(livro.capa)
+        
         
         
         

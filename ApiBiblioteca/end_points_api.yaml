@@ -1,0 +1,28 @@
+endpoints:
+  - name: sistema-biblioteca 
+    path: http://127.0.0.1:8000/ 
+    requests:
+      - name: cadastro_de_usuario
+        path: cadastro/ 
+        method: post 
+      - name: get_token
+        path: token/
+        method: post 
+      - name: token_refresh
+        path: token/refresh/
+        method: post 
+      - name: verificando_se_esta_logado
+        path: VerifyAuthenticated/
+        headers:
+          Authorization: Token ${token}
+        method: post 
+      - name: usernormal
+        path: UserNormal/
+        method: post 
+      - name: all_users
+        path: all_users/
+        method: post 
+      - name: livros
+        path: livros/
+        method: get 
+     

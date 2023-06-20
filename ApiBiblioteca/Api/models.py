@@ -158,7 +158,7 @@ class Emprestimo(models.Model):
 @receiver(pre_delete, sender=Livro)
 def deleteCapa(sender,instance, **kwargs):
     # Removendo capa dos arquivos
-    os.remove(f"{settings.MEDIA_ROOT}/CapasLivros/{instance.capa}")
+    instance.capa.delete(instance.capa)
 
 @receiver(pre_save, sender=CustomUser)
 def deleteFotoAntiga(sender,instance, **kwargs):

@@ -19,7 +19,7 @@ from django.core.files.storage import Storage
 
 class CoverManagementSystem(Storage):
     """
-    Standard filesystem storage
+    Custom
     """
 
     # The combination of O_CREAT and O_EXCL makes os.open() raise OSError if
