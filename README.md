@@ -73,56 +73,60 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 <img src="https://github.com/SobrancelhaDoDragao/Sistema-Biblioteca/blob/master/screenshots/diagrama_banco.png" alt="Diagrama do banco de dados">
 
-### End-points
+### End-points da Api
 
-### Cadastro de usuario
+#### Cadastro de usuario
 
-- POST /cadastro/
+- <code>POST /cadastro/</code> End-poit para cadastro de usuario
 
-### Autenticação
+#### Autenticação JWT(JSON Web Token)
 
-- POST /token/
-- POST /token/refresh/
-- POST /VerifyAuthenticated/
+- <code>POST /token/</code> para efetuar o login
+- <code>POST /token/refresh/ </code> End-point para renovar o tokens
+- <code>POST /VerifyAuthenticated/</code> End-point para verificar se o usuarios está autenticado
 
-### User autenticado
+#### User autenticado
 
-- GET /user/
-- POST /user/
-- GET /user/{id}/
-- PUT /user/{id}/
-- PATCH /user/{id}/
-- DELETE /user/{id}/
+##### Permissões: Apenas usuarios autenticados.
 
-#### Gerenciamento de usuarios. Apenas usuarios admins tem acesso.
+- <code>GET /user/</code> Retorna dados do usario autenticado do request
+- <code>PUT /user/{id}/</code> Para editar dados do usario autenticado do resquest
+- <code>PATCH /user/{id}/</code>Para editar parcialmente dados do usario autenticado do resquest
+- <code>DELETE /user/{id}/</code> Para deletar usuario logado
 
-- GET /all_users/
-- POST /all_users/
-- GET /all_users/{id}/
-- PUT /all_users/{id}/
-- PATCH /all_users/{id}/
-- DELETE /all_users/{id}/
+#### Gerenciamento de usuarios
 
-#### Livros. Cadastro, editar, excluir permitido apenas para admins.
+##### Permissões: Apenas usuarios admins tem acesso.
 
-- GET /livros/
-- POST /livros/
-- GET /livros/{id}/
-- PUT /livros/{id}/
-- PATCH /livros/{id}/
-- DELETE /livros/{id}/
-- GET /novoslivros/
-- GET /recomendacao/
+- <code>GET /all_users/</code> Para visualizar todos os usuarios do sistema
+- <code>POST /all_users/</code> Para cadastro de um novo usuario
+- <code>GET /all_users/{id}/</code> Para recuperar um usuario pelo id
+- <code>PUT /all_users/{id}/</code> Para alterar dados de um usuario
+- <code>PATCH /all_users/{id}/</code> Para alterar parcialmente dados de um usuario
+- <code>DELETE /all_users/{id}/</code> Para deletar um usuario
+
+#### Livros
+
+##### Permissões: Cadastro, editar, excluir permitido apenas para admins. Usuarios comum permitdo apenas visualização.
+
+- <code>GET /livros/</code> Para visualizar todos os livros
+- <code>POST /livros/</code> Para cadastrar um novo livro
+- <code>GET /livros/{id}/</code> Para recuperar um livro pelo id
+- <code>PUT /livros/{id}/</code> Para editar dados de um livro
+- <code>PATCH /livros/{id}/</code> Para editar parcialmente dados de um livro
+- <code>DELETE /livros/{id}/</code> Para deletar um livro
+- <code>GET /novoslivros/</code> Retorna os cinco ultimos livros retornado pelo sistema
+- <code>GET /recomendacao/</code> Retorna cinco livros aleatorios
 
 #### Empréstimo
 
-- GET /emprestimos/
-- POST /emprestimos/
-- GET /emprestimos/{id}/
-- PUT /emprestimos/{id}/
-- PATCH /emprestimos/{id}/
-- DELETE /emprestimos/{id}/
-- GET /usuarios/{id}/emprestimos/
+- <code>GET /emprestimos/</code> Para todos visualizar emprestimos do sistema
+- <code>POST /emprestimos/</code> Para cadastrar um novo emprestimo
+- <code>GET /emprestimos/{id}/</code> Para recuperar um emprestimo especifico
+- <code>PUT /emprestimos/{id}/</code> Para editar um emprestimo
+- <code>PATCH /emprestimos/{id}/</code> Para editar parciamente um emprestimo
+- <code>DELETE /emprestimos/{id}/</code> Para deletar em emprestimo
+- <code>GET /usuarios/{id}/emprestimos/</code> Retorna todos os emprestimos relacionado ao usuario
 
 ## Estrutura do servidor / Projeto
 
