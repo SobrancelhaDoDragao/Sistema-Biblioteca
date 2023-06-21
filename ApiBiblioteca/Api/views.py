@@ -17,19 +17,9 @@ class getRoutes(APIView):
     def get(self,request):
 
         routes = [
-            '------- Rotas que não precisa estar autenticado -----',
-            'cadastro/',
-            'VerifyAuthenticated/',
-            'token/',
-            'token/refresh/',
-            'usuarios/<int:pk>/emprestimos/'
-            'recomendacao/'
-            'novoslivros/'
-            'livros/'
-            'emprestimos'
-            '------- Precisa estar autenticado -----',
-            'UserNormal',
-            'all_users',
+            'Opções de documentação da Api:',
+            '/redoc/',
+            '/swagger/'
         ]
 
         return Response(routes)
@@ -79,9 +69,9 @@ class UserNormal(viewsets.ModelViewSet):
     """
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
-    # Retornando apenas os dados do usuario logado
+    
     def get_queryset(self):
-        
+        # Retornando apenas os dados do usuario logado
         user = User.objects.filter(id=self.request.user.id)
 
         return user

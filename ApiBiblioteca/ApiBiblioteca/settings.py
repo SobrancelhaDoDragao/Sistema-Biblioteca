@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_filters',
     'django_seed',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'Api.CustomUser'
@@ -99,6 +100,10 @@ SIMPLE_JWT = {
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
+SWAGGER_SETTINGS = {
+   'DEFAULT_INFO': 'Api.urls.api_info',
 }
 
 MIDDLEWARE = [

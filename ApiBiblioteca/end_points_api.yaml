@@ -1,28 +1,833 @@
-endpoints:
-  - name: sistema-biblioteca 
-    path: http://127.0.0.1:8000/ 
-    requests:
-      - name: cadastro_de_usuario
-        path: cadastro/ 
-        method: post 
-      - name: get_token
-        path: token/
-        method: post 
-      - name: token_refresh
-        path: token/refresh/
-        method: post 
-      - name: verificando_se_esta_logado
-        path: VerifyAuthenticated/
-        headers:
-          Authorization: Token ${token}
-        method: post 
-      - name: usernormal
-        path: UserNormal/
-        method: post 
-      - name: all_users
-        path: all_users/
-        method: post 
-      - name: livros
-        path: livros/
-        method: get 
-     
+swagger: '2.0'
+info:
+  title: Sistema biblioteca API
+  description: Api para gerenciar acervo e emprestimo de livro em uma biblioteca
+  contact:
+    email: eudson.duraes@gmail.com
+  license:
+    name: MIT
+  version: v1
+basePath: /
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /:
+    get:
+      operationId: _list
+      description: Todas as url da Api biblioteca
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - ''
+    parameters: []
+  /VerifyAuthenticated/:
+    post:
+      operationId: VerifyAuthenticated_create
+      description: Verificando se o usuario está logado
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - VerifyAuthenticated
+    parameters: []
+  /all_users/:
+    get:
+      operationId: all_users_list
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters:
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/User'
+      tags:
+      - all_users
+    post:
+      operationId: all_users_create
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - all_users
+    parameters: []
+  /all_users/{id}/:
+    get:
+      operationId: all_users_read
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - all_users
+    put:
+      operationId: all_users_update
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - all_users
+    patch:
+      operationId: all_users_partial_update
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - all_users
+    delete:
+      operationId: all_users_delete
+      description: End-point que mostra todos os usuarios do sistema, acesso permitido
+        apenas para admins
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - all_users
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this custom user.
+      required: true
+      type: integer
+  /cadastro/:
+    post:
+      operationId: cadastro_create
+      description: View para cadastro de usuario
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - cadastro
+    parameters: []
+  /emprestimos/:
+    get:
+      operationId: emprestimos_list
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Emprestimo'
+      tags:
+      - emprestimos
+    post:
+      operationId: emprestimos_create
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Emprestimo'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Emprestimo'
+      tags:
+      - emprestimos
+    parameters: []
+  /emprestimos/{id}/:
+    get:
+      operationId: emprestimos_read
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Emprestimo'
+      tags:
+      - emprestimos
+    put:
+      operationId: emprestimos_update
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Emprestimo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Emprestimo'
+      tags:
+      - emprestimos
+    patch:
+      operationId: emprestimos_partial_update
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Emprestimo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Emprestimo'
+      tags:
+      - emprestimos
+    delete:
+      operationId: emprestimos_delete
+      description: Adicionar, Editar, excluir emprestimos permitido apenas a admins.
+        Caso contrarios permitido apenas visualização.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - emprestimos
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this emprestimo.
+      required: true
+      type: integer
+  /livros/:
+    get:
+      operationId: livros_list
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters:
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Livro'
+      tags:
+      - livros
+    post:
+      operationId: livros_create
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Livro'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Livro'
+      tags:
+      - livros
+    parameters: []
+  /livros/{id}/:
+    get:
+      operationId: livros_read
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Livro'
+      tags:
+      - livros
+    put:
+      operationId: livros_update
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Livro'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Livro'
+      tags:
+      - livros
+    patch:
+      operationId: livros_partial_update
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Livro'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Livro'
+      tags:
+      - livros
+    delete:
+      operationId: livros_delete
+      description: Adicionar, Editar, excluir permitido apenas a admins. Caso contrarios
+        permitido apenas visualização.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - livros
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this livro.
+      required: true
+      type: integer
+  /novoslivros/:
+    get:
+      operationId: NovosLivros
+      description: Novos livros adicionados ao acervo
+      parameters:
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Livro'
+      tags:
+      - NovosLivros
+    parameters: []
+  /recomendacao/:
+    get:
+      operationId: Recomedacao
+      description: Recomecao de livros. Por enquanto vai ser aleatorio.
+      parameters:
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Livro'
+      tags:
+      - Recomedacao
+    parameters: []
+  /token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TokenObtainPair'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TokenObtainPair'
+      tags:
+      - token
+    parameters: []
+  /token/refresh/:
+    post:
+      operationId: token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TokenRefresh'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TokenRefresh'
+      tags:
+      - token
+    parameters: []
+  /user/:
+    get:
+      operationId: user_list
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/User'
+      tags:
+      - user
+    post:
+      operationId: user_create
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - user
+    parameters: []
+  /user/{id}/:
+    get:
+      operationId: user_read
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - user
+    put:
+      operationId: user_update
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - user
+    patch:
+      operationId: user_partial_update
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - user
+    delete:
+      operationId: user_delete
+      description: End-point para limitar o acesso do usuario para apenas seus proprio
+        dados
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - user
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+  /usuarios/{id}/emprestimos/:
+    get:
+      operationId: usuarios_ListarEmprestimosUsuario
+      description: Todos os empréstimos relacionados ao usuario
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+            - count
+            - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Emprestimo'
+      tags:
+      - usuarios
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this emprestimo.
+      required: true
+      type: integer
+definitions:
+  User:
+    required:
+    - nome
+    - email
+    - password
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      nome:
+        title: Nome
+        type: string
+        maxLength: 50
+        minLength: 1
+      email:
+        title: Email address
+        type: string
+        format: email
+        maxLength: 255
+        minLength: 1
+      foto:
+        title: Foto
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      is_admin:
+        title: Is admin
+        type: boolean
+  Livro:
+    required:
+    - nome
+    - autor
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      nome:
+        title: Nome
+        type: string
+        maxLength: 50
+        minLength: 1
+      capa:
+        title: Capa
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      autor:
+        title: Autor
+        type: string
+        maxLength: 50
+        minLength: 1
+      editora:
+        title: Editora
+        type: string
+        maxLength: 50
+        x-nullable: true
+      genero:
+        title: Genero
+        type: string
+        maxLength: 50
+        x-nullable: true
+      descricao:
+        title: Descricao
+        type: string
+        x-nullable: true
+  Emprestimo:
+    required:
+    - livro
+    - usuario
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      livro:
+        title: Livro
+        type: integer
+      usuario:
+        title: Usuario
+        type: integer
+      status:
+        title: Status
+        type: string
+        enum:
+        - emprestado
+        - atrasado
+        - devolvido
+      data_criacao:
+        title: Data criacao
+        type: string
+        readOnly: true
+      data_devolucao:
+        title: Data devolucao
+        type: string
+        format: date-time
+      UsuarioDados:
+        $ref: '#/definitions/User'
+      LivroDados:
+        $ref: '#/definitions/Livro'
+  TokenObtainPair:
+    required:
+    - email
+    - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  TokenRefresh:
+    required:
+    - refresh
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+      access:
+        title: Access
+        type: string
+        readOnly: true
+        minLength: 1
