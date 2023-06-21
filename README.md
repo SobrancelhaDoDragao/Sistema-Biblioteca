@@ -81,7 +81,7 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 #### Autenticação JWT(JSON Web Token)
 
-- <code>POST /token/</code> para efetuar o login
+- <code>POST /token/</code> Para efetuar o login
 - <code>POST /token/refresh/ </code> End-point para renovar o tokens
 - <code>POST /VerifyAuthenticated/</code> End-point para verificar se o usuarios está autenticado
 
@@ -119,6 +119,8 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 - <code>GET /recomendacao/</code> Retorna cinco livros aleatorios
 
 #### Empréstimo
+
+##### Permissões: Cadastro, editar, excluir permitido apenas para admins. Usuarios comum permitdo apenas visualização.
 
 - <code>GET /emprestimos/</code> Para todos visualizar emprestimos do sistema
 - <code>POST /emprestimos/</code> Para cadastrar um novo emprestimo
