@@ -30,9 +30,10 @@
 2. [Funcionalidades](#funcionalidades)
 3. [Tecnologias usadas](#tecnologias-usadas) 
 4. [Banco de dados](#banco-de-dados)
-5. [Testes](#testes)
-6. [Instalação](#instalação)
-7. [Licensa](#licensa)
+5. [End-points da api](#end-points-da-api)
+6. [Testes](#testes)
+7. [Instalação](#instalação)
+8. [Licensa](#licensa)
 
 ## Sobre
 
