@@ -75,7 +75,54 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ### End-points
 
-Em andamento
+### Cadastro de usuario
+
+- POST /cadastro/
+
+### Autenticação
+
+- POST /token/
+- POST /token/refresh/
+- POST /VerifyAuthenticated/
+
+### User autenticado
+
+- GET /user/
+- POST /user/
+- GET /user/{id}/
+- PUT /user/{id}/
+- PATCH /user/{id}/
+- DELETE /user/{id}/
+
+#### Gerenciamento de usuarios. Apenas usuarios admins tem acesso.
+
+- GET /all_users/
+- POST /all_users/
+- GET /all_users/{id}/
+- PUT /all_users/{id}/
+- PATCH /all_users/{id}/
+- DELETE /all_users/{id}/
+
+#### Livros. Cadastro, editar, excluir permitido apenas para admins.
+
+- GET /livros/
+- POST /livros/
+- GET /livros/{id}/
+- PUT /livros/{id}/
+- PATCH /livros/{id}/
+- DELETE /livros/{id}/
+- GET /novoslivros/
+- GET /recomendacao/
+
+#### Empréstimo
+
+- GET /emprestimos/
+- POST /emprestimos/
+- GET /emprestimos/{id}/
+- PUT /emprestimos/{id}/
+- PATCH /emprestimos/{id}/
+- DELETE /emprestimos/{id}/
+- GET /usuarios/{id}/emprestimos/
 
 ## Estrutura do servidor / Projeto
 

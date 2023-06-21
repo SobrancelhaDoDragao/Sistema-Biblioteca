@@ -24,20 +24,6 @@ class getRoutes(APIView):
 
         return Response(routes)
 
-class VerifyAuthenticated(APIView):
-    """
-    Verificando se o usuario está logado
-    """
-    permission_classes = [IsAuthenticated]
-    
-    def post(self, request, format=None):
-        
-        response = {
-            'Authenticated':True
-        }
-        #request.user
-        return Response(response)
-
 class CadastroUser(APIView):
     """
     View para cadastro de usuario
@@ -51,6 +37,20 @@ class CadastroUser(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
       
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class VerifyAuthenticated(APIView):
+    """
+    Verificando se o usuario está logado
+    """
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, format=None):
+        
+        response = {
+            'Authenticated':True
+        }
+        #request.user
+        return Response(response)
 
 class UsersAdmin(viewsets.ModelViewSet):
     """
