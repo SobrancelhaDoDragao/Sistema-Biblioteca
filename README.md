@@ -89,8 +89,8 @@ Durante o meu aprendizado em Vue.js, percebi que o Vue.js carrega a página em b
 
 ##### Permissões: Apenas usuarios autenticados.
 
-- <code>GET /user/</code> Retorna dados do usario autenticado do request
-- <code>PUT /user/{id}/</code> Para editar dados do usario autenticado do resquest
+- <code>GET /user/</code> Retorna dados do usuario autenticado do request
+- <code>PUT /user/{id}/</code> Para editar dados do usuario autenticado do resquest
 - <code>PATCH /user/{id}/</code>Para editar parcialmente dados do usario autenticado do resquest
 - <code>DELETE /user/{id}/</code> Para deletar usuario logado
 
