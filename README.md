@@ -142,7 +142,7 @@ Para executar testes unitários entre na pasta ApiBiblioteca e digite o comando:
 
 ### Requisitos
 
-  - Python 3.10.6
+  - Python 3.11.4
   - Venv
   - Pip
   - Node 18.16.0
